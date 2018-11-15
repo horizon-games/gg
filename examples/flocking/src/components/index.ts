@@ -2,7 +2,7 @@ import AccelerationComponent from './AccelerationComponent'
 import PositionComponent from './PositionComponent'
 import VelocityComponent from './VelocityComponent'
 
-import { ComponentTypes } from '../../../ecs'
+import { ComponentTypes } from '../../../../src/ecs'
 
 export interface Components extends ComponentTypes {
   acceleration: AccelerationComponent

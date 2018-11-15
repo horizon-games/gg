@@ -1,4 +1,4 @@
-import { Archetype } from '../../../ecs'
+import { Archetype } from '../../../../src/ecs'
 import Archetypes from './Archetypes'
 import { Components } from '../components'
 

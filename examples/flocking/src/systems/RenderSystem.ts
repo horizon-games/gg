@@ -1,4 +1,4 @@
-import { System, Entity, EntityManager } from '../../../ecs'
+import { System, Entity, EntityManager } from '../../../../src/ecs'
 import { Components } from '../components'
 import { Archetypes } from '../archetypes'
 import { Vector2 } from '../lib/vec2'
