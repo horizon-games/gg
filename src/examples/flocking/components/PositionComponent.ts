@@ -1,4 +1,4 @@
-import { Component } from '../lib/ecs'
+import { Component } from '../../../ecs'
 import { Vector2 } from '../lib/vec2'
 
 export default class PositionComponent extends Component {

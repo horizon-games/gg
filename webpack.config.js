@@ -3,7 +3,7 @@ const TSLintPlugin = require('tslint-webpack-plugin')
 const DotEnvPlugin = require('dotenv-webpack')
 
 module.exports = {
-  entry: path.join(__dirname, '/src/index.ts'),
+  entry: path.join(__dirname, '/src/examples/flocking/index.ts'),
   output: {
     filename: 'flocking.js',
     path: path.join(__dirname, 'dist')
@@ -13,8 +13,8 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/,
-      },
+        exclude: /node_modules/
+      }
     ]
   },
   resolve: {
@@ -27,9 +27,8 @@ module.exports = {
     new DotEnvPlugin()
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, 'src/examples/flocking'),
     compress: true,
     port: 8000
   }
 }
-
