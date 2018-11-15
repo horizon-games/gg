@@ -4775,10 +4775,6 @@ unique-slug@^2.0.0:
   dependencies:
     imurmurhash "^0.1.4"
 
-unistore@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/unistore/-/unistore-3.1.0.tgz#38ba40ba43e6d0cb89e842b6216469736c93dd34"
-
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
