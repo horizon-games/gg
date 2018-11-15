@@ -1,0 +1,14 @@
+{
+  "defaultSeverity": "warning",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "jsRules": {},
+  "rules": {
+    "no-console": false,
+    "interface-name": false,
+    "member-access": [true, "no-public"],
+    "ordered-imports": false,
+    "max-classes-per-file": false,
+    "no-shadowed-variable": false
+  },
+  "rulesDirectory": []
+}
