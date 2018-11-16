@@ -13,7 +13,7 @@ export default class RenderSystem extends System<Components> {
       const { value: width } = entity.getComponent('width')
       const { value: height } = entity.getComponent('height')
       const color = entity.getComponent('color')
-      const boxShadow = entity.getComponent('boxshadow')
+      const boxShadow = entity.getComponent('boxShadow')
       const position = entity.getComponent('position')
 
       if (document.body.contains(element)) {
