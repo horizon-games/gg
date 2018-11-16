@@ -1,24 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!--
-      Daniel Shiffman's flocking example ported from processing to javascript using HTML5 canvas.
-    -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Flocking</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cards</title>
 
     <style type="text/css">
-      html, body {
+      html,
+      body {
         padding: 0;
         margin: 0;
+      }
+
+      body * {
+        box-sizing: border-box;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 12px;
+      }
+
+      main > * {
+        margin: 12px;
+      }
+
+      section.player {
+        flex: 0.25;
+        border-radius: 8px;
+      }
+
+      section.player[data-player-id='1'] {
+        background-color: rgba(255, 128, 0, 0.1);
+        border: 4px solid rgba(255, 0, 0, 0.2);
+      }
+      section.player[data-player-id='2'] {
+        background-color: rgba(0, 128, 255, 0.1);
+        border: 4px solid rgba(0, 0, 255, 0.2);
+      }
+
+      section.field {
+        flex: 0.5;
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 4px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+      }
+
+      .player-court {
+      }
+
+      .player-court[data-player-id='1'] {
+      }
+      .player-court[data-player-id='2'] {
       }
     </style>
   </head>
   <body>
-    <canvas id="flocking"></canvas>
+    <main>
+      <section class="player" data-player-id="1">
+        <div class="deck"></div>
+        <div class="hand"></div>
+        <div class="mana"></div>
+      </section>
+      <section class="field">
+        <div class="player-court" data-player-id="1"></div>
+        <div class="player-court" data-player-id="2"></div>
+      </section>
+      <section class="player" data-player-id="2">
+        <div class="deck"></div>
+        <div class="hand"></div>
+        <div class="mana"></div>
+      </section>
+    </main>
     <script src="cards.js" type="text/javascript"></script>
   </body>
 </html>
-

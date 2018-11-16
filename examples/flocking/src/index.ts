@@ -1,5 +1,5 @@
 import Stats from 'stats.js'
-import { World, Archetype } from '../../../src/ecs'
+import { World } from '../../../src/ecs'
 import { createRenderingContext } from './RenderingContext'
 
 import { Components } from './components'

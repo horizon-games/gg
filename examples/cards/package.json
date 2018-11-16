@@ -34,7 +34,10 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.22",
     "dotenv-webpack": "^1.5.7",
+    "jquery": "^3.3.1",
+    "sillyname": "^0.1.0",
     "stats.js": "^0.17.0",
     "unistore": "^3.1.0"
   },
