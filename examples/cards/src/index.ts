@@ -47,6 +47,9 @@ window.onkeydown = (ev: any) => {
 }
 
 const init = () => {
+  // Add Stats
+  document.body.appendChild(stats.dom)
+
   drawCard(0)
   drawCard(0)
   drawCard(0)
