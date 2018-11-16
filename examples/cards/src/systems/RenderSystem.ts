@@ -15,6 +15,9 @@ export default class RenderSystem extends System<Components> {
       const color = entity.getComponent('color')
       const boxShadow = entity.getComponent('boxShadow')
       const position = entity.getComponent('position')
+      const borderRadius = entity.getComponent('borderRadius')
+
+      const $element = $(element)
 
       if (document.body.contains(element)) {
       } else {
@@ -22,13 +25,11 @@ export default class RenderSystem extends System<Components> {
       }
 
       if (width && height) {
-        $(element)
-          .width(width)
-          .height(height)
+        $element.width(width).height(height)
       }
 
       if (position) {
-        $(element).css({
+        $element.css({
           position: 'absolute',
           left: `${position.x}px`,
           top: `${position.y}px`
@@ -36,14 +37,18 @@ export default class RenderSystem extends System<Components> {
       }
 
       if (color) {
-        $(element).css(
+        $element.css(
           'background-color',
           `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
         )
       }
 
+      if (borderRadius) {
+        $element.css('borderRadius', `${borderRadius.value}px`)
+      }
+
       if (boxShadow) {
-        $(element).css(
+        $element.css(
           'box-shadow',
           `${boxShadow.hOffset}px ${boxShadow.vOffset}px ${boxShadow.blur}px ${
             boxShadow.spread

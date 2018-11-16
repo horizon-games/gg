@@ -6,7 +6,8 @@ import {
   ColorComponent,
   WidthComponent,
   HeightComponent,
-  BoxShadowComponent
+  BoxShadowComponent,
+  BorderRadiusComponent
 } from '../components'
 import { Card, CardStatus } from '../types'
 import $ from 'jquery'
@@ -32,9 +33,9 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
     new DOMComponent({ element }),
     new ColorComponent({
       r: card.playerId === 0 ? 255 : 0,
-      g: 64,
+      g: 0,
       b: card.playerId === 0 ? 0 : 255,
-      a: 1.0
+      a: 0.5
     }),
     new BoxShadowComponent({
       hOffset: 0,
@@ -43,6 +44,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       spread: 1,
       color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.1 })
     })
+    //new BorderRadiusComponent({ value: 6 })
   ]
 }
 

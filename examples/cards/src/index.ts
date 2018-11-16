@@ -31,22 +31,22 @@ store.subscribe((state: State) => {
   })
 })
 
-window.onkeydown = (ev: any) => {
-  const key = ev.keyCode
-  const { currentPlayerId } = store.getState()
+// window.onkeydown = (ev: any) => {
+//   const key = ev.keyCode
+//   const { currentPlayerId } = store.getState()
 
-  switch (key) {
-    case 68: // (d)rawCard
-      console.log('drawCard')
-      drawCard(currentPlayerId)
-      break
+//   switch (key) {
+//     case 68: // (d)rawCard
+//       console.log('drawCard')
+//       drawCard(currentPlayerId)
+//       break
 
-    case 80: // (p)layCard
-      console.log('playCard')
-      playCard(currentPlayerId, 0)
-      break
-  }
-}
+//     case 80: // (p)layCard
+//       console.log('playCard')
+//       playCard(currentPlayerId, 0)
+//       break
+//   }
+// }
 
 const init = () => {
   // Add Stats
