@@ -2,7 +2,8 @@ import { State } from './types'
 import store from './store'
 
 export const drawCard = (playerId: number) => {
-  const playerState = store.getState().players[playerId]
+  const state = store.getState()
+  const playerState = state.players[playerId]
   const { inDeck, inHand } = playerState
   const len = inDeck.length
 
@@ -14,15 +15,13 @@ export const drawCard = (playerId: number) => {
   }
 
   store.setState({
-    players: {
-      ...store.getState().players,
-      [playerId]: { ...playerState }
-    }
+    players: state.players
   })
 }
 
 export const playCard = (playerId: number, cardId: number) => {
-  const playerState = store.getState().players[playerId]
+  const state = store.getState()
+  const playerState = state.players[playerId]
   const { inHand, inPlay } = playerState
   const idx = inHand.findIndex(card => card.id === cardId)
 
@@ -33,10 +32,7 @@ export const playCard = (playerId: number, cardId: number) => {
   }
 
   store.setState({
-    players: {
-      ...store.getState().players,
-      [playerId]: { ...playerState }
-    }
+    players: state.players
   })
 }
 

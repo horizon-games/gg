@@ -1,5 +1,5 @@
 import createStore, { Store } from 'unistore'
-import { State, PlayerState, CardTypes } from './types'
+import { State, PlayerState, CardType } from './types'
 
 //@ts-ignore
 import sillyname from 'sillyname'
@@ -9,8 +9,8 @@ const getCardId = () => {
   return ++cardIdx
 }
 
-const getCardType = (): CardTypes => {
-  const types = [CardTypes.Unit, CardTypes.Spell]
+const getCardType = (): CardType => {
+  const types = [CardType.Unit, CardType.Spell]
 
   return types[Math.floor(Math.random() * types.length)]
 }
@@ -53,10 +53,7 @@ const getPlayerState = (playerId: number): PlayerState => ({
 })
 
 const state: State = {
-  players: {
-    1: getPlayerState(1),
-    2: getPlayerState(2)
-  },
+  players: [getPlayerState(0), getPlayerState(1)],
   currentPlayerId: 1,
   turnIndex: 0
 }

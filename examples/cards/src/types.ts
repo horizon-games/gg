@@ -1,18 +1,26 @@
-export enum CardTypes {
+export enum CardType {
   Unit = 'unit',
   Spell = 'spell'
 }
 
+export enum CardStatus {
+  Hand,
+  Deck,
+  Field,
+  Graveyard,
+  Dust
+}
+
 export interface Card {
   id: number
-  type: CardTypes
+  type: CardType
   name: string
   cost: number
   playerId: number
 }
 
 export interface State {
-  players: Record<number, PlayerState>
+  players: PlayerState[]
   currentPlayerId: number
   turnIndex: number
 }

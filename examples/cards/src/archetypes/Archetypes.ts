@@ -1,9 +1,15 @@
 const enum Archetypes {
+  Renderable,
+
   Cards,
-  DeckCards,
-  HandCards,
+
   PlayerHandCards,
-  OpponentHandCards
+  PlayerDeckCards,
+  PlayerPlayedCards,
+
+  OpponentHandCards,
+  OpponentDeckCards,
+  OpponentPlayedCards
 }
 
 export default Archetypes

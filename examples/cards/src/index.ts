@@ -1,17 +1,32 @@
 import Stats from 'stats.js'
-import { State } from './types'
+import { State, CardStatus } from './types'
 import store from './store'
 import { drawCard, playCard } from './actions'
-import { World } from '../../../src/ecs'
+import { World, Archetype } from '../../../src/ecs'
 import RenderSystem from './systems/RenderSystem'
+import { RenderableArchetype, Archetypes, CardsArchetype } from './archetypes'
+import { Components } from './components'
+import CardAssemblage from './assemblages/CardAssemblage'
+import DeckSystem from './systems/DeckSystem'
+
 const stats = new Stats()
 
-const world = new World()
+const world = new World<Components>()
+
+world.addArchetype(RenderableArchetype)
+world.addArchetype(CardsArchetype)
 
 world.addSystem(new RenderSystem())
+world.addSystem(new DeckSystem())
 
 store.subscribe((state: State) => {
   console.log('State update', state)
+
+  state.players.forEach((player, playerId) => {
+    player.inDeck.forEach(card => {
+      world.createEntity(...CardAssemblage(card, CardStatus.Deck))
+    })
+  })
 })
 
 window.onkeydown = (ev: any) => {
@@ -32,13 +47,13 @@ window.onkeydown = (ev: any) => {
 }
 
 const init = () => {
-  drawCard(1)
-  drawCard(1)
-  drawCard(1)
+  drawCard(0)
+  drawCard(0)
+  drawCard(0)
 
-  drawCard(2)
-  drawCard(2)
-  drawCard(2)
+  drawCard(1)
+  drawCard(1)
+  drawCard(1)
 
   // Start loop
   requestAnimationFrame(loop)
