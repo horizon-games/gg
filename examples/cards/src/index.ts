@@ -3,10 +3,12 @@ import { State } from './types'
 import store from './store'
 import { drawCard, playCard } from './actions'
 import { World } from '../../../src/ecs'
-
+import RenderSystem from './systems/RenderSystem'
 const stats = new Stats()
 
 const world = new World()
+
+world.addSystem(new RenderSystem())
 
 store.subscribe((state: State) => {
   console.log('State update', state)
@@ -30,6 +32,14 @@ window.onkeydown = (ev: any) => {
 }
 
 const init = () => {
+  drawCard(1)
+  drawCard(1)
+  drawCard(1)
+
+  drawCard(2)
+  drawCard(2)
+  drawCard(2)
+
   // Start loop
   requestAnimationFrame(loop)
 }
@@ -43,3 +53,5 @@ const loop = () => {
 
   requestAnimationFrame(loop)
 }
+
+init()

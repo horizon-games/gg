@@ -1,6 +1,6 @@
-export const enum CardTypes {
-  Unit,
-  Spell
+export enum CardTypes {
+  Unit = 'unit',
+  Spell = 'spell'
 }
 
 export interface Card {
@@ -8,6 +8,7 @@ export interface Card {
   type: CardTypes
   name: string
   cost: number
+  playerId: number
 }
 
 export interface State {

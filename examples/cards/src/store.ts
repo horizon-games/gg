@@ -9,17 +9,42 @@ const getCardId = () => {
   return ++cardIdx
 }
 
-const getPlayerState = (): PlayerState => ({
+const getCardType = (): CardTypes => {
+  const types = [CardTypes.Unit, CardTypes.Spell]
+
+  return types[Math.floor(Math.random() * types.length)]
+}
+
+const getCard = (playerId: number) => ({
+  id: getCardId(),
+  playerId,
+  type: getCardType(),
+  name: sillyname(),
+  cost: Math.floor(Math.random() * 10)
+})
+
+const getPlayerState = (playerId: number): PlayerState => ({
   inDeck: [
-    { id: getCardId(), type: CardTypes.Unit, name: sillyname(), cost: 1 },
-    { id: getCardId(), type: CardTypes.Unit, name: sillyname(), cost: 2 },
-    { id: getCardId(), type: CardTypes.Unit, name: sillyname(), cost: 3 },
-    { id: getCardId(), type: CardTypes.Unit, name: sillyname(), cost: 4 },
-    { id: getCardId(), type: CardTypes.Unit, name: sillyname(), cost: 5 },
-    { id: getCardId(), type: CardTypes.Spell, name: sillyname(), cost: 1 },
-    { id: getCardId(), type: CardTypes.Spell, name: sillyname(), cost: 2 },
-    { id: getCardId(), type: CardTypes.Spell, name: sillyname(), cost: 3 },
-    { id: getCardId(), type: CardTypes.Spell, name: sillyname(), cost: 4 }
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId),
+    getCard(playerId)
   ],
   inHand: [],
   inPlay: [],
@@ -29,8 +54,8 @@ const getPlayerState = (): PlayerState => ({
 
 const state: State = {
   players: {
-    1: getPlayerState(),
-    2: getPlayerState()
+    1: getPlayerState(1),
+    2: getPlayerState(2)
   },
   currentPlayerId: 1,
   turnIndex: 0

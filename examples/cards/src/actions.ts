@@ -39,3 +39,25 @@ export const playCard = (playerId: number, cardId: number) => {
     }
   })
 }
+
+export const endTurn = () => {
+  const state = store.getState()
+  const { currentPlayerId } = state
+  const nextPlayerId = currentPlayerId === 1 ? 2 : 1
+  const nextPlayerState = state.players[nextPlayerId]
+
+  const turnIndex = state.turnIndex + 1
+
+  store.setState({
+    turnIndex,
+    currentPlayerId: nextPlayerId,
+    players: {
+      ...state.players,
+      [nextPlayerId]: {
+        ...nextPlayerState,
+        mana: turnIndex,
+        manaMax: turnIndex
+      }
+    }
+  })
+}
