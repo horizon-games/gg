@@ -1,5 +1,5 @@
 import { Component } from '../../../../src/ecs'
 
-export default class DOMComponent extends Component {
+export default class DomComponent extends Component {
   element: HTMLElement
 }

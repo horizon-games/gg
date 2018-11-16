@@ -1,7 +1,7 @@
 import {
   PositionComponent,
   PlayerComponent,
-  DOMComponent,
+  DomComponent,
   CardComponent,
   ColorComponent,
   WidthComponent,
@@ -30,7 +30,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight
     }),
-    new DOMComponent({ element }),
+    new DomComponent({ element }),
     new ColorComponent({
       r: card.playerId === 0 ? 255 : 0,
       g: 0,
@@ -43,8 +43,8 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       blur: 6,
       spread: 1,
       color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.1 })
-    })
-    //new BorderRadiusComponent({ value: 6 })
+    }),
+    new BorderRadiusComponent({ value: 6 })
   ]
 }
 
