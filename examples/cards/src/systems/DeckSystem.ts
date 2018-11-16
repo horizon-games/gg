@@ -8,9 +8,9 @@ export default class DeckSystem extends System<Components> {
     entities.forEach(entity => {
       const position = entity.getComponent('position')
 
-      if (position) {
-        position.x += 0.1
-        position.y += 0.1
+      if (position && Math.random() < 0.01) {
+        position.x += Math.random() * 20 - 10
+        position.y += Math.random() * 20 - 10
       }
     })
   }

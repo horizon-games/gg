@@ -19,6 +19,8 @@ world.addArchetype(CardsArchetype)
 world.addSystem(new RenderSystem())
 world.addSystem(new DeckSystem())
 
+console.log(world)
+
 store.subscribe((state: State) => {
   console.log('State update', state)
 

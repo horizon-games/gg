@@ -17,14 +17,14 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   return [
     new CardComponent({
       id: card.id,
-      type: card.type,
+      cardType: card.type,
       name: card.name,
       cost: card.cost,
       status
     }),
     new PlayerComponent({ id: card.playerId }),
     new WidthComponent({ value: 160 }),
-    new HeightComponent({ value: 320 }),
+    new HeightComponent({ value: 240 }),
     new PositionComponent({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight
