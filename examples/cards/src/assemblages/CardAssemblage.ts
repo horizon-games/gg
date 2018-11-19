@@ -7,7 +7,9 @@ import {
   WidthComponent,
   HeightComponent,
   BoxShadowComponent,
-  BorderRadiusComponent
+  BorderRadiusComponent,
+  RotationComponent,
+  HoverComponent
 } from '../components'
 import { Card, CardStatus } from '../types'
 import $ from 'jquery'
@@ -24,11 +26,19 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       status
     }),
     new PlayerComponent({ id: card.playerId }),
-    new WidthComponent({ value: 160 }),
-    new HeightComponent({ value: 240 }),
+    new WidthComponent({ value: 125 }),
+    new HeightComponent({ value: 175 }),
+    new HoverComponent({ value: false }),
+    // new PositionComponent({
+    //   x: Math.random() * window.innerWidth,
+    //   y: Math.random() * window.innerHeight
+    // }),
     new PositionComponent({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight
+      x: 0,
+      y: 0
+    }),
+    new RotationComponent({
+      value: 0
     }),
     new DomComponent({ element }),
     new ColorComponent({

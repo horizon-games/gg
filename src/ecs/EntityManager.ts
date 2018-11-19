@@ -69,8 +69,12 @@ export default class EntityManager<C extends ComponentTypes> {
     }
   }
 
-  hasEntity(entity: Entity<C>): boolean {
-    return this.entities.has(entity.id)
+  hasEntity(entityId: number): boolean {
+    return this.entities.has(entityId)
+  }
+
+  getEntity(entityId: number): Entity<C> | undefined {
+    return this.entities.get(entityId)
   }
 
   renewEntity(...components: Array<ValueOf<C>>): Entity<C> {
@@ -80,7 +84,7 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   releaseEntity(entity: Entity<C>) {
-    if (this.hasEntity(entity)) {
+    if (this.hasEntity(entity.id)) {
       this.removeEntity(entity)
       this.entityPool.release(entity)
     }
@@ -114,7 +118,7 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   private handleEntityAddComponent(entity: Entity<C>, _: ValueOf<C>) {
-    if (this.hasEntity(entity)) {
+    if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
         archetype.handleEntityComponentChange(entity)
       })
@@ -122,7 +126,7 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   private handleEntityRemoveComponent(entity: Entity<C>, _: ValueOf<C>) {
-    if (this.hasEntity(entity)) {
+    if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
         archetype.handleEntityComponentChange(entity)
       })

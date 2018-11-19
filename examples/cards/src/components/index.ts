@@ -1,5 +1,7 @@
 import { ComponentTypes } from '../../../../src/ecs'
 import PositionComponent from './PositionComponent'
+import RotationComponent from './RotationComponent'
+import HoverComponent from './HoverComponent'
 import PlayerComponent from './PlayerComponent'
 import CardComponent from './CardComponent'
 import DomComponent from './DomComponent'
@@ -12,6 +14,7 @@ import BorderRadiusComponent from './BorderRadiusComponent'
 export interface Components extends ComponentTypes {
   player: PlayerComponent
   position: PositionComponent
+  rotation: RotationComponent
   card: CardComponent
   dom: DomComponent
   color: ColorComponent
@@ -19,10 +22,12 @@ export interface Components extends ComponentTypes {
   height: HeightComponent
   boxShadow: BoxShadowComponent
   borderRadius: BorderRadiusComponent
+  hover: HoverComponent
 }
 
 export {
   PositionComponent,
+  RotationComponent,
   PlayerComponent,
   CardComponent,
   DomComponent,
@@ -30,5 +35,6 @@ export {
   WidthComponent,
   HeightComponent,
   BoxShadowComponent,
-  BorderRadiusComponent
+  BorderRadiusComponent,
+  HoverComponent
 }

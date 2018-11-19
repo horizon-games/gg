@@ -2,6 +2,9 @@ const enum Archetypes {
   Renderable,
 
   Cards,
+  DeckCards,
+  HandCards,
+  PlayedCards,
 
   PlayerHandCards,
   PlayerDeckCards,

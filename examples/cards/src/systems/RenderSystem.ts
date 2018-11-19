@@ -16,8 +16,11 @@ export default class RenderSystem extends System<Components> {
       const boxShadow = entity.getComponent('boxShadow')
       const position = entity.getComponent('position')
       const borderRadius = entity.getComponent('borderRadius')
+      const rotation = entity.getComponent('rotation')
 
       const $element = $(element)
+
+      $element.attr('data-id', entity.id)
 
       if (document.body.contains(element)) {
       } else {
@@ -28,11 +31,34 @@ export default class RenderSystem extends System<Components> {
         $element.width(width).height(height)
       }
 
+      const transforms = []
+
       if (position) {
+        // $element.css({
+        //   position: 'absolute',
+        //   left: `${position.x}px`,
+        //   top: `${position.y}px`
+        // })
+        transforms.push(
+          `translateX(${position.x}px) translateY(${position.y}px)`
+        )
+      }
+
+      if (rotation) {
+        // $element.css({
+        //   transform: `rotate(${rotation.value}deg)`,
+        //   transformOrigin: `50% 50%`
+        // })
+        transforms.push(`rotate(${rotation.value}deg)`)
+      }
+
+      if (transforms.length) {
         $element.css({
           position: 'absolute',
-          left: `${position.x}px`,
-          top: `${position.y}px`
+          left: 0,
+          top: 0,
+          transform: transforms.join(' '),
+          transformOrigin: `50% 50%`
         })
       }
 

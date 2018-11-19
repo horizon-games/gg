@@ -1,13 +1,21 @@
 import Stats from 'stats.js'
-import { State, CardStatus } from './types'
+import { State, CardStatus, Card } from './types'
 import store from './store'
 import { drawCard, playCard } from './actions'
-import { World, Archetype } from '../../../src/ecs'
+import { World, Archetype, Entity } from '../../../src/ecs'
 import RenderSystem from './systems/RenderSystem'
-import { RenderableArchetype, Archetypes, CardsArchetype } from './archetypes'
+import {
+  RenderableArchetype,
+  Archetypes,
+  CardsArchetype,
+  DeckCardsArchetype,
+  HandCardsArchetype
+} from './archetypes'
 import { Components } from './components'
 import CardAssemblage from './assemblages/CardAssemblage'
 import DeckSystem from './systems/DeckSystem'
+import HandSystem from './systems/HandSystem'
+import $ from 'jquery'
 
 const stats = new Stats()
 
@@ -15,38 +23,81 @@ const world = new World<Components>()
 
 world.addArchetype(RenderableArchetype)
 world.addArchetype(CardsArchetype)
+world.addArchetype(DeckCardsArchetype)
+world.addArchetype(HandCardsArchetype)
 
 world.addSystem(new RenderSystem())
 world.addSystem(new DeckSystem())
+world.addSystem(new HandSystem())
 
 console.log(world)
+
+const cards: Map<number, Entity<Components>> = new Map()
+console.log(cards)
+
+const updateCardEntity = (card: Card, status: CardStatus) => {
+  if (!cards.has(card.id)) {
+    const entity = world.createEntity(...CardAssemblage(card, status))
+    cards.set(card.id, entity)
+  } else {
+    const entity = cards.get(card.id)
+    if (entity) {
+      entity.components.card!.status = status
+    }
+  }
+}
 
 store.subscribe((state: State) => {
   console.log('State update', state)
 
   state.players.forEach((player, playerId) => {
     player.inDeck.forEach(card => {
-      world.createEntity(...CardAssemblage(card, CardStatus.Deck))
+      updateCardEntity(card, CardStatus.Deck)
+    })
+
+    player.inHand.forEach(card => {
+      updateCardEntity(card, CardStatus.Hand)
+    })
+
+    player.inPlay.forEach(card => {
+      updateCardEntity(card, CardStatus.Field)
     })
   })
 })
 
-// window.onkeydown = (ev: any) => {
-//   const key = ev.keyCode
-//   const { currentPlayerId } = store.getState()
+window.onkeydown = (ev: any) => {
+  const key = ev.keyCode
+  const { currentPlayerId } = store.getState()
 
-//   switch (key) {
-//     case 68: // (d)rawCard
-//       console.log('drawCard')
-//       drawCard(currentPlayerId)
-//       break
+  switch (key) {
+    case 68: // (d)rawCard
+      console.log('drawCard')
+      drawCard(currentPlayerId)
+      break
 
-//     case 80: // (p)layCard
-//       console.log('playCard')
-//       playCard(currentPlayerId, 0)
-//       break
-//   }
-// }
+    case 80: // (p)layCard
+      console.log('playCard')
+      playCard(currentPlayerId, 0)
+      break
+  }
+}
+
+$('body').mousemove(ev => {
+  const target = $(ev.target)
+  const id = Number(target.data('id'))
+  world.manager.entities.forEach(entity => {
+    if (entity.hasComponent('hover')) {
+      entity.setComponent('hover', { value: false })
+    }
+  })
+
+  if (id) {
+    const entity = world.manager.getEntity(id)
+    if (entity && entity.hasComponent('hover')) {
+      entity.setComponent('hover', { value: true })
+    }
+  }
+})
 
 const init = () => {
   // Add Stats
@@ -55,7 +106,11 @@ const init = () => {
   drawCard(0)
   drawCard(0)
   drawCard(0)
+  drawCard(0)
+  drawCard(0)
 
+  drawCard(1)
+  drawCard(1)
   drawCard(1)
   drawCard(1)
   drawCard(1)

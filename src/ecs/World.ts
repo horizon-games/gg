@@ -14,7 +14,7 @@ World registers systems, archetypes and entities. Updates systems.
 
 export default class World<C extends ComponentTypes> {
   private systems: Map<string, System<C>> = new Map()
-  private manager: EntityManager<C> = new EntityManager<C>()
+  manager: EntityManager<C> = new EntityManager<C>()
 
   get systemTypes(): string[] {
     return Array.from(this.systems.keys())
