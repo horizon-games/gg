@@ -47,9 +47,7 @@ const updateCardEntity = (card: Card, status: CardStatus) => {
   }
 }
 
-store.subscribe((state: State) => {
-  console.log('State update', state)
-
+const syncState = (state: State) => {
   state.players.forEach((player, playerId) => {
     player.inDeck.forEach(card => {
       updateCardEntity(card, CardStatus.Deck)
@@ -63,6 +61,11 @@ store.subscribe((state: State) => {
       updateCardEntity(card, CardStatus.Field)
     })
   })
+}
+
+store.subscribe((state: State) => {
+  console.log('State update', state)
+  syncState(state)
 })
 
 window.onkeydown = (ev: any) => {
@@ -115,24 +118,38 @@ $('body').click(ev => {
   }
 })
 
+const stagger = (fns: any[], timeout: number) => {
+  setTimeout(() => {
+    fns.shift()()
+    stagger(fns, timeout)
+  }, timeout)
+}
+
 const init = () => {
   // Add Stats
   document.body.appendChild(stats.dom)
 
-  drawCard(0)
-  drawCard(0)
-  drawCard(0)
-  drawCard(0)
-  drawCard(0)
-
-  drawCard(1)
-  drawCard(1)
-  drawCard(1)
-  drawCard(1)
-  drawCard(1)
+  syncState(store.getState())
 
   // Start loop
   requestAnimationFrame(loop)
+
+  stagger(
+    [
+      () => drawCard(0),
+      () => drawCard(0),
+      () => drawCard(0),
+      () => drawCard(0),
+      () => drawCard(0),
+
+      () => drawCard(1),
+      () => drawCard(1),
+      () => drawCard(1),
+      () => drawCard(1),
+      () => drawCard(1)
+    ],
+    200
+  )
 }
 
 const loop = () => {
