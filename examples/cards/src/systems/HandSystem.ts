@@ -66,8 +66,8 @@ const updateCardPosition = (
   isHovering: boolean,
   hoveringIdx: number
 ) => {
-  position.x = window.innerWidth / 2 + idx * 100 - (cardCount * 100) / 2
-  position.y =
+  const x = window.innerWidth / 2 + idx * 100 - (cardCount * 100) / 2
+  const y =
     cardPositionY(
       idx,
       playerId ? -20 : 20,
@@ -76,7 +76,12 @@ const updateCardPosition = (
       hoveringIdx
     ) + (playerId ? window.innerHeight - 225 : 50)
 
-  rotation.value = cardRotation(idx, playerId ? 4 : -4, cardCount)
+  const rot = cardRotation(idx, playerId ? 4 : -4, cardCount)
+
+  if (position.x !== x || position.y !== y) {
+    position.x = position.x + 0.16 * (x - position.x)
+    position.y = position.y + 0.16 * (y - position.y)
+  }
 }
 
 export default class HandSystem extends System<Components> {

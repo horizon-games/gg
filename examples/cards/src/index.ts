@@ -16,6 +16,7 @@ import CardAssemblage from './assemblages/CardAssemblage'
 import DeckSystem from './systems/DeckSystem'
 import HandSystem from './systems/HandSystem'
 import $ from 'jquery'
+import FieldSystem from './systems/FieldSystem'
 
 const stats = new Stats()
 
@@ -23,12 +24,11 @@ const world = new World<Components>()
 
 world.addArchetype(RenderableArchetype)
 world.addArchetype(CardsArchetype)
-world.addArchetype(DeckCardsArchetype)
-world.addArchetype(HandCardsArchetype)
 
 world.addSystem(new RenderSystem())
 world.addSystem(new DeckSystem())
 world.addSystem(new HandSystem())
+world.addSystem(new FieldSystem())
 
 console.log(world)
 
@@ -72,13 +72,15 @@ window.onkeydown = (ev: any) => {
   switch (key) {
     case 68: // (d)rawCard
       console.log('drawCard')
-      drawCard(currentPlayerId)
+      drawCard(0)
+      drawCard(1)
+
       break
 
-    case 80: // (p)layCard
-      console.log('playCard')
-      playCard(currentPlayerId, 0)
-      break
+    // case 80: // (p)layCard
+    //   console.log('playCard')
+    //   playCard(currentPlayerId, 0)
+    //   break
   }
 }
 
@@ -95,6 +97,20 @@ $('body').mousemove(ev => {
     const entity = world.manager.getEntity(id)
     if (entity && entity.hasComponent('hover')) {
       entity.setComponent('hover', { value: true })
+    }
+  }
+})
+
+$('body').click(ev => {
+  const target = $(ev.target)
+  const id = Number(target.data('id'))
+
+  if (id) {
+    const entity = world.manager.getEntity(id)
+    if (entity && entity.hasComponent('hover')) {
+      entity.setComponent('hover', { value: true })
+
+      playCard(entity.components.player!.id, entity.components.card!.id)
     }
   }
 })
