@@ -7,37 +7,59 @@ const lerp = (a: number, b: number, dt: number): number => {
   return a + dt * (b - a)
 }
 
+const cardPositionX = (
+  index: number,
+  step: number,
+  cardCount: number,
+  isHovering: boolean,
+  hoveringIdx: number
+) => {
+  let x = -((cardCount - 1) * step) / 2 + index * step
+
+  if (isHovering) {
+    const half = (cardCount - 1) / 2
+
+    if (index > hoveringIdx) {
+      x += 20
+    } else if (index === hoveringIdx) {
+      x += Math.min(1, Math.max(index - half, -1)) * 10
+    }
+  }
+
+  return window.innerWidth / 2 + x
+  //return window.innerWidth / 2 + index * step - (cardCount * step) / 2
+}
+
 const cardPositionY = (
   index: number,
-  yStep: number,
+  step: number,
   cardCount: number,
   isHovering: boolean,
   hoveringIdx: number
 ) => {
   const mid = Math.ceil(cardCount / 2)
   let i = index - mid
-  let s = yStep
-
+  let s = step
   let y
   if (cardCount % 2 === 0) {
     if (i >= 0) {
       i += 1
     }
     if (i === -1 || i === 1) {
-      s = yStep
+      s = step
     }
     y = Math.abs(i) * -s
   } else {
     i += 1
     if (i === 0) {
-      y = -yStep / 2
+      y = -step / 2
     } else {
       y = Math.abs(i) * -s
     }
   }
 
   if (isHovering && hoveringIdx === index) {
-    y += yStep
+    y += step
   }
 
   return y
@@ -45,53 +67,41 @@ const cardPositionY = (
 
 const cardRotation = (index: number, degreesRot: number, cardCount: number) => {
   const mid = Math.ceil(cardCount / 2)
-  let i = index - mid
-  let r = degreesRot
-
-  if (cardCount % 2 === 0) {
-    if (i >= 0) {
-      i += 1
-    }
-    if (i === -1 || i === 1) {
-      r = degreesRot / 2
-    }
-  } else {
-    i += 1
-  }
-  return i * r
+  return (index - mid + 1) * degreesRot
 }
 
 const updateCardPosition = (
   entity: Entity<Components>,
   idx: number,
-  cardCount: number
+  cardCount: number,
+  isHovering: boolean,
+  hoveringIdx: number
 ) => {
   const position = entity.getComponent('position')
   const rotation = entity.getComponent('rotation')
   const player = entity.getComponent('player')
-  const hover = entity.getComponent('hover')
-  const isHovering = hover.value
-  const hoveringIdx = idx
   const isPlayer = player.id === 1
-  const x = window.innerWidth / 2 + idx * 100 - (cardCount * 100) / 2
+  const xStep = 100
+  const yStep = 20
+  const rStep = 4
+  const x = cardPositionX(idx, xStep, cardCount, isHovering, hoveringIdx)
   const y =
     cardPositionY(
       idx,
-      isPlayer ? -20 : 20,
+      isPlayer ? -yStep : yStep,
       cardCount,
       isHovering,
       hoveringIdx
     ) + (isPlayer ? window.innerHeight - 225 : 50)
-
-  const rot = cardRotation(idx, isPlayer ? 4 : -4, cardCount)
+  const rot = cardRotation(idx, isPlayer ? rStep : -rStep, cardCount)
   const dt = 0.16
 
-  if (position.x !== x || position.y !== y) {
+  if (Math.abs(position.x - x) > 0.1 || Math.abs(position.y - y) > 0.1) {
     position.x = lerp(position.x, x, dt)
     position.y = lerp(position.y, y, dt)
   }
 
-  if (rotation.value !== rot) {
+  if (Math.abs(rotation.value - rot) > 0.1) {
     rotation.value = lerp(rotation.value, rot, dt)
   }
 }
@@ -110,12 +120,37 @@ export default class HandSystem extends System<Components> {
       entity => entity.components.card!.status === CardStatus.Hand
     )
 
-    opponentCards.forEach((entity, idx) => {
-      updateCardPosition(entity, idx, opponentCards.length)
-    })
+    const isHoveringPlayerCards = playerCards.some(
+      entity => entity.components.hover!.value
+    )
+    const isHoveringOpponentCards = opponentCards.some(
+      entity => entity.components.hover!.value
+    )
+    const playerHoveringIdx = playerCards.findIndex(
+      entity => entity.components.hover!.value
+    )
+    const opponentHoveringIdx = opponentCards.findIndex(
+      entity => entity.components.hover!.value
+    )
 
     playerCards.forEach((entity, idx) => {
-      updateCardPosition(entity, idx, playerCards.length)
+      updateCardPosition(
+        entity,
+        idx,
+        playerCards.length,
+        isHoveringPlayerCards,
+        playerHoveringIdx
+      )
+    })
+
+    opponentCards.forEach((entity, idx) => {
+      updateCardPosition(
+        entity,
+        idx,
+        opponentCards.length,
+        isHoveringOpponentCards,
+        opponentHoveringIdx
+      )
     })
   }
 }
