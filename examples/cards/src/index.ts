@@ -6,10 +6,9 @@ import { World, Archetype, Entity } from '../../../src/ecs'
 import RenderSystem from './systems/RenderSystem'
 import {
   RenderableArchetype,
-  Archetypes,
   CardsArchetype,
-  DeckCardsArchetype,
-  HandCardsArchetype
+  PlayerCardsArchetype,
+  OpponentCardsArchetype
 } from './archetypes'
 import { Components } from './components'
 import CardAssemblage from './assemblages/CardAssemblage'
@@ -24,6 +23,8 @@ const world = new World<Components>()
 
 world.addArchetype(RenderableArchetype)
 world.addArchetype(CardsArchetype)
+world.addArchetype(PlayerCardsArchetype)
+world.addArchetype(OpponentCardsArchetype)
 
 world.addSystem(new RenderSystem())
 world.addSystem(new DeckSystem())
@@ -120,8 +121,10 @@ $('body').click(ev => {
 
 const stagger = (fns: any[], timeout: number) => {
   setTimeout(() => {
-    fns.shift()()
-    stagger(fns, timeout)
+    if (fns.length) {
+      fns.shift()()
+      stagger(fns, timeout)
+    }
   }, timeout)
 }
 

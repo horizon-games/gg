@@ -14,30 +14,27 @@ const updateDeckPosition = (
 
 export default class DeckSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities } = manager.getArchetype(Archetypes.Cards)
-
-    const opponentCards = entities.filter(
-      entity =>
-        entity.components.card!.status === CardStatus.Deck &&
-        entity.components.player!.id === 0
+    const { entities: playerCards } = manager.getArchetype(
+      Archetypes.PlayerCards
+    )
+    const { entities: opponentCards } = manager.getArchetype(
+      Archetypes.OpponentCards
     )
 
-    const playerCards = entities.filter(
-      entity =>
-        entity.components.card!.status === CardStatus.Deck &&
-        entity.components.player!.id === 1
-    )
+    playerCards
+      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .forEach((entity, idx) => {
+        const position = entity.getComponent('position')
+        const player = entity.getComponent('player')
+        updateDeckPosition(player.id, position, idx)
+      })
 
-    opponentCards.forEach((entity, idx) => {
-      const position = entity.getComponent('position')
-      const player = entity.getComponent('player')
-      updateDeckPosition(player.id, position, idx)
-    })
-
-    playerCards.forEach((entity, idx) => {
-      const position = entity.getComponent('position')
-      const player = entity.getComponent('player')
-      updateDeckPosition(player.id, position, idx)
-    })
+    opponentCards
+      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .forEach((entity, idx) => {
+        const position = entity.getComponent('position')
+        const player = entity.getComponent('player')
+        updateDeckPosition(player.id, position, idx)
+      })
   }
 }

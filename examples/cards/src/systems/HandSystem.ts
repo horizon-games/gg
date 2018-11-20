@@ -3,6 +3,10 @@ import { Components, PositionComponent, RotationComponent } from '../components'
 import { Archetypes } from '../archetypes'
 import { CardStatus } from '../types'
 
+const lerp = (a: number, b: number, dt: number): number => {
+  return a + dt * (b - a)
+}
+
 const cardPositionY = (
   index: number,
   yStep: number,
@@ -58,88 +62,60 @@ const cardRotation = (index: number, degreesRot: number, cardCount: number) => {
 }
 
 const updateCardPosition = (
-  playerId: number,
-  position: PositionComponent,
-  rotation: RotationComponent,
+  entity: Entity<Components>,
   idx: number,
-  cardCount: number,
-  isHovering: boolean,
-  hoveringIdx: number
+  cardCount: number
 ) => {
+  const position = entity.getComponent('position')
+  const rotation = entity.getComponent('rotation')
+  const player = entity.getComponent('player')
+  const hover = entity.getComponent('hover')
+  const isHovering = hover.value
+  const hoveringIdx = idx
+  const isPlayer = player.id === 1
   const x = window.innerWidth / 2 + idx * 100 - (cardCount * 100) / 2
   const y =
     cardPositionY(
       idx,
-      playerId ? -20 : 20,
+      isPlayer ? -20 : 20,
       cardCount,
       isHovering,
       hoveringIdx
-    ) + (playerId ? window.innerHeight - 225 : 50)
+    ) + (isPlayer ? window.innerHeight - 225 : 50)
 
-  const rot = cardRotation(idx, playerId ? 4 : -4, cardCount)
+  const rot = cardRotation(idx, isPlayer ? 4 : -4, cardCount)
+  const dt = 0.16
 
   if (position.x !== x || position.y !== y) {
-    position.x = position.x + 0.16 * (x - position.x)
-    position.y = position.y + 0.16 * (y - position.y)
+    position.x = lerp(position.x, x, dt)
+    position.y = lerp(position.y, y, dt)
+  }
+
+  if (rotation.value !== rot) {
+    rotation.value = lerp(rotation.value, rot, dt)
   }
 }
 
 export default class HandSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities } = manager.getArchetype(Archetypes.Cards)
-    const opponentCards = entities.filter(
-      entity =>
-        entity.components.card!.status === CardStatus.Hand &&
-        entity.components.player!.id === 0
+    let { entities: playerCards } = manager.getArchetype(Archetypes.PlayerCards)
+    let { entities: opponentCards } = manager.getArchetype(
+      Archetypes.OpponentCards
     )
 
-    const playerCards = entities.filter(
-      entity =>
-        entity.components.card!.status === CardStatus.Hand &&
-        entity.components.player!.id === 1
+    playerCards = playerCards.filter(
+      entity => entity.components.card!.status === CardStatus.Hand
+    )
+    opponentCards = opponentCards.filter(
+      entity => entity.components.card!.status === CardStatus.Hand
     )
 
     opponentCards.forEach((entity, idx) => {
-      const card = entity.getComponent('card')
-      if (card.status === CardStatus.Hand) {
-        const position = entity.getComponent('position')
-        const rotation = entity.getComponent('rotation')
-        const player = entity.getComponent('player')
-        const hover = entity.getComponent('hover')
-        const isHovering = hover.value
-        const hoveringIdx = idx
-
-        updateCardPosition(
-          player.id,
-          position,
-          rotation,
-          idx,
-          opponentCards.length,
-          isHovering,
-          hoveringIdx
-        )
-      }
+      updateCardPosition(entity, idx, opponentCards.length)
     })
 
     playerCards.forEach((entity, idx) => {
-      const card = entity.getComponent('card')
-      if (card.status === CardStatus.Hand) {
-        const position = entity.getComponent('position')
-        const rotation = entity.getComponent('rotation')
-        const player = entity.getComponent('player')
-        const hover = entity.getComponent('hover')
-        const isHovering = hover.value
-        const hoveringIdx = idx
-        updateCardPosition(
-          player.id,
-          position,
-          rotation,
-          idx,
-          playerCards.length,
-          isHovering,
-          hoveringIdx
-        )
-      }
+      updateCardPosition(entity, idx, playerCards.length)
     })
   }
 }
