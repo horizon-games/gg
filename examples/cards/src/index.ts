@@ -76,7 +76,6 @@ window.onkeydown = (ev: any) => {
   switch (key) {
     case 68: // (d)rawCard
       console.log('drawCard')
-      drawCard(0)
       drawCard(1)
 
       break
