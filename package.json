@@ -4,6 +4,7 @@
   "description": "GG game engine",
   "author": "Corban Riley",
   "license": "MIT",
+  "main": "dist/ecs/index.js",
   "scripts": {
     "tslint": "tslint -c tslint.json $(find src -type f -name *.ts)",
     "tslint:fix": "tslint -c tslint.json --fix $(find src -type f -name *.ts)",
@@ -11,7 +12,8 @@
     "prettier:fix": "prettier --config .prettierrc --write $(find src -type f -name *.ts)",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "build": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
