@@ -2,6 +2,10 @@ import { ComponentTypes } from './Component'
 
 type ValueOf<T> = T[keyof T]
 
+type ComponentValues<T extends ComponentTypes> = {
+  [type in keyof T]: T[type]['value']
+}
+
 type ComponentChangeEventTypes = 'add' | 'remove'
 
 interface ComponentChangeEvent<C extends ComponentTypes> {
@@ -18,7 +22,7 @@ let instanceIdx = 0
 
 export default class Entity<C extends ComponentTypes> {
   id: number
-  components: Partial<C> = {}
+  components: Partial<ComponentValues<C>> = {}
 
   get componentTypes(): Array<keyof C> {
     return Object.keys(this.components)
@@ -49,7 +53,7 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   addComponent = (component: ValueOf<C>) => {
-    this.components[component.type] = component
+    this.components[component.type] = component.value
 
     this.componentChangeListeners.forEach(listener =>
       listener({ type: 'add', entity: this, component })
@@ -69,28 +73,24 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   hasComponent(type: string): boolean {
-    return !!this.components[type]
+    return !!this.componentTypes.includes(type)
   }
 
   hasComponents = (...types: string[]): boolean => {
     return types.every(type => this.hasComponent(type))
   }
 
-  getComponent<T extends keyof C>(type: T): C[T] {
-    const component = this.components[type] as C[T]
-
-    if (component) {
-      return component
+  getComponent<T extends keyof C>(type: T): C[T]['value'] {
+    if (this.hasComponent(type as string)) {
+      return this.components[type] as C[T]['value']
     } else {
       throw new Error(`Entity does not contain component of ${type}.`)
     }
   }
 
-  setComponent<T extends keyof C>(type: T, value: Partial<C[T]>) {
-    const component = this.components[type] as C[T]
-
-    if (component) {
-      Object.assign(component, value)
+  setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']>) {
+    if (this.hasComponent(type as string)) {
+      this.components[type] = value
     } else {
       throw new Error(`Entity does not contain component of type ${type}.`)
     }

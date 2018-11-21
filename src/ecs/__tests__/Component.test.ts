@@ -7,10 +7,11 @@ describe('Component', () => {
 
     expect(component).toBeInstanceOf(Component)
     expect(component).toBeInstanceOf(PositionComponent)
-    expect(component).toEqual({ type: 'position', x: 1, y: 2, z: 3 })
+    expect(component.type).toBe('position')
+    expect(component.value).toEqual({ x: 1, y: 2, z: 3 })
 
-    component.x = 4
+    component.value.x = 4
 
-    expect(component).toEqual({ type: 'position', x: 4, y: 2, z: 3 })
+    expect(component.value).toEqual({ x: 4, y: 2, z: 3 })
   })
 })

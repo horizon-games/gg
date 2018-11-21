@@ -5,14 +5,11 @@ export const getComponentTypeFromClass = (klass: any): string =>
 
 export default class Component {
   readonly type: string = getComponentTypeFromClass(this.constructor)
+  value: any
 
-  constructor(data: object = {}) {
-    Object.assign(this, data)
+  constructor(value?: any) {
+    this.value = value
   }
-}
-
-export interface ComponentClass<T extends Component> {
-  new (): T
 }
 
 export interface ComponentTypes {

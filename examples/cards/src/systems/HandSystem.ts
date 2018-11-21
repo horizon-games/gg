@@ -26,8 +26,7 @@ const cardPositionX = (
     }
   }
 
-  return window.innerWidth / 2 + x
-  //return window.innerWidth / 2 + index * step - (cardCount * step) / 2
+  return window.innerWidth / 2 + x - 62
 }
 
 const cardPositionY = (
@@ -66,8 +65,8 @@ const cardPositionY = (
 }
 
 const cardRotation = (index: number, degreesRot: number, cardCount: number) => {
-  const mid = Math.ceil(cardCount / 2)
-  return (index - mid + 1) * degreesRot
+  const mid = Math.floor(cardCount / 2)
+  return (index - mid) * degreesRot
 }
 
 const updateCardPosition = (
@@ -101,8 +100,8 @@ const updateCardPosition = (
     position.y = lerp(position.y, y, dt)
   }
 
-  if (Math.abs(rotation.value - rot) > 0.1) {
-    rotation.value = lerp(rotation.value, rot, dt)
+  if (Math.abs(rotation - rot) > 0.1) {
+    entity.setComponent('rotation', lerp(rotation, rot, dt))
   }
 }
 
@@ -121,16 +120,16 @@ export default class HandSystem extends System<Components> {
     )
 
     const isHoveringPlayerCards = playerCards.some(
-      entity => entity.components.hover!.value
+      entity => entity.components.hover!
     )
     const isHoveringOpponentCards = opponentCards.some(
-      entity => entity.components.hover!.value
+      entity => entity.components.hover!
     )
     const playerHoveringIdx = playerCards.findIndex(
-      entity => entity.components.hover!.value
+      entity => entity.components.hover!
     )
     const opponentHoveringIdx = opponentCards.findIndex(
-      entity => entity.components.hover!.value
+      entity => entity.components.hover!
     )
 
     playerCards.forEach((entity, idx) => {

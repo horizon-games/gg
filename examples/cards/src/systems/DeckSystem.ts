@@ -5,7 +5,7 @@ import { CardStatus } from '../types'
 
 const updateDeckPosition = (
   playerId: number,
-  position: PositionComponent,
+  position: PositionComponent['value'],
   idx: number
 ) => {
   position.x = (playerId ? window.innerWidth - 160 : 30) + idx * 2

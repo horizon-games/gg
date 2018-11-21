@@ -26,9 +26,9 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       status
     }),
     new PlayerComponent({ id: card.playerId }),
-    new WidthComponent({ value: 125 }),
-    new HeightComponent({ value: 175 }),
-    new HoverComponent({ value: false }),
+    new WidthComponent(125),
+    new HeightComponent(175),
+    new HoverComponent(false),
     // new PositionComponent({
     //   x: Math.random() * window.innerWidth,
     //   y: Math.random() * window.innerHeight
@@ -37,9 +37,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       x: 0,
       y: 0
     }),
-    new RotationComponent({
-      value: 0
-    }),
+    new RotationComponent(0),
     new DomComponent({ element }),
     new ColorComponent({
       r: card.playerId === 0 ? 255 : 0,
@@ -52,9 +50,9 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       vOffset: 2,
       blur: 6,
       spread: 1,
-      color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.1 })
+      color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.1 }).value
     }),
-    new BorderRadiusComponent({ value: 6 })
+    new BorderRadiusComponent(6)
   ]
 }
 

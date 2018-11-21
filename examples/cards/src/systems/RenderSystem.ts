@@ -10,20 +10,27 @@ export default class RenderSystem extends System<Components> {
 
     entities.forEach(entity => {
       const { element } = entity.getComponent('dom')
-      const { value: width } = entity.getComponent('width')
-      const { value: height } = entity.getComponent('height')
+      const width = entity.getComponent('width')
+      const height = entity.getComponent('height')
       const color = entity.getComponent('color')
       const boxShadow = entity.getComponent('boxShadow')
       const position = entity.getComponent('position')
       const borderRadius = entity.getComponent('borderRadius')
       const rotation = entity.getComponent('rotation')
-
+      const card = entity.getComponent('card')
       const $element = $(element)
 
       $element.attr('data-id', entity.id)
 
       if (document.body.contains(element)) {
       } else {
+        if (card) {
+          $element.html(
+            `<div><div class="title">${card.name}</div><div class="cost">${
+              card.cost
+            }</div></div>`
+          )
+        }
         document.body.appendChild(element)
       }
 
@@ -49,7 +56,7 @@ export default class RenderSystem extends System<Components> {
         //   transform: `rotate(${rotation.value}deg)`,
         //   transformOrigin: `50% 50%`
         // })
-        transforms.push(`rotate(${rotation.value}deg)`)
+        transforms.push(`rotate(${rotation}deg)`)
       }
 
       if (transforms.length) {
@@ -70,7 +77,7 @@ export default class RenderSystem extends System<Components> {
       }
 
       if (borderRadius) {
-        $element.css('borderRadius', `${borderRadius.value}px`)
+        $element.css('borderRadius', `${borderRadius}px`)
       }
 
       if (boxShadow) {
