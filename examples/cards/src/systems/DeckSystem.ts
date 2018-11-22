@@ -10,7 +10,7 @@ const updateDeckPosition = (
 ) => {
   position.x = playerId ? window.innerWidth - 160 : 30
   position.y = playerId ? window.innerHeight - 205 : 30
-  position.z = idx * 2
+  position.z = -40 + idx * 2
 }
 
 export default class DeckSystem extends System<Components> {

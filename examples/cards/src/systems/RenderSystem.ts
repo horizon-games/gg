@@ -61,7 +61,7 @@ export default class RenderSystem extends System<Components> {
         transforms.push(
           `translate3d(${position.x}px, ${position.y}px, ${position.z}px)`
         )
-        $element.css('z-index', Math.ceil(position.z))
+        $element.css('z-index', Math.round(position.z))
       }
 
       if (rotation) {

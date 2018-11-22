@@ -123,14 +123,16 @@ const updateCardPosition = (
   const dt = 0.16 / 2
   const z = order //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
 
+  position.z = z
+
   if (
     Math.abs(position.x - x) > 0.1 ||
-    Math.abs(position.y - y) > 0.1 ||
-    Math.abs(position.z - z) > 0.1
+    Math.abs(position.y - y) > 0.1
+    //Math.abs(position.z - z) > 0.1
   ) {
     position.x = lerp(position.x, x, dt)
     position.y = lerp(position.y, y, dt)
-    position.z = lerp(position.z, z, dt)
+    //position.z = lerp(position.z, z, dt)
   }
 
   if (Math.abs(rotation.z - rotZ) > 0.1 || Math.abs(rotation.y - rotY) > 0.1) {
