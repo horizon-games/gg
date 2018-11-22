@@ -17,6 +17,7 @@ export interface Card {
   name: string
   cost: number
   playerId: number
+  artId: number
 }
 
 export interface State {

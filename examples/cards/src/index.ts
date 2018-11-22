@@ -34,7 +34,6 @@ world.addSystem(new FieldSystem())
 console.log(world)
 
 const cards: Map<number, Entity<Components>> = new Map()
-console.log(cards)
 
 const updateCardEntity = (card: Card, status: CardStatus) => {
   if (!cards.has(card.id)) {
