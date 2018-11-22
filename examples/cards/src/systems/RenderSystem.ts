@@ -3,6 +3,7 @@ import { Components } from '../components'
 import { Archetypes } from '../archetypes'
 import $ from 'jquery'
 import { positionArchetype } from '../../../../src/ecs/__tests__/archetype.fixtures'
+import { CardStatus } from '../types'
 
 export default class RenderSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
@@ -10,21 +11,42 @@ export default class RenderSystem extends System<Components> {
 
     entities.forEach(entity => {
       const { element } = entity.getComponent('dom')
-      const { value: width } = entity.getComponent('width')
-      const { value: height } = entity.getComponent('height')
+      const width = entity.getComponent('width')
+      const height = entity.getComponent('height')
       const color = entity.getComponent('color')
       const boxShadow = entity.getComponent('boxShadow')
       const position = entity.getComponent('position')
       const borderRadius = entity.getComponent('borderRadius')
       const rotation = entity.getComponent('rotation')
-
+      const card = entity.getComponent('card')
+      const material = entity.getComponent('material')
+      const player = entity.getComponent('player')
+      const isPlayer = player.id === 1
+      const showFace =
+        (isPlayer && card.status !== CardStatus.Deck) ||
+        card.status === CardStatus.Field
       const $element = $(element)
 
       $element.attr('data-id', entity.id)
 
       if (document.body.contains(element)) {
       } else {
+        if (card) {
+          $element
+            .html(
+              `<div>
+              <div class="title">${card.name}</div>
+              <div class="cost">${card.cost}</div>
+            </div>`
+            )
+            .children()
+            .hide()
+        }
         document.body.appendChild(element)
+      }
+
+      if (showFace) {
+        $element.children().show()
       }
 
       if (width && height) {
@@ -34,22 +56,13 @@ export default class RenderSystem extends System<Components> {
       const transforms = []
 
       if (position) {
-        // $element.css({
-        //   position: 'absolute',
-        //   left: `${position.x}px`,
-        //   top: `${position.y}px`
-        // })
         transforms.push(
           `translateX(${position.x}px) translateY(${position.y}px)`
         )
       }
 
       if (rotation) {
-        // $element.css({
-        //   transform: `rotate(${rotation.value}deg)`,
-        //   transformOrigin: `50% 50%`
-        // })
-        transforms.push(`rotate(${rotation.value}deg)`)
+        transforms.push(`rotate(${rotation}deg)`)
       }
 
       if (transforms.length) {
@@ -69,8 +82,23 @@ export default class RenderSystem extends System<Components> {
         )
       }
 
+      if (material) {
+        const backgroundImage = showFace
+          ? `linear-gradient(rgba(32,64,255,0), rgba(32,64,255,0.1), rgba(255,32,128,0.2), rgba(32,0,64,0.8), rgba(16,0,32,1)), url("images/${
+              material.imageSrc
+            }")`
+          : `url("images/back.png")`
+
+        $element.css({
+          'background-image': backgroundImage,
+          'background-size': 'cover',
+          'background-position': '50% 33%',
+          'background-repeat': 'norepeat'
+        })
+      }
+
       if (borderRadius) {
-        $element.css('borderRadius', `${borderRadius.value}px`)
+        $element.css('borderRadius', `${borderRadius}px`)
       }
 
       if (boxShadow) {

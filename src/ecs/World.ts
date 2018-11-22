@@ -81,6 +81,14 @@ export default class World<C extends ComponentTypes> {
     return this.manager.renewEntity(...components)
   }
 
+  getEntity(entityId: number): Entity<C> | undefined {
+    return this.manager.getEntity(entityId)
+  }
+
+  getEntities(entityIds: number[]): Array<Entity<C>> {
+    return entityIds.map(this.getEntity.bind(this)) //.filter(entity => entity !== undefined)
+  }
+
   update(dt: number) {
     this.systems.forEach(system => {
       if (system.enabled) {

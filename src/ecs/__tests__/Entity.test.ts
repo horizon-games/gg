@@ -1,12 +1,6 @@
 import Entity from '../Entity'
 
-import {
-  Components,
-  PositionComponent,
-  VelocityComponent,
-  RotationComponent,
-  AccelerationComponent
-} from './component.fixtures'
+import { Components, PositionComponent } from './component.fixtures'
 
 describe('Entity', () => {
   test('can create', () => {
@@ -26,7 +20,6 @@ describe('Entity', () => {
     expect(entity.componentTypes.length).toBe(1)
     expect(entity.hasComponents('position')).toBe(true)
     expect(entity.getComponent('position')).toEqual({
-      type: 'position',
       x: 1,
       y: 2,
       z: 3
@@ -41,15 +34,13 @@ describe('Entity', () => {
     component.x = 1
 
     expect(entity.getComponent('position')).toEqual({
-      type: 'position',
       x: 1,
       y: 0,
       z: 0
     })
 
-    expect(entity.setComponent('position', { y: 2, z: 3 }))
+    expect(entity.setComponent('position', { x: 1, y: 2, z: 3 }))
     expect(entity.getComponent('position')).toEqual({
-      type: 'position',
       x: 1,
       y: 2,
       z: 3

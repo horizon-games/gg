@@ -20,7 +20,8 @@ const getCard = (playerId: number) => ({
   playerId,
   type: getCardType(),
   name: sillyname(),
-  cost: Math.floor(Math.random() * 10)
+  cost: Math.ceil(Math.random() * 9),
+  artId: Math.ceil(Math.random() * 32)
 })
 
 const getPlayerState = (playerId: number): PlayerState => ({

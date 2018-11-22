@@ -34,7 +34,6 @@ world.addSystem(new FieldSystem())
 console.log(world)
 
 const cards: Map<number, Entity<Components>> = new Map()
-console.log(cards)
 
 const updateCardEntity = (card: Card, status: CardStatus) => {
   if (!cards.has(card.id)) {
@@ -92,14 +91,14 @@ $('body').mousemove(ev => {
   const id = Number(target.data('id'))
   world.manager.entities.forEach(entity => {
     if (entity.hasComponent('hover')) {
-      entity.setComponent('hover', { value: false })
+      entity.setComponent('hover', false)
     }
   })
 
   if (id) {
     const entity = world.manager.getEntity(id)
     if (entity && entity.hasComponent('hover')) {
-      entity.setComponent('hover', { value: true })
+      entity.setComponent('hover', true)
     }
   }
 })
@@ -111,7 +110,7 @@ $('body').click(ev => {
   if (id) {
     const entity = world.manager.getEntity(id)
     if (entity && entity.hasComponent('hover')) {
-      entity.setComponent('hover', { value: true })
+      entity.setComponent('hover', true)
 
       playCard(entity.components.player!.id, entity.components.card!.id)
     }

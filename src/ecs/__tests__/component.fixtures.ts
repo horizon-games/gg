@@ -27,27 +27,35 @@ export interface Components extends ComponentTypes {
 // }
 
 export class PositionComponent extends Component {
-  x: number
-  y: number
-  z: number
+  value: {
+    x: number
+    y: number
+    z: number
+  }
 }
 
 export class RotationComponent extends Component {
-  x: number
-  y: number
-  z: number
+  value: {
+    x: number
+    y: number
+    z: number
+  }
 }
 
 export class VelocityComponent extends Component {
-  x: number
-  y: number
-  z: number
+  value: {
+    x: number
+    y: number
+    z: number
+  }
 }
 
 export class AccelerationComponent extends Component {
-  x: number
-  y: number
-  z: number
+  value: {
+    x: number
+    y: number
+    z: number
+  }
 }
 
 export class PlayerControllableComponent extends Component {
@@ -68,6 +76,6 @@ export const physicalAssemblage = () => {
     new RotationComponent({ x: 0, y: 0, z: 0 }),
     new VelocityComponent({ x: 0, y: 0, z: 0 }),
     new AccelerationComponent({ x: 0, y: 0, z: 0 }),
-    new ColliderComponent({ value: true })
+    new ColliderComponent(true)
   ]
 }

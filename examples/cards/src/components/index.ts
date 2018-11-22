@@ -10,6 +10,7 @@ import WidthComponent from './WidthComponent'
 import HeightComponent from './HeightComponent'
 import BoxShadowComponent from './BoxShadowComponent'
 import BorderRadiusComponent from './BorderRadiusComponent'
+import MaterialComponent from './MaterialComponent'
 
 export interface Components extends ComponentTypes {
   player: PlayerComponent
@@ -23,6 +24,7 @@ export interface Components extends ComponentTypes {
   boxShadow: BoxShadowComponent
   borderRadius: BorderRadiusComponent
   hover: HoverComponent
+  material: MaterialComponent
 }
 
 export {
@@ -36,5 +38,6 @@ export {
   HeightComponent,
   BoxShadowComponent,
   BorderRadiusComponent,
-  HoverComponent
+  HoverComponent,
+  MaterialComponent
 }

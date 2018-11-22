@@ -25,9 +25,9 @@ export default class FlockingSystem extends System<Components> {
     const len = entities.length
     for (let i = 0; i < len; i++) {
       const bird = entities[i]
-      const loc = bird.components.position!.value
-      const vel = bird.components.velocity!.value
-      const acc = bird.components.acceleration!.value
+      const loc = bird.components.position!
+      const vel = bird.components.velocity!
+      const acc = bird.components.acceleration!
 
       vec2.set(separation, 0, 0)
       vec2.set(alignment, 0, 0)
@@ -38,8 +38,8 @@ export default class FlockingSystem extends System<Components> {
 
       for (let j = 0; j < len; j++) {
         const other = entities[j]
-        const otherLoc = other.components.position!.value
-        const otherVel = other.components.velocity!.value
+        const otherLoc = other.components.position!
+        const otherVel = other.components.velocity!
         const d = vec2.distance(loc, otherLoc)
 
         if (d > 0) {
@@ -103,8 +103,8 @@ export default class FlockingSystem extends System<Components> {
   }
 
   steer(entity: Entity<Components>, target: Vector2) {
-    const loc = entity.components.position!.value
-    const vel = entity.components.velocity!.value
+    const loc = entity.components.position!
+    const vel = entity.components.velocity!
 
     vec2.set(steer, 0, 0)
     vec2.sub(desired, target, loc)
@@ -122,7 +122,7 @@ export default class FlockingSystem extends System<Components> {
   }
 
   borders(entity: Entity<Components>) {
-    const loc = entity.components.position!.value
+    const loc = entity.components.position!
     const { innerWidth: width, innerHeight: height } = window
 
     if (loc[0] < -RADIUS) {
