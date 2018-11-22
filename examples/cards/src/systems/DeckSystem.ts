@@ -8,7 +8,7 @@ const updateDeckPosition = (
   position: PositionComponent['value'],
   idx: number
 ) => {
-  position.x = (playerId ? window.innerWidth - 160 : 30) + idx * 2
+  position.x = (playerId ? window.innerWidth - 160 : 30) + idx
   position.y = (playerId ? window.innerHeight - 205 : 30) + idx
 }
 
