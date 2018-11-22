@@ -4,5 +4,6 @@ export default class PositionComponent extends Component {
   value: {
     x: number
     y: number
+    z: number
   }
 }

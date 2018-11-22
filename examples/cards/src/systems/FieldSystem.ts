@@ -80,21 +80,32 @@ const updateCardPosition = (
   const rotation = entity.getComponent('rotation')
   const player = entity.getComponent('player')
   const isPlayer = player.id === 1
-  const xStep = 130
+  const xStep = 135
   const yStep = 20
   const rStep = 4
   const x = window.innerWidth / 2 - (cardCount / 2) * xStep + xStep * idx
-  const y = window.innerHeight / 2 + (isPlayer ? 0 : -160)
+  const y = window.innerHeight / 2 + (isPlayer ? 10 : -180)
   const dt = 0.16
-  const rot = 0
+  const rotZ = 0
+  const rotY = 0
+  const z = -25
 
-  if (Math.abs(position.x - x) > 0.1 || Math.abs(position.y - y) > 0.1) {
+  if (
+    Math.abs(position.x - x) > 0.1 ||
+    Math.abs(position.y - y) > 0.1 ||
+    Math.abs(position.z - z) > 0.1
+  ) {
     position.x = lerp(position.x, x, dt)
     position.y = lerp(position.y, y, dt)
+    position.z = lerp(position.z, z, dt)
+  } else {
+    if (Math.abs(rotation.y - rotY) > 0.1) {
+      rotation.y = lerp(rotation.y, rotY, dt / 3)
+    }
   }
 
-  if (Math.abs(rotation - rot) > 0.1) {
-    entity.setComponent('rotation', lerp(rotation, rot, dt))
+  if (Math.abs(rotation.z - rotZ) > 0.1) {
+    rotation.z = lerp(rotation.z, rotZ, dt)
   }
 }
 

@@ -8,7 +8,7 @@ export const drawCard = (playerId: number) => {
   const len = inDeck.length
 
   if (len > 0) {
-    const idx = 0
+    const idx = len - 1
     const card = inDeck[idx]
     inDeck.splice(idx, 1)
     inHand.push(card)

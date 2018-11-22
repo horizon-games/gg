@@ -19,10 +19,14 @@ const cardPositionX = (
   if (isHovering) {
     const half = (cardCount - 1) / 2
 
+    const hoveredMoved = Math.min(1, Math.max(hoveringIdx - half, -1)) * 20
+
     if (index > hoveringIdx) {
-      x += 20
+      x += 80 + hoveredMoved
     } else if (index === hoveringIdx) {
-      x += Math.min(1, Math.max(index - half, -1)) * 10
+      x += hoveredMoved
+    } else if (index < hoveringIdx) {
+      x += -20
     }
   }
 
@@ -58,13 +62,32 @@ const cardPositionY = (
   }
 
   if (isHovering && hoveringIdx === index) {
-    y += step
+    y += step * 4
   }
 
   return y
 }
 
-const cardRotation = (index: number, degreesRot: number, cardCount: number) => {
+const cardPositionZ = (
+  index: number,
+  order: number,
+  step: number,
+  isHovering: boolean,
+  hoveringIdx: number
+) => {
+  if (isHovering && hoveringIdx === index) {
+    return index + step
+  } else {
+    return order
+  }
+}
+
+const cardRotation = (
+  index: number,
+  isPlayer: boolean,
+  degreesRot: number,
+  cardCount: number
+) => {
   const mid = Math.floor(cardCount / 2)
   return (index - mid) * degreesRot
 }
@@ -79,10 +102,13 @@ const updateCardPosition = (
   const position = entity.getComponent('position')
   const rotation = entity.getComponent('rotation')
   const player = entity.getComponent('player')
+  const order = entity.getComponent('order')
+
   const isPlayer = player.id === 1
-  const xStep = 100
-  const yStep = 20
+  const xStep = 40
+  const yStep = 5
   const rStep = 4
+  const zStep = 200
   const x = cardPositionX(idx, xStep, cardCount, isHovering, hoveringIdx)
   const y =
     cardPositionY(
@@ -92,16 +118,24 @@ const updateCardPosition = (
       isHovering,
       hoveringIdx
     ) + (isPlayer ? window.innerHeight - 225 : 50)
-  const rot = cardRotation(idx, isPlayer ? rStep : -rStep, cardCount)
-  const dt = 0.16
+  const rotY = isPlayer ? 0 : 180
+  const rotZ = cardRotation(idx, isPlayer, isPlayer ? rStep : -rStep, cardCount)
+  const dt = 0.16 / 2
+  const z = order //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
 
-  if (Math.abs(position.x - x) > 0.1 || Math.abs(position.y - y) > 0.1) {
+  if (
+    Math.abs(position.x - x) > 0.1 ||
+    Math.abs(position.y - y) > 0.1 ||
+    Math.abs(position.z - z) > 0.1
+  ) {
     position.x = lerp(position.x, x, dt)
     position.y = lerp(position.y, y, dt)
+    position.z = lerp(position.z, z, dt)
   }
 
-  if (Math.abs(rotation - rot) > 0.1) {
-    entity.setComponent('rotation', lerp(rotation, rot, dt))
+  if (Math.abs(rotation.z - rotZ) > 0.1 || Math.abs(rotation.y - rotY) > 0.1) {
+    rotation.y = lerp(rotation.y, rotY, dt)
+    rotation.z = lerp(rotation.z, rotZ, dt)
   }
 }
 
@@ -112,9 +146,9 @@ export default class HandSystem extends System<Components> {
       Archetypes.OpponentCards
     )
 
-    playerCards = playerCards.filter(
-      entity => entity.components.card!.status === CardStatus.Hand
-    )
+    playerCards = playerCards
+      .filter(entity => entity.components.card!.status === CardStatus.Hand)
+      .sort((a, b) => a.components.order! - b.components.order!)
     opponentCards = opponentCards.filter(
       entity => entity.components.card!.status === CardStatus.Hand
     )

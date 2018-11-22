@@ -18,43 +18,12 @@
       }
 
       main {
-        display: flex;
-        flex-direction: column;
+        position: relative;
         height: 100vh;
-        padding: 12px;
-      }
-
-      main > * {
-        margin: 12px;
-      }
-
-      section.player {
-        flex: 0.25;
-        border-radius: 8px;
-      }
-
-      section.player[data-player-id='1'] {
-        background-color: rgba(255, 128, 0, 0.1);
-        border: 4px solid rgba(255, 0, 0, 0.2);
-      }
-      section.player[data-player-id='2'] {
-        background-color: rgba(0, 128, 255, 0.1);
-        border: 4px solid rgba(0, 0, 255, 0.2);
-      }
-
-      section.field {
-        flex: 0.5;
-        background-color: rgba(0, 0, 0, 0.1);
-        border: 4px solid rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-      }
-
-      .player-court {
-      }
-
-      .player-court[data-player-id='1'] {
-      }
-      .player-court[data-player-id='2'] {
+        perspective: 1000px;
+        perspective-origin: 50% 50%;
+        background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
+          url('images/background.png');
       }
 
       .title,
@@ -85,25 +54,38 @@
         text-shadow: 1px 1px 0px rgba(16, 0, 32, 0.7),
           -1px 1px 2px rgba(32, 0, 64, 0.7);
       }
+
+      .card {
+        position: relative;
+        transform-style: preserve-3d;
+        cursor: pointer;
+      }
+
+      .face,
+      .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        overflow: hidden;
+      }
+
+      .face {
+        background-position: 50% 33%;
+      }
+
+      .back {
+        background-position: 50% 50%;
+        background-image: url('images/back.jpg');
+        transform: rotateY(180deg);
+      }
     </style>
   </head>
   <body>
-    <main>
-      <section class="player" data-player-id="1">
-        <div class="deck"></div>
-        <div class="hand"></div>
-        <div class="mana"></div>
-      </section>
-      <section class="field">
-        <div class="player-court" data-player-id="1"></div>
-        <div class="player-court" data-player-id="2"></div>
-      </section>
-      <section class="player" data-player-id="2">
-        <div class="deck"></div>
-        <div class="hand"></div>
-        <div class="mana"></div>
-      </section>
-    </main>
+    <main></main>
     <script src="cards.js" type="text/javascript"></script>
   </body>
 </html>

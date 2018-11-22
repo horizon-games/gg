@@ -35,7 +35,7 @@ console.log(world)
 
 const cards: Map<number, Entity<Components>> = new Map()
 
-const updateCardEntity = (card: Card, status: CardStatus) => {
+const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   if (!cards.has(card.id)) {
     const entity = world.createEntity(...CardAssemblage(card, status))
     cards.set(card.id, entity)
@@ -43,22 +43,23 @@ const updateCardEntity = (card: Card, status: CardStatus) => {
     const entity = cards.get(card.id)
     if (entity) {
       entity.components.card!.status = status
+      entity.components.order! = index
     }
   }
 }
 
 const syncState = (state: State) => {
   state.players.forEach((player, playerId) => {
-    player.inDeck.forEach(card => {
-      updateCardEntity(card, CardStatus.Deck)
+    player.inDeck.forEach((card, idx) => {
+      updateCardEntity(card, CardStatus.Deck, idx)
     })
 
-    player.inHand.forEach(card => {
-      updateCardEntity(card, CardStatus.Hand)
+    player.inHand.forEach((card, idx) => {
+      updateCardEntity(card, CardStatus.Hand, idx)
     })
 
-    player.inPlay.forEach(card => {
-      updateCardEntity(card, CardStatus.Field)
+    player.inPlay.forEach((card, idx) => {
+      updateCardEntity(card, CardStatus.Field, idx)
     })
   })
 }
@@ -70,7 +71,6 @@ store.subscribe((state: State) => {
 
 window.onkeydown = (ev: any) => {
   const key = ev.keyCode
-  const { currentPlayerId } = store.getState()
 
   switch (key) {
     case 68: // (d)rawCard
@@ -78,16 +78,11 @@ window.onkeydown = (ev: any) => {
       drawCard(1)
 
       break
-
-    // case 80: // (p)layCard
-    //   console.log('playCard')
-    //   playCard(currentPlayerId, 0)
-    //   break
   }
 }
 
-$('body').mousemove(ev => {
-  const target = $(ev.target)
+$('body').mousemove(function(ev) {
+  const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
   world.manager.entities.forEach(entity => {
     if (entity.hasComponent('hover')) {
@@ -98,21 +93,32 @@ $('body').mousemove(ev => {
   if (id) {
     const entity = world.manager.getEntity(id)
     if (entity && entity.hasComponent('hover')) {
-      entity.setComponent('hover', true)
+      const { status } = entity.components.card!
+
+      if (status !== CardStatus.Deck) {
+        entity.setComponent('hover', true)
+      }
     }
   }
 })
 
-$('body').click(ev => {
-  const target = $(ev.target)
+$('body').on('click', '.card', function(ev) {
+  const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
 
   if (id) {
     const entity = world.manager.getEntity(id)
-    if (entity && entity.hasComponent('hover')) {
-      entity.setComponent('hover', true)
+    if (entity) {
+      const { status } = entity.components.card!
+      switch (status) {
+        case CardStatus.Deck:
+          drawCard(entity.components.player!.id)
+          break
 
-      playCard(entity.components.player!.id, entity.components.card!.id)
+        case CardStatus.Hand:
+          playCard(entity.components.player!.id, entity.components.card!.id)
+          break
+      }
     }
   }
 })
