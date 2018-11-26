@@ -11,7 +11,7 @@ type ComponentChangeEventTypes = 'add' | 'remove'
 interface ComponentChangeEvent<C extends ComponentTypes> {
   type: ComponentChangeEventTypes
   entity: Entity<C>
-  component: ValueOf<C>
+  componentType: keyof C
 }
 
 export type EntityListener<C extends ComponentTypes> = (
@@ -56,18 +56,16 @@ export default class Entity<C extends ComponentTypes> {
     this.components[component.type] = component.value
 
     this.componentChangeListeners.forEach(listener =>
-      listener({ type: 'add', entity: this, component })
+      listener({ type: 'add', entity: this, componentType: component.type })
     )
   }
 
   removeComponent = (type: string) => {
-    const component = this.components[type]
-
-    if (component) {
+    if (this.hasComponent(type)) {
       delete this.components[type]
 
       this.componentChangeListeners.forEach(listener =>
-        listener({ type: 'remove', entity: this, component })
+        listener({ type: 'remove', entity: this, componentType: type })
       )
     }
   }

@@ -33,14 +33,14 @@ export default class EntityManager<C extends ComponentTypes> {
       this.entityListenerDisposers.set(
         entity.id,
         entity.onComponentChange(ev => {
-          const { type, entity, component } = ev
+          const { type, entity, componentType } = ev
           switch (type) {
             case 'add':
-              this.handleEntityAddComponent(entity, component)
+              this.handleEntityAddComponent(entity, componentType)
               break
 
             case 'remove':
-              this.handleEntityRemoveComponent(entity, component)
+              this.handleEntityRemoveComponent(entity, componentType)
           }
         })
       )
@@ -117,7 +117,7 @@ export default class EntityManager<C extends ComponentTypes> {
     }
   }
 
-  private handleEntityAddComponent(entity: Entity<C>, _: ValueOf<C>) {
+  private handleEntityAddComponent(entity: Entity<C>, _: keyof C) {
     if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
         archetype.handleEntityComponentChange(entity)
@@ -125,7 +125,7 @@ export default class EntityManager<C extends ComponentTypes> {
     }
   }
 
-  private handleEntityRemoveComponent(entity: Entity<C>, _: ValueOf<C>) {
+  private handleEntityRemoveComponent(entity: Entity<C>, _: keyof C) {
     if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
         archetype.handleEntityComponentChange(entity)
