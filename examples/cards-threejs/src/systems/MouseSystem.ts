@@ -15,6 +15,12 @@ let screenHeight = window.innerHeight
 window.addEventListener('mousemove', function(ev) {
   mouse.x = (ev.clientX! / screenWidth) * 2 - 1
   mouse.y = -(ev.clientY! / screenHeight) * 2 + 1
+
+  if (hoveredEntity) {
+    document.body.style.cursor = 'pointer'
+  } else {
+    document.body.style.cursor = 'default'
+  }
 })
 
 window.addEventListener('resize', function() {

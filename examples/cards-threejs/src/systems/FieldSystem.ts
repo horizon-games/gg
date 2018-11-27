@@ -116,12 +116,13 @@ export default class FieldSystem extends System<Components> {
       Archetypes.OpponentCards
     )
 
-    playerCards = playerCards.filter(
-      entity => entity.components.card!.status === CardStatus.Field
-    )
-    opponentCards = opponentCards.filter(
-      entity => entity.components.card!.status === CardStatus.Field
-    )
+    playerCards = playerCards
+      .filter(entity => entity.components.card!.status === CardStatus.Field)
+      .sort((a, b) => a.components.order! - b.components.order!)
+
+    opponentCards = opponentCards
+      .filter(entity => entity.components.card!.status === CardStatus.Field)
+      .sort((a, b) => a.components.order! - b.components.order!)
 
     const isHoveringPlayerCards = playerCards.some(
       entity => entity.components.hover!
