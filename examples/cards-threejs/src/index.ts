@@ -19,8 +19,6 @@ import FieldSystem from './systems/FieldSystem'
 import camera from './camera'
 import scene from './scene'
 
-import $ from 'jquery'
-
 import {
   WebGLRenderer,
   PlaneGeometry,
@@ -28,11 +26,75 @@ import {
   Mesh,
   TextureLoader,
   RepeatWrapping,
-  Vector2
+  Vector2,
+  DoubleSide,
+  PCFSoftShadowMap,
+  PointLight,
+  MeshStandardMaterial,
+  DirectionalLight
 } from 'three'
 import MouseSystem from './systems/MouseSystem'
+//@ts-ignore
+import GLTFLoader from 'three-gltf-loader'
 
-const renderer = new WebGLRenderer()
+const loader = new GLTFLoader()
+const faceTexture = new TextureLoader().load(`images/10.jpg`)
+const backTexture = new TextureLoader().load(`images/back.jpg`)
+const faceMaterial = new MeshBasicMaterial({
+  map: faceTexture,
+  side: DoubleSide
+})
+const backMaterial = new MeshBasicMaterial({
+  map: backTexture,
+  side: DoubleSide
+})
+
+backTexture.repeat.x = 3.9
+backTexture.repeat.y = 2.76
+backTexture.offset.x = -2.82
+
+let group: any
+let face: any
+let back: any
+
+loader.load(
+  // resource URL
+  'models/card-lauren1.glb',
+  // called when the resource is loaded
+  function(gltf: any) {
+    group = gltf.scene.children[0]
+    group.scale.set(0.5, 0.5, 0.5)
+    console.log('mesh', group)
+    face = group.children[0] as Mesh
+    back = group.children[1] as Mesh
+    group.children[2].material = new MeshBasicMaterial({ color: 0xffffff })
+    face.material = faceMaterial
+    back.material = backMaterial
+    scene.add(group)
+  },
+  // called while loading is progressing
+  function(xhr: any) {
+    console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+  },
+  // called when loading has errors
+  function(error: any) {
+    console.log('An error happened')
+  }
+)
+
+const renderer = new WebGLRenderer({ antialias: true })
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = PCFSoftShadowMap
+
+var light1 = new DirectionalLight(0xffffff, 0.9)
+light1.position.set(0, 0, 1000)
+light1.castShadow = true // default false
+scene.add(light1)
+
+var light2 = new PointLight(0xffffff, 0.5)
+light2.position.set(0, 0, 100)
+light2.castShadow = true // default false
+scene.add(light2)
 
 const mouse = new Vector2()
 let width = window.innerWidth
@@ -41,9 +103,17 @@ let height = window.innerHeight
 const texture = new TextureLoader().load('images/background.png')
 texture.wrapS = RepeatWrapping
 texture.wrapT = RepeatWrapping
-texture.repeat.set(2, 2)
+texture.repeat.set(10, 10)
 
-scene.background = texture
+//scene.background = texture
+
+var gameBoard = new Mesh(
+  new PlaneGeometry(100, 100, 10),
+  new MeshStandardMaterial({ map: texture })
+)
+gameBoard.receiveShadow = true
+gameBoard.position.set(0, 0, -2)
+scene.add(gameBoard)
 
 const stats = new Stats()
 
@@ -116,55 +186,9 @@ window.onkeydown = (ev: any) => {
 window.addEventListener('resize', function(ev) {
   width = window.innerWidth
   height = window.innerHeight
-  console.log('hey')
   camera.aspect = width / height
   camera.updateProjectionMatrix()
   renderer.setSize(width, height)
-})
-
-$('body').mousemove(function(ev) {
-  mouse.x = (ev.clientX! / width) * 2 - 1
-  mouse.y = (ev.clientY! / height) * 2 - 1
-
-  // const target = $(ev.target).closest('.card')
-  // const id = Number(target.data('id'))
-  // world.manager.entities.forEach(entity => {
-  //   if (entity.hasComponent('hover')) {
-  //     entity.setComponent('hover', false)
-  //   }
-  // })
-
-  // if (id) {
-  //   const entity = world.manager.getEntity(id)
-  //   if (entity && entity.hasComponent('hover')) {
-  //     const { status } = entity.components.card!
-
-  //     if (status !== CardStatus.Deck) {
-  //       entity.setComponent('hover', true)
-  //     }
-  //   }
-  // }
-})
-
-$('body').on('click', '.card', function(ev) {
-  const target = $(ev.target).closest('.card')
-  const id = Number(target.data('id'))
-
-  if (id) {
-    const entity = world.manager.getEntity(id)
-    if (entity) {
-      const { status } = entity.components.card!
-      switch (status) {
-        case CardStatus.Deck:
-          drawCard(entity.components.player!.id)
-          break
-
-        case CardStatus.Hand:
-          playCard(entity.components.player!.id, entity.components.card!.id)
-          break
-      }
-    }
-  }
 })
 
 const stagger = (fns: any[], timeout: number) => {
@@ -216,16 +240,31 @@ const init = () => {
   )
 }
 
+let frame = 0
 const loop = () => {
   stats.begin()
+  frame++
 
   world.update(0)
 
   stats.end()
   cube.rotation.x += 0.01
   cube.rotation.y += 0.01
+  cube.rotation.z += 0.01
+
+  if (group) {
+    // group.rotation.x += 0.01
+    group.rotation.y -= 0.03
+    // group.rotation.z += 0.1
+  }
+
+  light2.position.set(
+    Math.sin(frame / 100) * 100,
+    Math.cos(frame / 100) * 100,
+    30
+  )
   renderer.render(scene, camera)
   requestAnimationFrame(loop)
 }
 
-init()
+setTimeout(init, 1000)

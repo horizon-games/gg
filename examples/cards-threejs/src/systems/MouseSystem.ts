@@ -52,18 +52,22 @@ export default class MouseSystem extends System<Components> {
 
     raycaster.setFromCamera(mouse, camera)
 
-    const intersections = raycaster.intersectObjects(scene.children)
+    const intersections = raycaster.intersectObjects(scene.children, true)
     entities.forEach(entity => entity.removeComponent('hover'))
     hoveredEntity = null
 
     if (intersections.length) {
-      const { object } = intersections[0]
-      const { entityId } = object.userData
-      if (entityId) {
-        const entity = manager.getEntity(entityId)
-        if (entity) {
-          hoveredEntity = entity
-          entity.addComponent(new HoverComponent())
+      const {
+        object: { parent }
+      } = intersections[0]
+      if (parent) {
+        const { entityId } = parent.userData
+        if (entityId) {
+          const entity = manager.getEntity(entityId)
+          if (entity) {
+            hoveredEntity = entity
+            entity.addComponent(new HoverComponent())
+          }
         }
       }
     }

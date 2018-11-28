@@ -37,11 +37,13 @@
     "@types/jquery": "^3.3.22",
     "@types/three": "^0.93.10",
     "dotenv-webpack": "^1.5.7",
+    "gltf-loader-ts": "^0.3.1",
     "jquery": "^3.3.1",
     "popmotion": "^8.5.3",
     "sillyname": "^0.1.0",
     "stats.js": "^0.17.0",
     "three": "^0.98.0",
+    "three-gltf-loader": "^1.98.0",
     "unistore": "^3.1.0"
   },
   "jest": {
