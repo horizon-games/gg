@@ -122,7 +122,7 @@ const updateCardPosition = (
   const rotY = degreesToRadians(isPlayer ? 0 : 180)
   const rotZ = cardRotation(idx, isPlayer, -rStep, cardCount)
   const dt = 0.16 / 2
-  const z = order //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
+  const z = order * 2 //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
 
   position.z = z
 

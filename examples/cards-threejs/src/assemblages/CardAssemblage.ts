@@ -34,8 +34,7 @@ import GLTFLoader from 'three-gltf-loader'
 const loader = new GLTFLoader()
 const backTexture = new TextureLoader().load(`images/back.jpg`)
 const backMaterial = new MeshStandardMaterial({
-  map: backTexture,
-  side: DoubleSide
+  map: backTexture
 })
 
 backTexture.repeat.x = 3.9
@@ -55,9 +54,15 @@ loader.load(
     group = gltf.scene.children[0]
     group.scale.set(0.2, 0.2, 0.2)
     console.log('mesh', group)
-    back = group.children[1] as Mesh
+    group.children[1].material = backMaterial
     group.children[2].material = new MeshStandardMaterial({ color: 0xffffff })
-    back.material = backMaterial
+
+    // group.children[0].receiveShadow = true
+    // group.children[0].castShadow = true
+    group.traverse(function(obj: Mesh) {
+      obj.receiveShadow = true
+      obj.castShadow = true
+    })
     // mesh.rotation.z = Math.PI / 2
     // mesh.rotation.y = Math.PI / 2
     // scene.add(group)
@@ -77,7 +82,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   const isPlayer = card.playerId === 1
 
   const texture = new TextureLoader().load(`images/${card.artId}.jpg`)
-  const material = new MeshStandardMaterial({ map: texture, side: DoubleSide })
+  const material = new MeshStandardMaterial({ map: texture })
 
   const object3d = group.clone()
   object3d.children[0].material = material

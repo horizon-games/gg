@@ -10,7 +10,7 @@ const updateDeckPosition = (
 ) => {
   position.x = playerId ? 1000 : -1000
   position.y = playerId ? -500 : 500
-  position.z = 0 + idx * 2
+  position.z = 0 + idx
 }
 
 export default class DeckSystem extends System<Components> {

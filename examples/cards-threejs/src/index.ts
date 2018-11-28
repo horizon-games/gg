@@ -31,88 +31,45 @@ import {
   PCFSoftShadowMap,
   PointLight,
   MeshStandardMaterial,
-  DirectionalLight
+  DirectionalLight,
+  SpotLight
 } from 'three'
 import MouseSystem from './systems/MouseSystem'
-//@ts-ignore
-import GLTFLoader from 'three-gltf-loader'
-
-const loader = new GLTFLoader()
-const faceTexture = new TextureLoader().load(`images/10.jpg`)
-const backTexture = new TextureLoader().load(`images/back.jpg`)
-const faceMaterial = new MeshBasicMaterial({
-  map: faceTexture,
-  side: DoubleSide
-})
-const backMaterial = new MeshBasicMaterial({
-  map: backTexture,
-  side: DoubleSide
-})
-
-backTexture.repeat.x = 3.9
-backTexture.repeat.y = 2.76
-backTexture.offset.x = -2.82
-
-let group: any
-let face: any
-let back: any
-
-loader.load(
-  // resource URL
-  'models/card-lauren1.glb',
-  // called when the resource is loaded
-  function(gltf: any) {
-    group = gltf.scene.children[0]
-    group.scale.set(0.5, 0.5, 0.5)
-    console.log('mesh', group)
-    face = group.children[0] as Mesh
-    back = group.children[1] as Mesh
-    group.children[2].material = new MeshBasicMaterial({ color: 0xffffff })
-    face.material = faceMaterial
-    back.material = backMaterial
-    scene.add(group)
-  },
-  // called while loading is progressing
-  function(xhr: any) {
-    console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-  },
-  // called when loading has errors
-  function(error: any) {
-    console.log('An error happened')
-  }
-)
 
 const renderer = new WebGLRenderer({ antialias: true })
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
-var light1 = new DirectionalLight(0xffffff, 0.9)
-light1.position.set(0, 0, 1000)
-light1.castShadow = true // default false
+var light1 = new DirectionalLight(0xffffff, 0.7)
+light1.position.set(0, 0, 5)
+light1.castShadow = true
+light1.shadow.mapSize.width = 2048
+light1.shadow.mapSize.height = 2048
+
 scene.add(light1)
 
-var light2 = new PointLight(0xffffff, 0.5)
-light2.position.set(0, 0, 100)
-light2.castShadow = true // default false
+var light2 = new PointLight(0xffffff, 0.3)
+light2.position.set(0, 0, 5)
+light2.castShadow = true
+light2.shadow.mapSize.width = 2048
+light2.shadow.mapSize.height = 2048
 scene.add(light2)
 
 const mouse = new Vector2()
 let width = window.innerWidth
 let height = window.innerHeight
 
-const texture = new TextureLoader().load('images/background.png')
-texture.wrapS = RepeatWrapping
-texture.wrapT = RepeatWrapping
-texture.repeat.set(10, 10)
-
-//scene.background = texture
+const backgroundTexture = new TextureLoader().load('images/background.png')
+backgroundTexture.wrapS = RepeatWrapping
+backgroundTexture.wrapT = RepeatWrapping
+backgroundTexture.repeat.set(10, 10)
 
 var gameBoard = new Mesh(
   new PlaneGeometry(100, 100, 10),
-  new MeshStandardMaterial({ map: texture })
+  new MeshStandardMaterial({ map: backgroundTexture })
 )
 gameBoard.receiveShadow = true
-gameBoard.position.set(0, 0, -2)
+gameBoard.position.set(0, 0, 0)
 scene.add(gameBoard)
 
 const stats = new Stats()
@@ -213,8 +170,6 @@ const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.body.appendChild(renderer.domElement)
 
-  scene.add(cube)
-
   camera.position.z = 5
 
   syncState(store.getState())
@@ -252,16 +207,10 @@ const loop = () => {
   cube.rotation.y += 0.01
   cube.rotation.z += 0.01
 
-  if (group) {
-    // group.rotation.x += 0.01
-    group.rotation.y -= 0.03
-    // group.rotation.z += 0.1
-  }
-
   light2.position.set(
-    Math.sin(frame / 100) * 100,
-    Math.cos(frame / 100) * 100,
-    30
+    Math.sin(frame / 100) * 20,
+    Math.cos(frame / 100) * 20,
+    10
   )
   renderer.render(scene, camera)
   requestAnimationFrame(loop)
