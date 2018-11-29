@@ -1,31 +1,21 @@
 import { System, EntityManager } from '../../../../src/ecs'
 import { Components, HoverComponent } from '../components'
 import { Archetypes } from '../archetypes'
-import { Vector2, Raycaster } from 'three'
+import { Raycaster } from 'three'
 import camera from '../camera'
 import scene from '../scene'
 import { drawCard, playCard } from '../actions'
 import { CardStatus } from '../types'
+import mouse from '../mouse'
 
 const raycaster = new Raycaster()
-const mouse = new Vector2()
-let screenWidth = window.innerWidth
-let screenHeight = window.innerHeight
 
 window.addEventListener('mousemove', function(ev) {
-  mouse.x = (ev.clientX! / screenWidth) * 2 - 1
-  mouse.y = -(ev.clientY! / screenHeight) * 2 + 1
-
   if (hoveredEntity) {
     document.body.style.cursor = 'pointer'
   } else {
     document.body.style.cursor = 'default'
   }
-})
-
-window.addEventListener('resize', function() {
-  screenWidth = window.innerWidth
-  screenHeight = window.innerHeight
 })
 
 window.addEventListener('click', function() {
@@ -50,7 +40,7 @@ export default class MouseSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     const { entities } = manager.getArchetype(Archetypes.HoveredCards)
 
-    raycaster.setFromCamera(mouse, camera)
+    raycaster.setFromCamera(mouse.position, camera)
 
     const intersections = raycaster.intersectObjects(scene.children, true)
     entities.forEach(entity => entity.removeComponent('hover'))

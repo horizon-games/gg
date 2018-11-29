@@ -2,6 +2,7 @@ import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components, PositionComponent, RotationComponent } from '../components'
 import { Archetypes } from '../archetypes'
 import { CardStatus } from '../types'
+import screen from '../screen'
 
 const lerp = (a: number, b: number, dt: number): number => {
   const out = a + dt * (b - a)
@@ -27,7 +28,7 @@ const cardPositionX = (
     }
   }
 
-  return window.innerWidth / 2 + x - 62
+  return screen.width / 2 + x - 62
 }
 
 const cardPositionY = (

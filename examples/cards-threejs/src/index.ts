@@ -34,7 +34,7 @@ import FieldSystem from './systems/FieldSystem'
 import LightsSystem from './systems/LightsSystem'
 import MouseSystem from './systems/MouseSystem'
 import RenderSystem from './systems/RenderSystem'
-
+import screen from './screen'
 import camera from './camera'
 import scene from './scene'
 import LightAssemblage from './assemblages/LightAssemblage'
@@ -135,10 +135,10 @@ window.onkeydown = (ev: any) => {
 }
 
 window.addEventListener('resize', function(ev) {
-  const { innerWidth, innerHeight } = window
-  camera.aspect = innerWidth / innerHeight
+  const { width, height } = screen
+  camera.aspect = width / height
   camera.updateProjectionMatrix()
-  renderer.setSize(innerWidth, innerHeight)
+  renderer.setSize(width, height)
 })
 
 const stagger = (fns: any[], timeout: number) => {
@@ -155,7 +155,7 @@ const init = () => {
   document.body.appendChild(stats.dom)
 
   // Add Renderer
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(screen.width, screen.height)
   document.body.appendChild(renderer.domElement)
 
   camera.position.z = 5
