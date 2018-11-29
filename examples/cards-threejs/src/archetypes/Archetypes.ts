@@ -1,6 +1,6 @@
 const enum Archetypes {
   Renderable,
-
+  Lights,
   Cards,
   PlayerCards,
   OpponentCards,

@@ -80,12 +80,12 @@ const updateCardPosition = (
   const rotation = entity.getComponent('rotation')
   const player = entity.getComponent('player')
   const isPlayer = player.id === 1
-  const xStep = 135
-  const yStep = 20
+  const xStep = 1.2
+  const yStep = 2
   const rStep = 4
-  const x = -(cardCount / 2) * xStep + xStep * idx + xStep / 2
-  const y = isPlayer ? -100 : 100
-  const z = 0
+  const x = -(cardCount / 2) * xStep + xStep * idx + xStep / 200
+  const y = isPlayer ? -0.8 : 0.8
+  const z = 0.1
   const dt = 0.16
   const rotZ = 0
   const rotY = 0

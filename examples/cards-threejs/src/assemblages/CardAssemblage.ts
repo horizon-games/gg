@@ -16,69 +16,39 @@ import {
   TextureComponent
 } from '../components'
 import { Card, CardStatus } from '../types'
-import $ from 'jquery'
-import {
-  TextureLoader,
-  MeshBasicMaterial,
-  Mesh,
-  PlaneGeometry,
-  DoubleSide,
-  Group,
-  MeshStandardMaterial
-} from 'three'
+import { TextureLoader, Mesh, MeshStandardMaterial } from 'three'
 import { degreesToRadians } from '../utils'
 import scene from '../scene'
 //@ts-ignore
 import GLTFLoader from 'three-gltf-loader'
 
-const loader = new GLTFLoader()
 const backTexture = new TextureLoader().load(`images/back.jpg`)
 const backMaterial = new MeshStandardMaterial({
   map: backTexture
 })
 
-backTexture.repeat.x = 3.9
-backTexture.repeat.y = 2.76
-backTexture.offset.x = -2.82
-//backTexture.offset.x = (300 / 100) * 0.8
+// backTexture.repeat.x = 3.9
+// backTexture.repeat.y = 2.76
+// backTexture.offset.x = -2.82
+// backTexture.offset.x = (300 / 100) * 0.8
 
+const loader = new GLTFLoader()
 let group: any
-let face: any
-let back: any
 
-loader.load(
-  // resource URL
-  'models/card-lauren1.glb',
-  // called when the resource is loaded
-  function(gltf: any) {
-    group = gltf.scene.children[0]
-    group.scale.set(0.2, 0.2, 0.2)
-    console.log('mesh', group)
-    group.children[1].material = backMaterial
-    group.children[2].material = new MeshStandardMaterial({ color: 0xffffff })
-
-    // group.children[0].receiveShadow = true
-    // group.children[0].castShadow = true
-    group.traverse(function(obj: Mesh) {
-      obj.receiveShadow = true
-      obj.castShadow = true
-    })
-    // mesh.rotation.z = Math.PI / 2
-    // mesh.rotation.y = Math.PI / 2
-    // scene.add(group)
-  },
-  // called while loading is progressing
-  function(xhr: any) {
-    console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-  },
-  // called when loading has errors
-  function(error: any) {
-    console.log('An error happened')
-  }
-)
+loader.load('models/card.glb', function(gltf: any) {
+  console.log(gltf)
+  group = gltf.scene.children[0]
+  group.scale.set(0.2, 0.2, 0.2)
+  const [face, trim, back] = group.children
+  trim.material = new MeshStandardMaterial({ color: 0xffffff })
+  back.material = backMaterial
+  group.traverse(function(obj: Mesh) {
+    obj.receiveShadow = true
+    obj.castShadow = true
+  })
+})
 
 const CardAssemblage = (card: Card, status: CardStatus) => {
-  const element = $('<div/>').get(0)
   const isPlayer = card.playerId === 1
 
   const texture = new TextureLoader().load(`images/${card.artId}.jpg`)
@@ -86,8 +56,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
 
   const object3d = group.clone()
   object3d.children[0].material = material
-  object3d.castShadow = true
-  object3d.receiveShadow = true
+  scene.add(object3d)
 
   return [
     new CardComponent({

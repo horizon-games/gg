@@ -14,6 +14,7 @@ import MaterialComponent from './MaterialComponent'
 import OrderComponent from './OrderComponent'
 import TextureComponent from './TextureComponent'
 import MeshComponent from './MeshComponent'
+import LightComponent from './LightComponent'
 
 export interface Components extends ComponentTypes {
   player: PlayerComponent
@@ -31,6 +32,7 @@ export interface Components extends ComponentTypes {
   order: OrderComponent
   texture: TextureComponent
   mesh: MeshComponent
+  light: LightComponent
 }
 
 export {
@@ -48,5 +50,6 @@ export {
   MaterialComponent,
   OrderComponent,
   TextureComponent,
-  MeshComponent
+  MeshComponent,
+  LightComponent
 }

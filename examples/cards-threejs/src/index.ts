@@ -1,24 +1,4 @@
 import Stats from 'stats.js'
-import { State, CardStatus, Card } from './types'
-import store from './store'
-import { drawCard, playCard } from './actions'
-import { World, Archetype, Entity } from '../../../src/ecs'
-import RenderSystem from './systems/RenderSystem'
-import {
-  RenderableArchetype,
-  CardsArchetype,
-  PlayerCardsArchetype,
-  OpponentCardsArchetype,
-  HoveredCardsArchetype
-} from './archetypes'
-import { Components } from './components'
-import CardAssemblage from './assemblages/CardAssemblage'
-import DeckSystem from './systems/DeckSystem'
-import HandSystem from './systems/HandSystem'
-import FieldSystem from './systems/FieldSystem'
-import camera from './camera'
-import scene from './scene'
-
 import {
   WebGLRenderer,
   PlaneGeometry,
@@ -34,30 +14,51 @@ import {
   DirectionalLight,
   SpotLight
 } from 'three'
+import { World, Entity } from '../../../src/ecs'
+import { State, CardStatus, Card } from './types'
+import store from './store'
+import { drawCard } from './actions'
+import {
+  RenderableArchetype,
+  CardsArchetype,
+  PlayerCardsArchetype,
+  OpponentCardsArchetype,
+  HoveredCardsArchetype,
+  LightsArchetype
+} from './archetypes'
+import { Components } from './components'
+import CardAssemblage from './assemblages/CardAssemblage'
+import DeckSystem from './systems/DeckSystem'
+import HandSystem from './systems/HandSystem'
+import FieldSystem from './systems/FieldSystem'
+import LightsSystem from './systems/LightsSystem'
 import MouseSystem from './systems/MouseSystem'
+import RenderSystem from './systems/RenderSystem'
+
+import camera from './camera'
+import scene from './scene'
+import LightAssemblage from './assemblages/LightAssemblage'
+
+const world = new World<Components>()
+console.log(world)
+
+world.addArchetype(RenderableArchetype)
+world.addArchetype(CardsArchetype)
+world.addArchetype(PlayerCardsArchetype)
+world.addArchetype(HoveredCardsArchetype)
+world.addArchetype(OpponentCardsArchetype)
+world.addArchetype(LightsArchetype)
+
+world.addSystem(new DeckSystem())
+world.addSystem(new HandSystem())
+world.addSystem(new FieldSystem())
+world.addSystem(new MouseSystem())
+world.addSystem(new LightsSystem())
+world.addSystem(new RenderSystem())
 
 const renderer = new WebGLRenderer({ antialias: true })
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
-
-var light1 = new DirectionalLight(0xffffff, 0.7)
-light1.position.set(0, 0, 5)
-light1.castShadow = true
-light1.shadow.mapSize.width = 2048
-light1.shadow.mapSize.height = 2048
-
-scene.add(light1)
-
-var light2 = new PointLight(0xffffff, 0.3)
-light2.position.set(0, 0, 5)
-light2.castShadow = true
-light2.shadow.mapSize.width = 2048
-light2.shadow.mapSize.height = 2048
-scene.add(light2)
-
-const mouse = new Vector2()
-let width = window.innerWidth
-let height = window.innerHeight
 
 const backgroundTexture = new TextureLoader().load('images/background.png')
 backgroundTexture.wrapS = RepeatWrapping
@@ -72,24 +73,20 @@ gameBoard.receiveShadow = true
 gameBoard.position.set(0, 0, 0)
 scene.add(gameBoard)
 
-const stats = new Stats()
+// LIGHTS
+var light1 = new DirectionalLight(0xffffff, 0.7)
+light1.position.set(0, 0, 5)
+light1.castShadow = true
+light1.shadow.mapSize.width = 2048
+light1.shadow.mapSize.height = 2048
 
-const world = new World<Components>()
+scene.add(light1)
 
-world.addArchetype(RenderableArchetype)
-world.addArchetype(CardsArchetype)
-world.addArchetype(PlayerCardsArchetype)
-world.addArchetype(HoveredCardsArchetype)
-world.addArchetype(OpponentCardsArchetype)
+// Light entities
+world.createEntity(...LightAssemblage(0xaa00ff, 0.3))
+world.createEntity(...LightAssemblage(0x00ffaa, 0.3))
 
-world.addSystem(new DeckSystem())
-world.addSystem(new HandSystem())
-world.addSystem(new FieldSystem())
-world.addSystem(new MouseSystem())
-world.addSystem(new RenderSystem())
-
-console.log(world)
-
+// Lookup for added cards
 const cards: Map<number, Entity<Components>> = new Map()
 
 const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
@@ -97,7 +94,6 @@ const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
     const entity = world.createEntity(...CardAssemblage(card, status))
     entity.components.mesh!.userData.entityId = entity.id
     cards.set(card.id, entity)
-    scene.add(entity.components.mesh!)
   } else {
     const entity = cards.get(card.id)
     if (entity) {
@@ -124,7 +120,6 @@ const syncState = (state: State) => {
 }
 
 store.subscribe((state: State) => {
-  console.log('State update', state)
   syncState(state)
 })
 
@@ -133,7 +128,6 @@ window.onkeydown = (ev: any) => {
 
   switch (key) {
     case 68: // (d)rawCard
-      console.log('drawCard')
       drawCard(1)
 
       break
@@ -141,11 +135,10 @@ window.onkeydown = (ev: any) => {
 }
 
 window.addEventListener('resize', function(ev) {
-  width = window.innerWidth
-  height = window.innerHeight
-  camera.aspect = width / height
+  const { innerWidth, innerHeight } = window
+  camera.aspect = innerWidth / innerHeight
   camera.updateProjectionMatrix()
-  renderer.setSize(width, height)
+  renderer.setSize(innerWidth, innerHeight)
 })
 
 const stagger = (fns: any[], timeout: number) => {
@@ -156,11 +149,6 @@ const stagger = (fns: any[], timeout: number) => {
     }
   }, timeout)
 }
-
-const cube = new Mesh(
-  new PlaneGeometry(1, 1, 1),
-  new MeshBasicMaterial({ color: 0x00ff00 })
-)
 
 const init = () => {
   // Add Stats
@@ -177,6 +165,7 @@ const init = () => {
   // Start loop
   requestAnimationFrame(loop)
 
+  // Draw cards for initial player hands
   stagger(
     [
       () => drawCard(0),
@@ -195,6 +184,8 @@ const init = () => {
   )
 }
 
+const stats = new Stats()
+
 let frame = 0
 const loop = () => {
   stats.begin()
@@ -202,17 +193,10 @@ const loop = () => {
 
   world.update(0)
 
-  stats.end()
-  cube.rotation.x += 0.01
-  cube.rotation.y += 0.01
-  cube.rotation.z += 0.01
-
-  light2.position.set(
-    Math.sin(frame / 100) * 20,
-    Math.cos(frame / 100) * 20,
-    10
-  )
   renderer.render(scene, camera)
+
+  stats.end()
+
   requestAnimationFrame(loop)
 }
 

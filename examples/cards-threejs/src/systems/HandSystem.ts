@@ -31,7 +31,7 @@ const cardPositionX = (
     }
   }
 
-  return x
+  return x / 200
 }
 
 const cardPositionY = (
@@ -66,7 +66,7 @@ const cardPositionY = (
     y += step * 4
   }
 
-  return y
+  return y / 200
 }
 
 const cardPositionZ = (
@@ -76,11 +76,14 @@ const cardPositionZ = (
   isHovering: boolean,
   hoveringIdx: number
 ) => {
+  let z
   if (isHovering && hoveringIdx === index) {
-    return index + step
+    z = index + step
   } else {
-    return order
+    z = order
   }
+
+  return z / 200
 }
 
 const cardRotation = (
@@ -106,10 +109,10 @@ const updateCardPosition = (
   const order = entity.getComponent('order')
 
   const isPlayer = player.id === 1
-  const xStep = 40
-  const yStep = 5
+  const xStep = 80
+  const yStep = 10
   const rStep = 4
-  const zStep = 200
+  const zStep = 1
   const x = cardPositionX(idx, xStep, cardCount, isHovering, hoveringIdx)
   const y =
     cardPositionY(
@@ -118,11 +121,11 @@ const updateCardPosition = (
       cardCount,
       isHovering,
       hoveringIdx
-    ) + (isPlayer ? -500 : 500)
-  const rotY = degreesToRadians(isPlayer ? 0 : 180)
+    ) + (isPlayer ? -2.5 : 2.5)
+  const rotY = degreesToRadians(isPlayer ? 2 : 178) // slight angle
   const rotZ = cardRotation(idx, isPlayer, -rStep, cardCount)
   const dt = 0.16 / 2
-  const z = order * 2 //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
+  const z = 0.03 //+ (order * 2) / 200 //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
 
   position.z = z
 
