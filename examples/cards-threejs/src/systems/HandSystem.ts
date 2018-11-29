@@ -23,11 +23,11 @@ const cardPositionX = (
     const hoveredMoved = Math.min(1, Math.max(hoveringIdx - half, -1)) * 20
 
     if (index > hoveringIdx) {
-      x += 80 + hoveredMoved
+      x += step + hoveredMoved
     } else if (index === hoveringIdx) {
       x += hoveredMoved
     } else if (index < hoveringIdx) {
-      x += -20
+      x += -step / 4
     }
   }
 
@@ -109,7 +109,7 @@ const updateCardPosition = (
   const order = entity.getComponent('order')
 
   const isPlayer = player.id === 1
-  const xStep = 80
+  const xStep = 100
   const yStep = 10
   const rStep = 4
   const zStep = 1

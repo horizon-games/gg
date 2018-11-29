@@ -16,7 +16,12 @@ import {
   TextureComponent
 } from '../components'
 import { Card, CardStatus } from '../types'
-import { TextureLoader, Mesh, MeshStandardMaterial } from 'three'
+import {
+  TextureLoader,
+  Mesh,
+  MeshStandardMaterial,
+  MeshBasicMaterial
+} from 'three'
 import { degreesToRadians } from '../utils'
 import scene from '../scene'
 //@ts-ignore
@@ -52,7 +57,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   const isPlayer = card.playerId === 1
 
   const texture = new TextureLoader().load(`images/${card.artId}.jpg`)
-  const material = new MeshStandardMaterial({ map: texture })
+  const material = new MeshBasicMaterial({ map: texture })
 
   const object3d = group.clone()
   object3d.children[0].material = material

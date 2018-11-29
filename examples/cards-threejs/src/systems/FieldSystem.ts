@@ -4,7 +4,8 @@ import { Archetypes } from '../archetypes'
 import { CardStatus } from '../types'
 
 const lerp = (a: number, b: number, dt: number): number => {
-  return a + dt * (b - a)
+  const out = a + dt * (b - a)
+  return Math.abs(b - out) > 0.001 ? out : b
 }
 
 const cardPositionX = (
