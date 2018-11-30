@@ -30,3 +30,13 @@ export const lerp = (a: number, b: number, dt: number): number => {
   const out = a + dt * (b - a)
   return Math.abs(b - out) > 0.00001 ? out : b
 }
+
+export const mapRange = (
+  value: number,
+  low1: number,
+  high1: number,
+  low2: number,
+  high2: number
+): number => {
+  return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1)
+}

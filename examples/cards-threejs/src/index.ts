@@ -218,7 +218,7 @@ const loop = () => {
   stats.begin()
   frame++
 
-  world.update(0)
+  world.update(0, frame)
 
   renderer.render(scene, camera)
 

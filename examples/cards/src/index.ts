@@ -159,10 +159,12 @@ const init = () => {
   )
 }
 
+let frame = 0
 const loop = () => {
+  frame++
   stats.begin()
 
-  world.update(0)
+  world.update(0, frame)
 
   stats.end()
 

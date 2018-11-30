@@ -1,15 +1,8 @@
 import {
   PositionComponent,
   PlayerComponent,
-  DomComponent,
   CardComponent,
-  ColorComponent,
-  WidthComponent,
-  HeightComponent,
-  BoxShadowComponent,
-  BorderRadiusComponent,
   RotationComponent,
-  HoverComponent,
   MaterialComponent,
   OrderComponent,
   MeshComponent,
@@ -22,7 +15,6 @@ import {
   TextureLoader,
   Mesh,
   MeshStandardMaterial,
-  MeshBasicMaterial,
   MeshPhysicalMaterial
 } from 'three'
 import { degreesToRadians } from '../utils'
@@ -34,11 +26,6 @@ const backTexture = new TextureLoader().load(`images/back.jpg`)
 const backMaterial = new MeshStandardMaterial({
   map: backTexture
 })
-
-// backTexture.repeat.x = 3.9
-// backTexture.repeat.y = 2.76
-// backTexture.offset.x = -2.82
-// backTexture.offset.x = (300 / 100) * 0.8
 
 const loader = new GLTFLoader()
 let group: any
@@ -80,8 +67,6 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
     new MaterialComponent(material),
     new MeshComponent(object3d),
     new PlayerComponent({ id: card.playerId }),
-    new WidthComponent(125),
-    new HeightComponent(175),
     new OrderComponent(0),
     new PositionComponent({
       x: 0,
