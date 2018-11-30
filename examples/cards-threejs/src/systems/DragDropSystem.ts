@@ -77,10 +77,6 @@ export default class DragDropSystem extends System<Components> {
         const card = dragSource.getComponent('card')
         const player = dragSource.getComponent('player')
 
-        if (player.id !== 1) {
-          return
-        }
-
         if (card.status === CardStatus.Deck) {
           return
         }
@@ -97,8 +93,11 @@ export default class DragDropSystem extends System<Components> {
         position.x = lerp(mesh.position.x, pos.x /* + mouseDist.x */, 0.5)
         position.y = lerp(mesh.position.y, pos.y /* + mouseDist.y */, 0.5)
         position.z = lerp(mesh.position.z, pos.z, 0.5)
-        //rotation.x = lerp(mesh.rotation.x, 0, 0.5)
-        rotation.y = lerp(mesh.rotation.y, 0, 0.5)
+
+        if (player.id === 1) {
+          //rotation.x = lerp(mesh.rotation.x, 0, 0.5)
+          rotation.y = lerp(mesh.rotation.y, 0, 0.5)
+        }
         rotation.z = lerp(mesh.rotation.z, 0, 0.5)
       } else {
         if (dragSource && dropTarget) {

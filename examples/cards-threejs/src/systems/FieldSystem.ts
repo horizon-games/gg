@@ -89,14 +89,15 @@ const updateCardPosition = (
   const rotZ = 0
   const rotY = 0
 
-  if (position.x !== x || position.y !== y || position.z !== z) {
+  if (position.x !== x || position.y !== y) {
     position.x = lerp(position.x, x, dt)
     position.y = lerp(position.y, y, dt)
-    position.z = lerp(position.z, z, dt)
   } else {
-    if (rotation.y !== rotY) {
-      rotation.y = lerp(rotation.y, rotY, dt / 3)
-    }
+    rotation.y = lerp(rotation.y, rotY, dt)
+  }
+
+  if (rotation.y === rotY) {
+    position.z = lerp(position.z, z, dt)
   }
 
   if (rotation.z !== rotZ || rotation.x !== rotX) {
