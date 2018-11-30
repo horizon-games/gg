@@ -3,12 +3,8 @@ import { DirectionalLight } from 'three'
 import scene from '../scene'
 
 const LightAssemblage = (color: number, intensity: number) => {
-  const light = new DirectionalLight(color, intensity)
-  light.castShadow = true
-  scene.add(light)
-
   return [
-    new LightComponent(light),
+    new LightComponent(new DirectionalLight(color, intensity)),
     new PositionComponent({
       x: 0,
       y: 0,

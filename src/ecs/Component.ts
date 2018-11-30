@@ -1,3 +1,5 @@
+import Entity from './Entity'
+
 const ComponentTypeRegExp = /Component$/
 export const getComponentTypeFromClass = (klass: any): string =>
   klass.name.charAt(0).toLowerCase() +
@@ -10,6 +12,10 @@ export default class Component {
   constructor(value?: any) {
     this.value = value
   }
+
+  onAttach(entity: Entity<any>) {}
+
+  onDetach(entity: Entity<any>) {}
 }
 
 export interface ComponentTypes {

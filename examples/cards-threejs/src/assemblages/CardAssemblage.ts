@@ -53,7 +53,6 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   material.metalness = 0
   const object3d = group.clone()
   object3d.children[0].material = material
-  scene.add(object3d)
 
   return [
     new CardComponent({

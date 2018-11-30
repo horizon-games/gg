@@ -54,7 +54,7 @@ export default class Entity<C extends ComponentTypes> {
 
   addComponent = (component: ValueOf<C>) => {
     this.components[component.type] = component.value
-
+    component.onAttach(this)
     this.componentChangeListeners.forEach(listener =>
       listener({ type: 'add', entity: this, componentType: component.type })
     )
@@ -62,6 +62,8 @@ export default class Entity<C extends ComponentTypes> {
 
   removeComponent = (type: string) => {
     if (this.hasComponent(type)) {
+      // XXX Cannot detach because we no longer hold onto a reference to the component class instance
+      //this.components[type]!.onDetach(this)
       delete this.components[type]
 
       this.componentChangeListeners.forEach(listener =>
