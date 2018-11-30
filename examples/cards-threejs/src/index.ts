@@ -28,7 +28,13 @@ import {
   DraggableArchetype,
   DroppableArchetype
 } from './archetypes'
-import { Components } from './components'
+import {
+  Components,
+  DroppableComponent,
+  MeshComponent,
+  PositionComponent,
+  RotationComponent
+} from './components'
 import CardAssemblage from './assemblages/CardAssemblage'
 import DeckSystem from './systems/DeckSystem'
 import HandSystem from './systems/HandSystem'
@@ -91,6 +97,23 @@ scene.add(light1)
 // Light entities
 world.createEntity(...LightAssemblage(0xaa00ff, 0.3))
 world.createEntity(...LightAssemblage(0x00ffaa, 0.3))
+
+const droppableMesh = new Mesh(
+  new PlaneGeometry(8, 3),
+  new MeshBasicMaterial({ visible: false })
+)
+
+scene.add(droppableMesh)
+
+// Droppable Zones
+const droppableEntity = world.createEntity(
+  new DroppableComponent({ receives: ['card'] }),
+  new MeshComponent(droppableMesh),
+  new PositionComponent({ x: 0, y: 0, z: 0.1 }),
+  new RotationComponent({ x: 0, y: 0, z: 0 })
+)
+
+droppableMesh.userData.entityId = droppableEntity.id
 
 // Lookup for added cards
 const cards: Map<number, Entity<Components>> = new Map()

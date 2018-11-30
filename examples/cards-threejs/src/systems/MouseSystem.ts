@@ -19,9 +19,9 @@ window.addEventListener('click', function() {
         drawCard(player.id)
         break
 
-      case CardStatus.Hand:
-        playCard(player.id, card.id)
-        break
+      // case CardStatus.Hand:
+      //   playCard(player.id, card.id)
+      //   break
     }
   }
 })

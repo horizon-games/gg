@@ -28,18 +28,22 @@ export default class DragDropSystem extends System<Components> {
     raycaster.setFromCamera(mouse.position, camera)
 
     const intersections = raycaster.intersectObjects(scene.children, true)
-
     const found = intersections.some(x => {
-      const { parent } = x.object
-      if (parent) {
-        const { entityId } = parent.userData
+      const object3d = x.object.userData.entityId ? x.object : x.object.parent
+      if (object3d) {
+        const { entityId } = object3d.userData
         if (entityId) {
           const entity = manager.getEntity(entityId)
           if (entity) {
             if (isDragging) {
-              if (!mouse.isPressed && entity.hasComponent('droppable')) {
+              if (
+                !mouse.isPressed &&
+                entity !== dragSource &&
+                entity.hasComponent('droppable')
+              ) {
                 const { type } = dragSource.components.draggable!
                 const { receives } = entity.components.droppable!
+
                 if (receives.includes(type)) {
                   dropTarget = entity
                   return true
@@ -97,6 +101,12 @@ export default class DragDropSystem extends System<Components> {
         rotation.y = lerp(mesh.rotation.y, 0, 0.5)
         rotation.z = lerp(mesh.rotation.z, 0, 0.5)
       } else {
+        if (dragSource && dropTarget) {
+          const card = dragSource.getComponent('card')
+          const player = dragSource.getComponent('player')
+          playCard(player.id, card.id)
+        }
+
         isDragging = false
         dragSource = null
         dropTarget = null
