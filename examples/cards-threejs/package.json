@@ -20,6 +20,8 @@
     "@types/dotenv": "^6.1.0",
     "@types/jest": "^23.3.9",
     "@types/stats": "^0.16.30",
+    "@types/jquery": "^3.3.22",
+    "@types/three": "^0.93.10",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
     "prettier-check": "^2.0.0",
@@ -34,10 +36,7 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "@types/jquery": "^3.3.22",
-    "@types/three": "^0.93.10",
     "dotenv-webpack": "^1.5.7",
-    "gltf-loader-ts": "^0.3.1",
     "jquery": "^3.3.1",
     "popmotion": "^8.5.3",
     "sillyname": "^0.1.0",
