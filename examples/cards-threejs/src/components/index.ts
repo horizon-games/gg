@@ -15,6 +15,8 @@ import OrderComponent from './OrderComponent'
 import TextureComponent from './TextureComponent'
 import MeshComponent from './MeshComponent'
 import LightComponent from './LightComponent'
+import DraggableComponent from './DraggableComponent'
+import DroppableComponent from './DroppableComponent'
 
 export interface Components extends ComponentTypes {
   player: PlayerComponent
@@ -33,6 +35,8 @@ export interface Components extends ComponentTypes {
   texture: TextureComponent
   mesh: MeshComponent
   light: LightComponent
+  draggable: DraggableComponent
+  droppable: DroppableComponent
 }
 
 export {
@@ -51,5 +55,7 @@ export {
   OrderComponent,
   TextureComponent,
   MeshComponent,
-  LightComponent
+  LightComponent,
+  DraggableComponent,
+  DroppableComponent
 }

@@ -25,3 +25,8 @@ export const get2DPositionAtDepth = (
   const dist = (atDepth - camera.position.z) / v.z
   return new Vector3().copy(camera.position).add(v.multiplyScalar(dist))
 }
+
+export const lerp = (a: number, b: number, dt: number): number => {
+  const out = a + dt * (b - a)
+  return Math.abs(b - out) > 0.000001 ? out : b
+}

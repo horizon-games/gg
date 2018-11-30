@@ -13,14 +13,17 @@ import {
   MaterialComponent,
   OrderComponent,
   MeshComponent,
-  TextureComponent
+  TextureComponent,
+  DraggableComponent,
+  DroppableComponent
 } from '../components'
 import { Card, CardStatus } from '../types'
 import {
   TextureLoader,
   Mesh,
   MeshStandardMaterial,
-  MeshBasicMaterial
+  MeshBasicMaterial,
+  MeshPhysicalMaterial
 } from 'three'
 import { degreesToRadians } from '../utils'
 import scene from '../scene'
@@ -57,8 +60,10 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   const isPlayer = card.playerId === 1
 
   const texture = new TextureLoader().load(`images/${card.artId}.jpg`)
-  const material = new MeshBasicMaterial({ map: texture })
-
+  const material = new MeshPhysicalMaterial({ map: texture })
+  material.clearCoat = 0
+  material.reflectivity = 0
+  material.metalness = 0
   const object3d = group.clone()
   object3d.children[0].material = material
   scene.add(object3d)
@@ -87,7 +92,9 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       x: 0,
       y: degreesToRadians(180),
       z: degreesToRadians(Math.random() * 4 - 2 + 180)
-    })
+    }),
+    new DraggableComponent({ type: 'card' }),
+    new DroppableComponent({ receives: ['target'] })
   ]
 }
 

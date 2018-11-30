@@ -1,5 +1,7 @@
 const enum Archetypes {
   Renderable,
+  Draggable,
+  Droppable,
   Lights,
   Cards,
   PlayerCards,

@@ -3,11 +3,7 @@ import { Components, PositionComponent, RotationComponent } from '../components'
 import { Archetypes } from '../archetypes'
 import { CardStatus } from '../types'
 import screen from '../screen'
-
-const lerp = (a: number, b: number, dt: number): number => {
-  const out = a + dt * (b - a)
-  return Math.abs(b - out) > 0.001 ? out : b
-}
+import { lerp } from '../utils'
 
 const cardPositionX = (
   index: number,
@@ -89,6 +85,7 @@ const updateCardPosition = (
   const y = isPlayer ? -0.8 : 0.8
   const z = 0.1
   const dt = 0.16
+  const rotX = 0
   const rotZ = 0
   const rotY = 0
 
@@ -102,8 +99,9 @@ const updateCardPosition = (
     }
   }
 
-  if (rotation.z !== rotZ) {
+  if (rotation.z !== rotZ || rotation.x !== rotX) {
     rotation.z = lerp(rotation.z, rotZ, dt)
+    rotation.x = lerp(rotation.x, rotX, dt)
   }
 }
 

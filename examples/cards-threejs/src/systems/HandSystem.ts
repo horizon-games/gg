@@ -2,11 +2,7 @@ import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components, PositionComponent, RotationComponent } from '../components'
 import { Archetypes } from '../archetypes'
 import { CardStatus } from '../types'
-import { degreesToRadians } from '../utils'
-
-const lerp = (a: number, b: number, dt: number): number => {
-  return a + dt * (b - a)
-}
+import { degreesToRadians, lerp } from '../utils'
 
 const cardPositionX = (
   index: number,
@@ -121,27 +117,27 @@ const updateCardPosition = (
       cardCount,
       isHovering,
       hoveringIdx
-    ) + (isPlayer ? -2.5 : 2.5)
-  const rotY = degreesToRadians(isPlayer ? 2 : 178) // slight angle
+    ) + (isPlayer ? -2.0 : 2.5)
+  const rotX = degreesToRadians(isPlayer ? 20 : 0)
+  const rotY = degreesToRadians(isPlayer ? 0 : 178) // slight angle
   const rotZ = cardRotation(idx, isPlayer, -rStep, cardCount)
   const dt = 0.16 / 2
-  const z = 0.03 //+ (order * 2) / 200 //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
+  let z = isPlayer ? 0.5 + order / 30 : 0.03 //+ (order * 2) / 200 //cardPositionZ(idx, order, zStep, isHovering, hoveringIdx)
 
-  position.z = z
-
-  if (
-    position.x !== x ||
-    position.y !== y
-    //Math.abs(position.z - z) > 0.1
-  ) {
-    position.x = lerp(position.x, x, dt)
-    position.y = lerp(position.y, y, dt)
-    //position.z = lerp(position.z, z, dt)
+  if (isPlayer && isHovering && hoveringIdx === idx) {
+    z += 0.07
   }
 
-  if (rotation.z !== z || rotation.y !== rotY) {
+  if (position.x !== x || position.y !== y || position.z !== z) {
+    position.x = lerp(position.x, x, dt)
+    position.y = lerp(position.y, y, dt)
+    position.z = lerp(position.z, z, dt)
+  }
+
+  if (rotation.z !== z || rotation.y !== rotY || rotation.x !== rotX) {
     rotation.y = lerp(rotation.y, rotY, dt)
     rotation.z = lerp(rotation.z, rotZ, dt)
+    rotation.x = lerp(rotation.x, rotX, dt)
   }
 }
 

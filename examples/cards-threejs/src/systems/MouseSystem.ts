@@ -10,14 +10,6 @@ import mouse from '../mouse'
 
 const raycaster = new Raycaster()
 
-window.addEventListener('mousemove', function(ev) {
-  if (hoveredEntity) {
-    document.body.style.cursor = 'pointer'
-  } else {
-    document.body.style.cursor = 'default'
-  }
-})
-
 window.addEventListener('click', function() {
   if (hoveredEntity) {
     const player = hoveredEntity.getComponent('player')
@@ -45,6 +37,7 @@ export default class MouseSystem extends System<Components> {
     const intersections = raycaster.intersectObjects(scene.children, true)
     entities.forEach(entity => entity.removeComponent('hover'))
     hoveredEntity = null
+    document.body.style.cursor = 'default'
 
     if (intersections.length) {
       const {
@@ -57,20 +50,10 @@ export default class MouseSystem extends System<Components> {
           if (entity) {
             hoveredEntity = entity
             entity.addComponent(new HoverComponent())
+            document.body.style.cursor = 'pointer'
           }
         }
       }
     }
   }
 }
-
-// const get2DPoint = (worldVector: Vector3): Vector2 => {
-//   const vector = projector.projectVector(worldVector, camera)
-//   const halfWidth = screenWidth / 2
-//   const halfHeight = screenHeight / 2
-
-//   return new Vector2(
-//     Math.round(vector.x * halfWidth + halfWidth),
-//     Math.round(-vector.y * halfHeight + halfHeight)
-//   )
-// }

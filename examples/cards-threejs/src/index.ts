@@ -24,7 +24,9 @@ import {
   PlayerCardsArchetype,
   OpponentCardsArchetype,
   HoveredCardsArchetype,
-  LightsArchetype
+  LightsArchetype,
+  DraggableArchetype,
+  DroppableArchetype
 } from './archetypes'
 import { Components } from './components'
 import CardAssemblage from './assemblages/CardAssemblage'
@@ -34,6 +36,7 @@ import FieldSystem from './systems/FieldSystem'
 import LightsSystem from './systems/LightsSystem'
 import MouseSystem from './systems/MouseSystem'
 import RenderSystem from './systems/RenderSystem'
+import DragDropSystem from './systems/DragDropSystem'
 import screen from './screen'
 import camera from './camera'
 import scene from './scene'
@@ -48,11 +51,14 @@ world.addArchetype(PlayerCardsArchetype)
 world.addArchetype(HoveredCardsArchetype)
 world.addArchetype(OpponentCardsArchetype)
 world.addArchetype(LightsArchetype)
+world.addArchetype(DraggableArchetype)
+world.addArchetype(DroppableArchetype)
 
 world.addSystem(new DeckSystem())
 world.addSystem(new HandSystem())
 world.addSystem(new FieldSystem())
 world.addSystem(new MouseSystem())
+world.addSystem(new DragDropSystem())
 world.addSystem(new LightsSystem())
 world.addSystem(new RenderSystem())
 
@@ -74,7 +80,7 @@ gameBoard.position.set(0, 0, 0)
 scene.add(gameBoard)
 
 // LIGHTS
-var light1 = new DirectionalLight(0xffffff, 0.7)
+var light1 = new SpotLight(0xffffff, 1)
 light1.position.set(0, 0, 5)
 light1.castShadow = true
 light1.shadow.mapSize.width = 2048
@@ -157,8 +163,6 @@ const init = () => {
   // Add Renderer
   renderer.setSize(screen.width, screen.height)
   document.body.appendChild(renderer.domElement)
-
-  camera.position.z = 5
 
   syncState(store.getState())
 
