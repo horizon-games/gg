@@ -15,8 +15,6 @@ const raycaster = new Raycaster()
 let isDragging: boolean = false
 let dragSource: any = null
 let dropTarget: any = null
-let xDist: number
-let yDist: number
 
 const mouseDist = new Vector2()
 
@@ -95,7 +93,7 @@ export default class DragDropSystem extends System<Components> {
         position.z = lerp(mesh.position.z, pos.z, 0.5)
 
         if (player.id === 1) {
-          //rotation.x = lerp(mesh.rotation.x, 0, 0.5)
+          // rotation.x = lerp(mesh.rotation.x, 0, 0.5)
           rotation.y = lerp(mesh.rotation.y, 0, 0.5)
         }
         rotation.z = lerp(mesh.rotation.z, 0, 0.5)

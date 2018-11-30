@@ -45,7 +45,6 @@ export const endTurn = () => {
   const turnIndex = state.turnIndex + 1
 
   store.setState({
-    turnIndex,
     currentPlayerId: nextPlayerId,
     players: {
       ...state.players,
@@ -54,6 +53,7 @@ export const endTurn = () => {
         mana: turnIndex,
         manaMax: turnIndex
       }
-    }
+    },
+    turnIndex
   })
 }

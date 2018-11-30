@@ -27,7 +27,7 @@ import {
 } from 'three'
 import { degreesToRadians } from '../utils'
 import scene from '../scene'
-//@ts-ignore
+// @ts-ignore
 import GLTFLoader from 'three-gltf-loader'
 
 const backTexture = new TextureLoader().load(`images/back.jpg`)
@@ -43,14 +43,14 @@ const backMaterial = new MeshStandardMaterial({
 const loader = new GLTFLoader()
 let group: any
 
-loader.load('models/card.glb', function(gltf: any) {
+loader.load('models/card.glb', (gltf: any) => {
   console.log(gltf)
   group = gltf.scene.children[0]
   group.scale.set(0.2, 0.2, 0.2)
   const [face, trim, back] = group.children
   trim.material = new MeshStandardMaterial({ color: 0xffffff })
   back.material = backMaterial
-  group.traverse(function(obj: Mesh) {
+  group.traverse((obj: Mesh) => {
     obj.receiveShadow = true
     obj.castShadow = true
   })

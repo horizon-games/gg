@@ -10,7 +10,7 @@ import mouse from '../mouse'
 
 const raycaster = new Raycaster()
 
-window.addEventListener('click', function() {
+window.addEventListener('click', () => {
   if (hoveredEntity) {
     const player = hoveredEntity.getComponent('player')
     const card = hoveredEntity.getComponent('card')

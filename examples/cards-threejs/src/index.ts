@@ -77,7 +77,7 @@ backgroundTexture.wrapS = RepeatWrapping
 backgroundTexture.wrapT = RepeatWrapping
 backgroundTexture.repeat.set(10, 10)
 
-var gameBoard = new Mesh(
+const gameBoard = new Mesh(
   new PlaneGeometry(100, 100, 10),
   new MeshStandardMaterial({ map: backgroundTexture })
 )
@@ -86,7 +86,7 @@ gameBoard.position.set(0, 0, 0)
 scene.add(gameBoard)
 
 // LIGHTS
-var light1 = new SpotLight(0xffffff, 1)
+const light1 = new SpotLight(0xffffff, 1)
 light1.position.set(0, 0, 5)
 light1.castShadow = true
 light1.shadow.mapSize.width = 2048
@@ -163,7 +163,7 @@ window.onkeydown = (ev: any) => {
   }
 }
 
-window.addEventListener('resize', function(ev) {
+window.addEventListener('resize', ev => {
   const { width, height } = screen
   camera.aspect = width / height
   camera.updateProjectionMatrix()

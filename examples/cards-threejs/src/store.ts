@@ -1,7 +1,7 @@
 import createStore, { Store } from 'unistore'
 import { State, PlayerState, CardType } from './types'
 
-//@ts-ignore
+// @ts-ignore
 import sillyname from 'sillyname'
 
 let cardIdx = 0

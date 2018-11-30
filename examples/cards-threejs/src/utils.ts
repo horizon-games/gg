@@ -28,5 +28,5 @@ export const get2DPositionAtDepth = (
 
 export const lerp = (a: number, b: number, dt: number): number => {
   const out = a + dt * (b - a)
-  return Math.abs(b - out) > 0.000001 ? out : b
+  return Math.abs(b - out) > 0.00001 ? out : b
 }

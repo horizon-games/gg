@@ -6,7 +6,7 @@ const mouse: { position: Vector2; isPressed: boolean } = {
   isPressed: false
 }
 
-window.addEventListener('mousemove', function(ev) {
+window.addEventListener('mousemove', ev => {
   mouse.position.x = (ev.clientX! / screen.width) * 2 - 1
   mouse.position.y = -(ev.clientY! / screen.height) * 2 + 1
 })
@@ -17,13 +17,13 @@ window.addEventListener('mousemove', function(ev) {
 //   clearTimeout(mouseDownTimeout)
 // })
 
-window.addEventListener('mousedown', function(ev) {
-  //mouseDownTimeout = setTimeout(() => {
+window.addEventListener('mousedown', ev => {
+  // mouseDownTimeout = setTimeout(() => {
   mouse.isPressed = true
-  //}, 100)
+  // }, 100)
 })
 
-window.addEventListener('mouseup', function(ev) {
+window.addEventListener('mouseup', ev => {
   mouse.isPressed = false
 })
 
