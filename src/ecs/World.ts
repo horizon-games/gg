@@ -89,10 +89,10 @@ export default class World<C extends ComponentTypes> {
     return entityIds.map(this.getEntity.bind(this)) //.filter(entity => entity !== undefined)
   }
 
-  update(dt: number) {
+  update(dt: number, time: number) {
     this.systems.forEach(system => {
       if (system.enabled) {
-        system.update(this.manager, dt)
+        system.update(this.manager, dt, time)
       }
     })
   }

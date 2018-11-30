@@ -18,7 +18,7 @@ export default abstract class System<C extends ComponentTypes> {
     Object.assign(this, options)
   }
 
-  abstract update(manager: EntityManager<C>, dt: number): void
+  abstract update(manager: EntityManager<C>, dt: number, time: number): void
 
   enable() {
     this.enabled = true

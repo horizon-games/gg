@@ -13,7 +13,7 @@ enum Archetypes {
 }
 
 class PhysicsSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number) {
+  update(manager: EntityManager<Components>, dt: number, time: number) {
     const all = manager.getArchetype(Archetypes.All)
   }
 }

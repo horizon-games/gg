@@ -27,7 +27,7 @@ describe('World', () => {
     world.addSystems(new PhysicsSystem())
 
     // No entities yet, should have no effect
-    world.update(0)
+    world.update(16, 1)
 
     // Adding entities
     world.createEntity(...physicalAssemblage())
@@ -36,7 +36,7 @@ describe('World', () => {
     world.createEntity(...physicalAssemblage())
 
     // Now the system should modify this entity
-    world.update(1)
+    world.update(16, 2)
 
     expect(world.getArchetype(Archetypes.Physical).entities.length).toBe(4)
     expect(
