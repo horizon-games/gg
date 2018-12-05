@@ -109,7 +109,9 @@ export default class Entity<C extends ComponentTypes> {
     const componentType = getComponentTypeFromClass(componentClass)
 
     if (predicate) {
-      this.addComponent(new componentClass())
+      if (!this.hasComponent(componentType)) {
+        this.addComponent(new componentClass())
+      }
     } else {
       this.removeComponent(componentType)
     }
