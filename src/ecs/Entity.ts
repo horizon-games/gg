@@ -1,4 +1,7 @@
-import { ComponentTypes } from './Component'
+import Component, {
+  ComponentTypes,
+  getComponentTypeFromClass
+} from './Component'
 
 type ValueOf<T> = T[keyof T]
 
@@ -53,11 +56,17 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   addComponent = (component: ValueOf<C>) => {
-    this.components[component.type] = component.value
-    component.onAttach(this)
-    this.componentChangeListeners.forEach(listener =>
-      listener({ type: 'add', entity: this, componentType: component.type })
-    )
+    if (!this.hasComponent(component.type)) {
+      this.components[component.type] = component.value
+      component.onAttach(this)
+      this.componentChangeListeners.forEach(listener =>
+        listener({ type: 'add', entity: this, componentType: component.type })
+      )
+    } else {
+      throw new Error(
+        `Entity already contains component of type ${component.type}.`
+      )
+    }
   }
 
   removeComponent = (type: string) => {
@@ -93,6 +102,16 @@ export default class Entity<C extends ComponentTypes> {
       this.components[type] = value
     } else {
       throw new Error(`Entity does not contain component of type ${type}.`)
+    }
+  }
+
+  toggleComponent(componentClass: { new (): Component }, predicate: boolean) {
+    const componentType = getComponentTypeFromClass(componentClass)
+
+    if (predicate) {
+      this.addComponent(new componentClass())
+    } else {
+      this.removeComponent(componentType)
     }
   }
 }
