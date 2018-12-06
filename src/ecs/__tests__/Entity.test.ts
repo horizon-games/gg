@@ -43,11 +43,12 @@ describe('Entity', () => {
       z: 0
     })
 
-    expect(entity.setComponent('position', { x: 1, y: 2, z: 3 }))
+    entity.setComponent('position', { y: 2 })
+
     expect(entity.getComponent('position')).toEqual({
       x: 1,
       y: 2,
-      z: 3
+      z: 0
     })
   })
 

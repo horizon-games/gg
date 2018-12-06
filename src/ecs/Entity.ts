@@ -107,9 +107,9 @@ export default class Entity<C extends ComponentTypes> {
 
   get = this.getComponent
 
-  setComponent<T extends keyof C>(type: T, value: C[T]['value']) {
+  setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']>) {
     if (this.hasComponent(type as string)) {
-      this.components[type]!.value = value
+      Object.assign(this.getComponent(type), value)
     } else {
       throw new Error(`Entity does not contain component of type ${type}.`)
     }
