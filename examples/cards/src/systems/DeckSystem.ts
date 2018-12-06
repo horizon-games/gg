@@ -23,7 +23,9 @@ export default class DeckSystem extends System<Components> {
     )
 
     playerCards
-      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .filter(
+        entity => entity.components.card!.value.status === CardStatus.Deck
+      )
       .forEach((entity, idx) => {
         const position = entity.getComponent('position')
         const player = entity.getComponent('player')
@@ -31,7 +33,9 @@ export default class DeckSystem extends System<Components> {
       })
 
     opponentCards
-      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .filter(
+        entity => entity.components.card!.value.status === CardStatus.Deck
+      )
       .forEach((entity, idx) => {
         const position = entity.getComponent('position')
         const player = entity.getComponent('player')

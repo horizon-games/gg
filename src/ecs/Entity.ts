@@ -5,9 +5,9 @@ import Component, {
 
 type ValueOf<T> = T[keyof T]
 
-type ComponentValues<T extends ComponentTypes> = {
-  [type in keyof T]: T[type]['value']
-}
+// type ComponentValues<T extends ComponentTypes> = {
+//   [type in keyof T]: T[type]['value']
+// }
 
 type ComponentChangeEventTypes = 'add' | 'remove'
 
@@ -25,7 +25,9 @@ let instanceIdx = 0
 
 export default class Entity<C extends ComponentTypes> {
   id: number
-  components: Partial<ComponentValues<C>> = {}
+  //componentInstances: Partial<C> = {}
+  //components: Partial<ComponentValues<C>> = {}
+  components: Partial<C> = {}
 
   get componentTypes(): Array<keyof C> {
     return Object.keys(this.components)
@@ -44,8 +46,11 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   reset(): Entity<C> {
+    Object.keys(this.components).forEach(type => {
+      this.removeComponent(type)
+    })
+
     this.id = ++instanceIdx
-    this.components = {}
     this.componentChangeListeners = new Set()
     return this
   }
@@ -57,7 +62,8 @@ export default class Entity<C extends ComponentTypes> {
 
   addComponent = (component: ValueOf<C>) => {
     if (!this.hasComponent(component.type)) {
-      this.components[component.type] = component.value
+      this.components[component.type] = component
+
       component.onAttach(this)
       this.componentChangeListeners.forEach(listener =>
         listener({ type: 'add', entity: this, componentType: component.type })
@@ -71,8 +77,8 @@ export default class Entity<C extends ComponentTypes> {
 
   removeComponent = (type: string) => {
     if (this.hasComponent(type)) {
-      // XXX Cannot detach because we no longer hold onto a reference to the component class instance
-      //this.components[type]!.onDetach(this)
+      this.components[type]!.onDetach(this)
+
       delete this.components[type]
 
       this.componentChangeListeners.forEach(listener =>
@@ -82,8 +88,10 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   hasComponent(type: string): boolean {
-    return !!this.componentTypes.includes(type)
+    return !!this.components[type]
   }
+
+  has = this.hasComponent
 
   hasComponents = (...types: string[]): boolean => {
     return types.every(type => this.hasComponent(type))
@@ -91,19 +99,23 @@ export default class Entity<C extends ComponentTypes> {
 
   getComponent<T extends keyof C>(type: T): C[T]['value'] {
     if (this.hasComponent(type as string)) {
-      return this.components[type] as C[T]['value']
+      return this.components[type]!.value
     } else {
       throw new Error(`Entity does not contain component of ${type}.`)
     }
   }
 
-  setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']>) {
+  get = this.getComponent
+
+  setComponent<T extends keyof C>(type: T, value: C[T]['value']) {
     if (this.hasComponent(type as string)) {
-      this.components[type] = value
+      this.components[type]!.value = value
     } else {
       throw new Error(`Entity does not contain component of type ${type}.`)
     }
   }
+
+  set = this.setComponent
 
   toggleComponent(componentClass: { new (): Component }, predicate: boolean) {
     const componentType = getComponentTypeFromClass(componentClass)

@@ -41,12 +41,12 @@ const init = () => {
   requestAnimationFrame(loop)
 }
 
-let loopIdx = 0
+let frame = 0
 
 const loop = () => {
   stats.begin()
 
-  world.update(loopIdx++)
+  world.update(0, frame++)
 
   stats.end()
 

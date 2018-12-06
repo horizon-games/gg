@@ -6,5 +6,5 @@ import { CardStatus } from '../types'
 export default new Archetype<Components>(Archetypes.HandCards, [
   Archetype.include('card'),
   (entity: Entity<Components>) =>
-    entity.components.card!.status === CardStatus.Hand
+    entity.components.card!.value.status === CardStatus.Hand
 ])

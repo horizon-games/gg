@@ -39,8 +39,8 @@ export default class DragDropSystem extends System<Components> {
                 entity !== dragSource &&
                 entity.hasComponent('droppable')
               ) {
-                const { type } = dragSource.components.draggable!
-                const { receives } = entity.components.droppable!
+                const { type } = dragSource.components.draggable!.value
+                const { receives } = entity.components.droppable!.value
 
                 if (receives.includes(type)) {
                   dropTarget = entity
@@ -58,8 +58,8 @@ export default class DragDropSystem extends System<Components> {
                   0.5
                 )
                 mouseDist.set(
-                  entity.components.position!.x - pos.x,
-                  entity.components.position!.y - pos.y
+                  entity.components.position!.value.x - pos.x,
+                  entity.components.position!.value.y - pos.y
                 )
                 return true
               }

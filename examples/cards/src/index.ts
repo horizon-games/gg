@@ -42,8 +42,8 @@ const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   } else {
     const entity = cards.get(card.id)
     if (entity) {
-      entity.components.card!.status = status
-      entity.components.order! = index
+      entity.components.card!.value.status = status
+      entity.components.order!.value = index
     }
   }
 }
@@ -93,7 +93,7 @@ $('body').mousemove(function(ev) {
   if (id) {
     const entity = world.manager.getEntity(id)
     if (entity && entity.hasComponent('hover')) {
-      const { status } = entity.components.card!
+      const { status } = entity.components.card!.value
 
       if (status !== CardStatus.Deck) {
         entity.setComponent('hover', true)
@@ -109,14 +109,17 @@ $('body').on('click', '.card', function(ev) {
   if (id) {
     const entity = world.manager.getEntity(id)
     if (entity) {
-      const { status } = entity.components.card!
+      const { status } = entity.components.card!.value
       switch (status) {
         case CardStatus.Deck:
-          drawCard(entity.components.player!.id)
+          drawCard(entity.components.player!.value.id)
           break
 
         case CardStatus.Hand:
-          playCard(entity.components.player!.id, entity.components.card!.id)
+          playCard(
+            entity.components.player!.value.id,
+            entity.components.card!.value.id
+          )
           break
       }
     }

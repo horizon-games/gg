@@ -21,8 +21,8 @@ export default class RenderSystem extends System<Components> {
   }
 
   render = (ctx: CanvasRenderingContext2D, entity: Entity<Components>) => {
-    const loc = entity.components.position!
-    const vel = entity.components.velocity!
+    const loc = entity.components.position!.value
+    const vel = entity.components.velocity!.value
     const theta = heading2D(vel) + HALF_PI
 
     ctx.save()

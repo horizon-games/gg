@@ -5,8 +5,8 @@ import { CardStatus } from '../types'
 
 export default new Archetype<Components>(Archetypes.PlayerDeckCards, [
   (entity: Entity<Components>) =>
-    !!entity.components.player &&
-    entity.components.player.id === 1 &&
-    !!entity.components.card &&
-    entity.components.card.status === CardStatus.Deck
+    !!entity.components.player!.value &&
+    entity.components.player!.value.id === 1 &&
+    !!entity.components.card! &&
+    entity.components.card!.value.status === CardStatus.Deck
 ])

@@ -118,8 +118,8 @@ const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   } else {
     const entity = cards.get(card.id)
     if (entity) {
-      entity.components.card!.status = status
-      entity.components.order! = index
+      entity.components.card!.value.status = status
+      entity.components.order!.value = index
     }
   }
 }

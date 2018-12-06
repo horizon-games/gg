@@ -117,23 +117,23 @@ export default class FieldSystem extends System<Components> {
     )
 
     playerCards = playerCards.filter(
-      entity => entity.components.card!.status === CardStatus.Field
+      entity => entity.components.card!.value.status === CardStatus.Field
     )
     opponentCards = opponentCards.filter(
-      entity => entity.components.card!.status === CardStatus.Field
+      entity => entity.components.card!.value.status === CardStatus.Field
     )
 
     const isHoveringPlayerCards = playerCards.some(
-      entity => entity.components.hover!
+      entity => entity.components.hover!.value
     )
     const isHoveringOpponentCards = opponentCards.some(
-      entity => entity.components.hover!
+      entity => entity.components.hover!.value
     )
     const playerHoveringIdx = playerCards.findIndex(
-      entity => entity.components.hover!
+      entity => entity.components.hover!.value
     )
     const opponentHoveringIdx = opponentCards.findIndex(
-      entity => entity.components.hover!
+      entity => entity.components.hover!.value
     )
 
     playerCards.forEach((entity, idx) => {

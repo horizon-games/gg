@@ -30,6 +30,10 @@
   version "10.12.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.9.tgz#a07bfa74331471e1dc22a47eb72026843f7b95c8"
 
+"@types/node@^10.12.12":
+  version "10.12.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.12.tgz#e15a9d034d9210f00320ef718a50c4a799417c47"
+
 "@types/stats@^0.16.30":
   version "0.16.30"
   resolved "https://registry.yarnpkg.com/@types/stats/-/stats-0.16.30.tgz#deb5fa6e59c6d67bd6e0f61a51ef630a83a84ce9"

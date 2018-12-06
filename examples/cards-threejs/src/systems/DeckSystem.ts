@@ -29,7 +29,9 @@ export default class DeckSystem extends System<Components> {
     const opponentDeckPosition = get2DPositionAtDepth(camera, -0.8, 0.7)
 
     playerCards
-      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .filter(
+        entity => entity.components.card!.value.status === CardStatus.Deck
+      )
       .forEach((entity, idx) => {
         const position = entity.getComponent('position')
         const player = entity.getComponent('player')
@@ -37,7 +39,9 @@ export default class DeckSystem extends System<Components> {
       })
 
     opponentCards
-      .filter(entity => entity.components.card!.status === CardStatus.Deck)
+      .filter(
+        entity => entity.components.card!.value.status === CardStatus.Deck
+      )
       .forEach((entity, idx) => {
         const position = entity.getComponent('position')
         const player = entity.getComponent('player')

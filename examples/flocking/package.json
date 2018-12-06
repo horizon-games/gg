@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
     "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.12",
     "@types/stats": "^0.16.30",
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
