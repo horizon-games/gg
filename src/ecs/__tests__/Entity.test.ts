@@ -1,6 +1,10 @@
 import Entity from '../Entity'
 
 import { Components, PositionComponent } from './component.fixtures'
+import Component from '../Component'
+import { createEntityFixture } from './entity.fixtures'
+
+class TagComponent extends Component {}
 
 describe('Entity', () => {
   test('can create', () => {
@@ -45,5 +49,17 @@ describe('Entity', () => {
       y: 2,
       z: 3
     })
+  })
+
+  test('can toggle a tag component', () => {
+    const entity = new Entity<any>()
+
+    entity.toggleComponent(TagComponent, true)
+
+    expect(entity.hasComponent('tag')).toBe(true)
+
+    entity.toggleComponent(TagComponent, false)
+
+    expect(entity.hasComponent('tag')).toBe(false)
   })
 })
