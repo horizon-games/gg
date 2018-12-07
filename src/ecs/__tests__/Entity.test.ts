@@ -4,6 +4,12 @@ import { Components, PositionComponent } from './component.fixtures'
 import Component from '../Component'
 
 class TagComponent extends Component {}
+class PrimitiveValueComponent extends Component {
+  value: number
+}
+class ArrayValueComponent extends Component {
+  value: number[]
+}
 
 describe('Entity', () => {
   test('can create', () => {
@@ -30,8 +36,15 @@ describe('Entity', () => {
   })
 
   test('can set component value', () => {
-    const pos = new PositionComponent({ x: 0, y: 0, z: 0 })
-    const entity = new Entity<Components>([pos])
+    const entity = new Entity<{
+      position: PositionComponent
+      primitiveValue: PrimitiveValueComponent
+      arrayValue: ArrayValueComponent
+    }>([
+      new PositionComponent({ x: 0, y: 0, z: 0 }),
+      new PrimitiveValueComponent(1),
+      new ArrayValueComponent([1, 2])
+    ])
 
     const component = entity.getComponent('position')
     component.x = 1
@@ -49,6 +62,17 @@ describe('Entity', () => {
       y: 2,
       z: 0
     })
+
+    expect(entity.getComponent('primitiveValue')).toBe(1)
+    entity.setComponent('primitiveValue', 2)
+
+    expect(entity.getComponent('primitiveValue')).toBe(2)
+
+    expect(entity.getComponent('arrayValue')).toEqual([1, 2])
+
+    entity.setComponent('arrayValue', [3, 4])
+
+    expect(entity.getComponent('arrayValue')).toEqual([3, 4])
   })
 
   test('can toggle a tag component', () => {
