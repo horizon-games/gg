@@ -77,7 +77,7 @@ export default class EntityManager<C extends ComponentTypes> {
     return this.entities.get(entityId)
   }
 
-  renewEntity(...components: Array<ValueOf<C>>): Entity<C> {
+  renewEntity(components: Array<ValueOf<C>> = []): Entity<C> {
     const entity = this.entityPool.renew(components)
     this.addEntity(entity)
     return entity

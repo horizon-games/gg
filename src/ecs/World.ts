@@ -77,8 +77,8 @@ export default class World<C extends ComponentTypes> {
     return this.manager.getArchetype(archetypeID)
   }
 
-  createEntity(...components: Array<ValueOf<C>>): Entity<C> {
-    return this.manager.renewEntity(...components)
+  createEntity(components: Array<ValueOf<C>> = []): Entity<C> {
+    return this.manager.renewEntity(components)
   }
 
   getEntity(entityId: number): Entity<C> | undefined {

@@ -2,7 +2,6 @@ import Entity from '../Entity'
 
 import { Components, PositionComponent } from './component.fixtures'
 import Component from '../Component'
-import { createEntityFixture } from './entity.fixtures'
 
 class TagComponent extends Component {}
 
@@ -32,7 +31,7 @@ describe('Entity', () => {
 
   test('can set component value', () => {
     const pos = new PositionComponent({ x: 0, y: 0, z: 0 })
-    const entity = new Entity<Components>(pos)
+    const entity = new Entity<Components>([pos])
 
     const component = entity.getComponent('position')
     component.x = 1

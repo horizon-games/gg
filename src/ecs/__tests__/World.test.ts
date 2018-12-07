@@ -1,5 +1,4 @@
 import World from '../World'
-import EntityManager from '../EntityManager'
 import Archetype from '../Archetype'
 import { Components, physicalAssemblage } from './component.fixtures'
 import { PhysicsSystem } from './system.fixtures'
@@ -16,7 +15,7 @@ describe('World', () => {
 
     expect(world.hasArchetype(Archetypes.All)).toBe(true)
 
-    world.createEntity(...physicalAssemblage())
+    world.createEntity(physicalAssemblage())
 
     expect(world.getArchetype(Archetypes.All).entities.length).toBe(1)
   })
@@ -30,10 +29,10 @@ describe('World', () => {
     world.update(16, 1)
 
     // Adding entities
-    world.createEntity(...physicalAssemblage())
-    world.createEntity(...physicalAssemblage())
-    world.createEntity(...physicalAssemblage())
-    world.createEntity(...physicalAssemblage())
+    world.createEntity(physicalAssemblage())
+    world.createEntity(physicalAssemblage())
+    world.createEntity(physicalAssemblage())
+    world.createEntity(physicalAssemblage())
 
     // Now the system should modify this entity
     world.update(16, 2)

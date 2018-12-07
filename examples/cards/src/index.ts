@@ -37,7 +37,7 @@ const cards: Map<number, Entity<Components>> = new Map()
 
 const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   if (!cards.has(card.id)) {
-    const entity = world.createEntity(...CardAssemblage(card, status))
+    const entity = world.createEntity(CardAssemblage(card, status))
     cards.set(card.id, entity)
   } else {
     const entity = cards.get(card.id)

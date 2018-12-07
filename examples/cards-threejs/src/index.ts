@@ -95,25 +95,25 @@ light1.shadow.mapSize.height = 2048
 scene.add(light1)
 
 // Light entities
-world.createEntity(...LightAssemblage(0xaa00ff, 0.3))
-world.createEntity(...LightAssemblage(0x00ffaa, 0.3))
+world.createEntity(LightAssemblage(0xaa00ff, 0.3))
+world.createEntity(LightAssemblage(0x00ffaa, 0.3))
 
 // Droppable Zones
-const droppableEntity = world.createEntity(
+world.createEntity([
   new DroppableComponent({ receives: ['card'] }),
   new MeshComponent(
     new Mesh(new PlaneGeometry(8, 3), new MeshBasicMaterial({ visible: false }))
   ),
   new PositionComponent({ x: 0, y: 0, z: 0.1 }),
   new RotationComponent({ x: 0, y: 0, z: 0 })
-)
+])
 
 // Lookup for added cards
 const cards: Map<number, Entity<Components>> = new Map()
 
 const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   if (!cards.has(card.id)) {
-    const entity = world.createEntity(...CardAssemblage(card, status))
+    const entity = world.createEntity(CardAssemblage(card, status))
     cards.set(card.id, entity)
   } else {
     const entity = cards.get(card.id)

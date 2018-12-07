@@ -25,8 +25,6 @@ let instanceIdx = 0
 
 export default class Entity<C extends ComponentTypes> {
   id: number
-  //componentInstances: Partial<C> = {}
-  //components: Partial<ComponentValues<C>> = {}
   components: Partial<C> = {}
 
   get componentTypes(): Array<keyof C> {
@@ -35,7 +33,7 @@ export default class Entity<C extends ComponentTypes> {
 
   private componentChangeListeners: Set<EntityListener<C>> = new Set()
 
-  constructor(...components: Array<ValueOf<C>>) {
+  constructor(components: Array<ValueOf<C>> = []) {
     this.reset()
     this.renew(components)
   }
@@ -75,6 +73,8 @@ export default class Entity<C extends ComponentTypes> {
     }
   }
 
+  add = this.addComponent
+
   removeComponent = (type: string) => {
     if (this.hasComponent(type)) {
       this.components[type]!.onDetach(this)
@@ -86,6 +86,8 @@ export default class Entity<C extends ComponentTypes> {
       )
     }
   }
+
+  remove = this.removeComponent
 
   hasComponent(type: string): boolean {
     return !!this.components[type]

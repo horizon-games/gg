@@ -61,11 +61,11 @@ describe('EntityManager', () => {
   test('can find entities with specific types', () => {
     const manager = new EntityManager<Components>()
 
-    const entity = new Entity(
+    const entity = new Entity([
       new PositionComponent({ x: 1, y: 2, z: 3 }),
       new RotationComponent({ x: 1, y: 2, z: 3 }),
       new VelocityComponent({ x: 1, y: 2, z: 3 })
-    )
+    ])
 
     manager.addEntity(entity)
     expect(manager.filter(['position'])).toEqual([entity])

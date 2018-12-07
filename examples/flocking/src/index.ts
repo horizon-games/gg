@@ -3,7 +3,7 @@ import { World } from '../../../src/ecs'
 import { createRenderingContext } from './RenderingContext'
 
 import { Components } from './components'
-import { BirdArchetype, Archetypes } from './archetypes'
+import { BirdArchetype } from './archetypes'
 import BirdAssemblage from './assemblages/BirdAssemblage'
 import FlockingSystem from './systems/FlockingSystem'
 import RenderSystem from './systems/RenderSystem'
@@ -33,7 +33,7 @@ const init = () => {
 
   for (let i = 0; i < FLOCK_SIZE; i++) {
     world.createEntity(
-      ...BirdAssemblage(window.innerWidth / 2, window.innerHeight / 2)
+      BirdAssemblage(window.innerWidth / 2, window.innerHeight / 2)
     )
   }
 
