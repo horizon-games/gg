@@ -13,5 +13,5 @@ export const createEntityFixture = () => {
   const vel = new VelocityComponent({ x: 0, y: 0, z: 0 })
   const acc = new AccelerationComponent({ x: 0, y: 0, z: 0 })
   const playerControlled = new PlayerControllableComponent({ value: true })
-  return new Entity(pos, rot, vel, acc, playerControlled)
+  return new Entity([pos, rot, vel, acc, playerControlled])
 }
