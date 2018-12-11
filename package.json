@@ -4,7 +4,7 @@
   "description": "GG game engine",
   "author": "Corban Riley",
   "license": "MIT",
-  "main": "dist/ecs/index.js",
+  "main": "dist/ecs/index",
   "scripts": {
     "tslint": "tslint -c tslint.json $(find src -type f -name *.ts)",
     "tslint:fix": "tslint -c tslint.json --fix $(find src -type f -name *.ts)",
