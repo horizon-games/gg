@@ -13,7 +13,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
-    "build": "tsc -p ./tsconfig.json"
+    "build": "tsc -p ./tsconfig.json",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
