@@ -5,6 +5,7 @@
   "author": "Corban Riley",
   "license": "MIT",
   "main": "dist/ecs/index",
+  "types": "./dist/ecs/index.d.ts",
   "scripts": {
     "tslint": "tslint -c tslint.json $(find src -type f -name *.ts)",
     "tslint:fix": "tslint -c tslint.json --fix $(find src -type f -name *.ts)",
