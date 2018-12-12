@@ -44,10 +44,7 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   reset(): Entity<C> {
-    Object.keys(this.components).forEach(type => {
-      this.removeComponent(type)
-    })
-
+    this.componentTypes.reverse().forEach(this.removeComponent)
     this.id = ++instanceIdx
     this.componentChangeListeners = new Set()
     return this
