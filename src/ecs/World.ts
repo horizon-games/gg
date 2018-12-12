@@ -81,6 +81,14 @@ export default class World<C extends ComponentTypes> {
     return this.manager.renewEntity(components)
   }
 
+  removeEntity(entityId: number) {
+    const entity = this.getEntity(entityId)
+
+    if (entity) {
+      this.manager.releaseEntity(entity)
+    }
+  }
+
   getEntity(entityId: number): Entity<C> | undefined {
     return this.manager.getEntity(entityId)
   }
