@@ -57,10 +57,7 @@ var Entity = /** @class */ (function () {
         return this;
     };
     Entity.prototype.reset = function () {
-        var _this = this;
-        Object.keys(this.components).forEach(function (type) {
-            _this.removeComponent(type);
-        });
+        this.componentTypes.reverse().forEach(this.removeComponent);
         this.id = ++instanceIdx;
         this.componentChangeListeners = new Set();
         return this;

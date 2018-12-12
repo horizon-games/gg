@@ -18,6 +18,7 @@ export default class World<C extends ComponentTypes> {
     hasArchetype(archetypeID: number): boolean;
     getArchetype(archetypeID: number): Archetype<C>;
     createEntity(components?: Array<ValueOf<C>>): Entity<C>;
+    removeEntity(entityId: number): void;
     getEntity(entityId: number): Entity<C> | undefined;
     getEntities(entityIds: number[]): Array<Entity<C>>;
     update(dt: number, time: number): void;

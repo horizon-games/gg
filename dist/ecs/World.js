@@ -75,6 +75,12 @@ var World = /** @class */ (function () {
         if (components === void 0) { components = []; }
         return this.manager.renewEntity(components);
     };
+    World.prototype.removeEntity = function (entityId) {
+        var entity = this.getEntity(entityId);
+        if (entity) {
+            this.manager.releaseEntity(entity);
+        }
+    };
     World.prototype.getEntity = function (entityId) {
         return this.manager.getEntity(entityId);
     };
