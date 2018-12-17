@@ -80,7 +80,7 @@ var Entity = /** @class */ (function () {
     };
     Entity.prototype.setComponent = function (type, value) {
         if (this.hasComponent(type)) {
-            if (typeof value === 'object') {
+            if (typeof value === 'object' && !Array.isArray(value)) {
                 Object.assign(this.getComponent(type), value);
             }
             else {

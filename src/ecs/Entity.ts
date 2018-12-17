@@ -111,7 +111,7 @@ export default class Entity<C extends ComponentTypes> {
     value: Partial<C[T]['value']> | C[T]['value']
   ) {
     if (this.hasComponent(type as string)) {
-      if (typeof value === 'object') {
+      if (typeof value === 'object' && !Array.isArray(value)) {
         Object.assign(this.getComponent(type), value)
       } else {
         this.components[type]!.value = value
