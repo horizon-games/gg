@@ -3,7 +3,7 @@ import Entity from './Entity';
 declare type ArchetypeComponentFilter<C extends ComponentTypes> = (...componentTypes: Array<keyof C>) => ArchetypeFilterPredicate<C>;
 declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entity<C>) => boolean;
 declare type ArchetypeChangeEventTypes = 'add' | 'remove';
-interface ArchetypeChangeEvent<C extends ComponentTypes> {
+export interface ArchetypeChangeEvent<C extends ComponentTypes> {
     type: ArchetypeChangeEventTypes;
     archetype: Archetype<C>;
     entity: Entity<C>;
