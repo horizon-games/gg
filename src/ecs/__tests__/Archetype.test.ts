@@ -86,4 +86,54 @@ describe('Archetype', () => {
 
     expect(physicalArchetype.matchesEntity(entity)).toBe(false)
   })
+
+  test('can handle onChange event', () => {
+    const archetype = new Archetype<Components>(Archetypes.Position, [
+      Archetype.include('position')
+    ])
+
+    const spy = jest.fn()
+    const disposer = archetype.onChange(spy)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    const entity = new Entity<any>()
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(0)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(1)
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith({
+      type: 'add',
+      entity
+    })
+
+    entity.removeComponent('position')
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(0)
+
+    expect(spy).toHaveBeenCalledWith({
+      type: 'remove',
+      entity
+    })
+
+    disposer()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    expect(spy.mock.calls).toHaveLength(2)
+  })
 })

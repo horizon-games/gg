@@ -13,7 +13,7 @@ export default class EntityManager<C extends ComponentTypes> {
   entities: Map<number, Entity<C>> = new Map()
   archetypes: Map<number, Archetype<C>> = new Map()
   entityPool: EntityPool<C>
-  entityListenerDisposers: Map<number, () => void> = new Map()
+  entityChangeDisposers: Map<number, () => void> = new Map()
 
   constructor({ poolSize }: EntityManagerOptions = { poolSize: 1000 }) {
     this.entityPool = new EntityPool<C>(poolSize)
@@ -30,9 +30,9 @@ export default class EntityManager<C extends ComponentTypes> {
       this.entities.set(entity.id, entity)
 
       // Add entity listener
-      this.entityListenerDisposers.set(
+      this.entityChangeDisposers.set(
         entity.id,
-        entity.onComponentChange(ev => {
+        entity.onChange(ev => {
           const { type, entity, componentType } = ev
           switch (type) {
             case 'add':
@@ -57,9 +57,9 @@ export default class EntityManager<C extends ComponentTypes> {
       this.entities.delete(entity.id)
 
       // clean up entity listener disposers
-      if (this.entityListenerDisposers.has(entity.id)) {
-        this.entityListenerDisposers.get(entity.id)!()
-        this.entityListenerDisposers.delete(entity.id)
+      if (this.entityChangeDisposers.has(entity.id)) {
+        this.entityChangeDisposers.get(entity.id)!()
+        this.entityChangeDisposers.delete(entity.id)
       }
 
       // Remove entity from archetypes
@@ -120,7 +120,7 @@ export default class EntityManager<C extends ComponentTypes> {
   private handleEntityAddComponent(entity: Entity<C>, _: keyof C) {
     if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
-        archetype.handleEntityComponentChange(entity)
+        archetype.handleEntityChange(entity)
       })
     }
   }
@@ -128,7 +128,7 @@ export default class EntityManager<C extends ComponentTypes> {
   private handleEntityRemoveComponent(entity: Entity<C>, _: keyof C) {
     if (this.hasEntity(entity.id)) {
       this.archetypes.forEach(archetype => {
-        archetype.handleEntityComponentChange(entity)
+        archetype.handleEntityChange(entity)
       })
     }
   }

@@ -9,16 +9,16 @@ type ValueOf<T> = T[keyof T]
 //   [type in keyof T]: T[type]['value']
 // }
 
-type ComponentChangeEventTypes = 'add' | 'remove'
+type EntityChangeEventTypes = 'add' | 'remove'
 
-interface ComponentChangeEvent<C extends ComponentTypes> {
-  type: ComponentChangeEventTypes
+interface EntityChangeEvent<C extends ComponentTypes> {
+  type: EntityChangeEventTypes
   entity: Entity<C>
   componentType: keyof C
 }
 
-export type EntityListener<C extends ComponentTypes> = (
-  ev: ComponentChangeEvent<C>
+export type EntityChangeListener<C extends ComponentTypes> = (
+  ev: EntityChangeEvent<C>
 ) => void
 
 let instanceIdx = 0
@@ -31,7 +31,7 @@ export default class Entity<C extends ComponentTypes> {
     return Object.keys(this.components)
   }
 
-  private componentChangeListeners: Set<EntityListener<C>> = new Set()
+  private onChangeListeners: Set<EntityChangeListener<C>> = new Set()
 
   constructor(components: Array<ValueOf<C>> = []) {
     this.reset()
@@ -46,13 +46,13 @@ export default class Entity<C extends ComponentTypes> {
   reset(): Entity<C> {
     this.componentTypes.reverse().forEach(this.removeComponent)
     this.id = ++instanceIdx
-    this.componentChangeListeners = new Set()
+    this.onChangeListeners = new Set()
     return this
   }
 
-  onComponentChange(listener: EntityListener<C>) {
-    this.componentChangeListeners.add(listener)
-    return () => this.componentChangeListeners.delete(listener)
+  onChange(listener: EntityChangeListener<C>) {
+    this.onChangeListeners.add(listener)
+    return () => this.onChangeListeners.delete(listener)
   }
 
   addComponent = (component: ValueOf<C>) => {
@@ -60,7 +60,7 @@ export default class Entity<C extends ComponentTypes> {
       this.components[component.type] = component
 
       component.onAttach(this)
-      this.componentChangeListeners.forEach(listener =>
+      this.onChangeListeners.forEach(listener =>
         listener({ type: 'add', entity: this, componentType: component.type })
       )
     } else {
@@ -78,7 +78,7 @@ export default class Entity<C extends ComponentTypes> {
 
       delete this.components[type]
 
-      this.componentChangeListeners.forEach(listener =>
+      this.onChangeListeners.forEach(listener =>
         listener({ type: 'remove', entity: this, componentType: type })
       )
     }
@@ -123,7 +123,7 @@ export default class Entity<C extends ComponentTypes> {
 
   set = this.setComponent
 
-  toggleComponent(componentClass: { new (): Component }, predicate: boolean) {
+  toggleComponent(componentClass: { new (): ValueOf<C> }, predicate: boolean) {
     const componentType = getComponentTypeFromClass(componentClass)
 
     if (predicate) {

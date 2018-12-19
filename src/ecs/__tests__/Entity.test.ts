@@ -86,4 +86,35 @@ describe('Entity', () => {
 
     expect(entity.hasComponent('tag')).toBe(false)
   })
+
+  test('can handle onChange event', () => {
+    const entity = new Entity<any>()
+    const spy = jest.fn()
+    const disposer = entity.onChange(spy)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    entity.toggleComponent(TagComponent, true)
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith({
+      type: 'add',
+      componentType: 'tag',
+      entity
+    })
+
+    entity.toggleComponent(TagComponent, false)
+
+    expect(spy).toHaveBeenCalledWith({
+      type: 'remove',
+      componentType: 'tag',
+      entity
+    })
+
+    disposer()
+
+    entity.toggleComponent(TagComponent, true)
+
+    expect(spy.mock.calls.length).toBe(2)
+  })
 })

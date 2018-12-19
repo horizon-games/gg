@@ -8,6 +8,17 @@ type ArchetypeFilterPredicate<C extends ComponentTypes> = (
   entity: Entity<C>
 ) => boolean
 
+type ArchetypeChangeEventTypes = 'add' | 'remove'
+
+interface ArchetypeChangeEvent<C extends ComponentTypes> {
+  type: ArchetypeChangeEventTypes
+  entity: Entity<C>
+}
+
+export type ArchetypeChangeListener<C extends ComponentTypes> = (
+  ev: ArchetypeChangeEvent<C>
+) => void
+
 export default class Archetype<C extends ComponentTypes> {
   static include: ArchetypeComponentFilter<ComponentTypes> = (
     ...componentTypes
@@ -29,9 +40,16 @@ export default class Archetype<C extends ComponentTypes> {
 
   readonly entities: Array<Entity<C>> = []
 
+  private onChangeListeners: Set<ArchetypeChangeListener<C>> = new Set()
+
   constructor(id: number, filters: Array<ArchetypeFilterPredicate<C>> = []) {
     this.id = id
     this.filters = filters
+  }
+
+  onChange(listener: ArchetypeChangeListener<C>) {
+    this.onChangeListeners.add(listener)
+    return () => this.onChangeListeners.delete(listener)
   }
 
   matchesEntity(entity: Entity<C>): boolean {
@@ -42,7 +60,7 @@ export default class Archetype<C extends ComponentTypes> {
     return this.entities.indexOf(entity) !== -1
   }
 
-  handleEntityComponentChange(entity: Entity<C>) {
+  handleEntityChange(entity: Entity<C>) {
     if (this.hasEntity(entity)) {
       // Does this entity need to be removed
       if (!this.matchesEntity(entity)) {
@@ -60,6 +78,9 @@ export default class Archetype<C extends ComponentTypes> {
     if (this.matchesEntity(entity)) {
       if (!this.hasEntity(entity)) {
         this.entities.push(entity)
+        this.onChangeListeners.forEach(listener =>
+          listener({ type: 'add', entity })
+        )
       }
     }
   }
@@ -70,6 +91,9 @@ export default class Archetype<C extends ComponentTypes> {
 
       if (idx !== -1) {
         this.entities.splice(idx, 1)
+        this.onChangeListeners.forEach(listener =>
+          listener({ type: 'remove', entity })
+        )
       }
     }
   }
