@@ -10,7 +10,7 @@ type ArchetypeFilterPredicate<C extends ComponentTypes> = (
 
 type ArchetypeChangeEventTypes = 'add' | 'remove'
 
-interface ArchetypeChangeEvent<C extends ComponentTypes> {
+export interface ArchetypeChangeEvent<C extends ComponentTypes> {
   type: ArchetypeChangeEventTypes
   archetype: Archetype<C>
   entity: Entity<C>
