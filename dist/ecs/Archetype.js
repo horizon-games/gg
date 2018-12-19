@@ -4,16 +4,22 @@ var Archetype = /** @class */ (function () {
     function Archetype(id, filters) {
         if (filters === void 0) { filters = []; }
         this.entities = [];
+        this.onChangeListeners = new Set();
         this.id = id;
         this.filters = filters;
     }
+    Archetype.prototype.onChange = function (listener) {
+        var _this = this;
+        this.onChangeListeners.add(listener);
+        return function () { return _this.onChangeListeners.delete(listener); };
+    };
     Archetype.prototype.matchesEntity = function (entity) {
         return this.filters.every(function (filter) { return filter(entity); });
     };
     Archetype.prototype.hasEntity = function (entity) {
         return this.entities.indexOf(entity) !== -1;
     };
-    Archetype.prototype.handleEntityComponentChange = function (entity) {
+    Archetype.prototype.handleEntityChange = function (entity) {
         if (this.hasEntity(entity)) {
             // Does this entity need to be removed
             if (!this.matchesEntity(entity)) {
@@ -31,6 +37,9 @@ var Archetype = /** @class */ (function () {
         if (this.matchesEntity(entity)) {
             if (!this.hasEntity(entity)) {
                 this.entities.push(entity);
+                this.onChangeListeners.forEach(function (listener) {
+                    return listener({ type: 'add', entity: entity });
+                });
             }
         }
     };
@@ -39,6 +48,9 @@ var Archetype = /** @class */ (function () {
             var idx = this.entities.indexOf(entity);
             if (idx !== -1) {
                 this.entities.splice(idx, 1);
+                this.onChangeListeners.forEach(function (listener) {
+                    return listener({ type: 'remove', entity: entity });
+                });
             }
         }
     };

@@ -91,5 +91,27 @@ describe('Entity', function () {
         entity.toggleComponent(TagComponent, false);
         expect(entity.hasComponent('tag')).toBe(false);
     });
+    test('can handle onChange event', function () {
+        var entity = new Entity_1.default();
+        var spy = jest.fn();
+        var disposer = entity.onChange(spy);
+        expect(spy).not.toHaveBeenCalled();
+        entity.toggleComponent(TagComponent, true);
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith({
+            type: 'add',
+            componentType: 'tag',
+            entity: entity
+        });
+        entity.toggleComponent(TagComponent, false);
+        expect(spy).toHaveBeenCalledWith({
+            type: 'remove',
+            componentType: 'tag',
+            entity: entity
+        });
+        disposer();
+        entity.toggleComponent(TagComponent, true);
+        expect(spy.mock.calls.length).toBe(2);
+    });
 });
 //# sourceMappingURL=Entity.test.js.map

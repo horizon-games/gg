@@ -7,12 +7,12 @@ var Entity = /** @class */ (function () {
         if (components === void 0) { components = []; }
         var _this = this;
         this.components = {};
-        this.componentChangeListeners = new Set();
+        this.onChangeListeners = new Set();
         this.addComponent = function (component) {
             if (!_this.hasComponent(component.type)) {
                 _this.components[component.type] = component;
                 component.onAttach(_this);
-                _this.componentChangeListeners.forEach(function (listener) {
+                _this.onChangeListeners.forEach(function (listener) {
                     return listener({ type: 'add', entity: _this, componentType: component.type });
                 });
             }
@@ -25,7 +25,7 @@ var Entity = /** @class */ (function () {
             if (_this.hasComponent(type)) {
                 _this.components[type].onDetach(_this);
                 delete _this.components[type];
-                _this.componentChangeListeners.forEach(function (listener) {
+                _this.onChangeListeners.forEach(function (listener) {
                     return listener({ type: 'remove', entity: _this, componentType: type });
                 });
             }
@@ -59,13 +59,13 @@ var Entity = /** @class */ (function () {
     Entity.prototype.reset = function () {
         this.componentTypes.reverse().forEach(this.removeComponent);
         this.id = ++instanceIdx;
-        this.componentChangeListeners = new Set();
+        this.onChangeListeners = new Set();
         return this;
     };
-    Entity.prototype.onComponentChange = function (listener) {
+    Entity.prototype.onChange = function (listener) {
         var _this = this;
-        this.componentChangeListeners.add(listener);
-        return function () { return _this.componentChangeListeners.delete(listener); };
+        this.onChangeListeners.add(listener);
+        return function () { return _this.onChangeListeners.delete(listener); };
     };
     Entity.prototype.hasComponent = function (type) {
         return !!this.components[type];

@@ -68,5 +68,36 @@ describe('Archetype', function () {
         entity.addComponent(new component_fixtures_1.StaticComponent());
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
     });
+    test('can handle onChange event', function () {
+        var archetype = new Archetype_1.default(Archetypes.Position, [
+            Archetype_1.default.include('position')
+        ]);
+        var spy = jest.fn();
+        var disposer = archetype.onChange(spy);
+        expect(spy).not.toHaveBeenCalled();
+        var entity = new Entity_1.default();
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(0);
+        expect(spy).not.toHaveBeenCalled();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(1);
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith({
+            type: 'add',
+            entity: entity
+        });
+        entity.removeComponent('position');
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(0);
+        expect(spy).toHaveBeenCalledWith({
+            type: 'remove',
+            entity: entity
+        });
+        disposer();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        expect(spy.mock.calls).toHaveLength(2);
+    });
 });
 //# sourceMappingURL=Archetype.test.js.map

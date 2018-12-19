@@ -9,7 +9,7 @@ var EntityManager = /** @class */ (function () {
         var poolSize = (_a === void 0 ? { poolSize: 1000 } : _a).poolSize;
         this.entities = new Map();
         this.archetypes = new Map();
-        this.entityListenerDisposers = new Map();
+        this.entityChangeDisposers = new Map();
         this.entityPool = new EntityPool_1.default(poolSize);
     }
     EntityManager.prototype.filter = function (types) {
@@ -22,7 +22,7 @@ var EntityManager = /** @class */ (function () {
         if (!this.entities.has(entity.id)) {
             this.entities.set(entity.id, entity);
             // Add entity listener
-            this.entityListenerDisposers.set(entity.id, entity.onComponentChange(function (ev) {
+            this.entityChangeDisposers.set(entity.id, entity.onChange(function (ev) {
                 var type = ev.type, entity = ev.entity, componentType = ev.componentType;
                 switch (type) {
                     case 'add':
@@ -42,9 +42,9 @@ var EntityManager = /** @class */ (function () {
         if (this.entities.has(entity.id)) {
             this.entities.delete(entity.id);
             // clean up entity listener disposers
-            if (this.entityListenerDisposers.has(entity.id)) {
-                this.entityListenerDisposers.get(entity.id)();
-                this.entityListenerDisposers.delete(entity.id);
+            if (this.entityChangeDisposers.has(entity.id)) {
+                this.entityChangeDisposers.get(entity.id)();
+                this.entityChangeDisposers.delete(entity.id);
             }
             // Remove entity from archetypes
             this.archetypes.forEach(function (archetype) {
@@ -95,14 +95,14 @@ var EntityManager = /** @class */ (function () {
     EntityManager.prototype.handleEntityAddComponent = function (entity, _) {
         if (this.hasEntity(entity.id)) {
             this.archetypes.forEach(function (archetype) {
-                archetype.handleEntityComponentChange(entity);
+                archetype.handleEntityChange(entity);
             });
         }
     };
     EntityManager.prototype.handleEntityRemoveComponent = function (entity, _) {
         if (this.hasEntity(entity.id)) {
             this.archetypes.forEach(function (archetype) {
-                archetype.handleEntityComponentChange(entity);
+                archetype.handleEntityChange(entity);
             });
         }
     };

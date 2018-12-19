@@ -10,7 +10,7 @@ export default class EntityManager<C extends ComponentTypes> {
     entities: Map<number, Entity<C>>;
     archetypes: Map<number, Archetype<C>>;
     entityPool: EntityPool<C>;
-    entityListenerDisposers: Map<number, () => void>;
+    entityChangeDisposers: Map<number, () => void>;
     constructor({ poolSize }?: EntityManagerOptions);
     filter(types: string[]): Array<Entity<C>>;
     addEntity(entity: Entity<C>): void;

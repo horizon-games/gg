@@ -1,21 +1,21 @@
-import Component, { ComponentTypes } from './Component';
+import { ComponentTypes } from './Component';
 declare type ValueOf<T> = T[keyof T];
-declare type ComponentChangeEventTypes = 'add' | 'remove';
-interface ComponentChangeEvent<C extends ComponentTypes> {
-    type: ComponentChangeEventTypes;
+declare type EntityChangeEventTypes = 'add' | 'remove';
+interface EntityChangeEvent<C extends ComponentTypes> {
+    type: EntityChangeEventTypes;
     entity: Entity<C>;
     componentType: keyof C;
 }
-export declare type EntityListener<C extends ComponentTypes> = (ev: ComponentChangeEvent<C>) => void;
+export declare type EntityChangeListener<C extends ComponentTypes> = (ev: EntityChangeEvent<C>) => void;
 export default class Entity<C extends ComponentTypes> {
     id: number;
     components: Partial<C>;
     readonly componentTypes: Array<keyof C>;
-    private componentChangeListeners;
+    private onChangeListeners;
     constructor(components?: Array<ValueOf<C>>);
     renew(components?: Array<ValueOf<C>>): Entity<C>;
     reset(): Entity<C>;
-    onComponentChange(listener: EntityListener<C>): () => boolean;
+    onChange(listener: EntityChangeListener<C>): () => boolean;
     addComponent: (component: C[keyof C]) => void;
     add: (component: C[keyof C]) => void;
     removeComponent: (type: string) => void;
@@ -28,7 +28,7 @@ export default class Entity<C extends ComponentTypes> {
     setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']> | C[T]['value']): void;
     set: <T extends keyof C>(type: T, value: C[T]["value"] | Partial<C[T]["value"]>) => void;
     toggleComponent(componentClass: {
-        new (): Component;
+        new (): ValueOf<C>;
     }, predicate: boolean): void;
 }
 export {};
