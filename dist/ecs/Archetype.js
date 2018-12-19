@@ -34,22 +34,24 @@ var Archetype = /** @class */ (function () {
         }
     };
     Archetype.prototype.handleEntityAdd = function (entity) {
+        var _this = this;
         if (this.matchesEntity(entity)) {
             if (!this.hasEntity(entity)) {
                 this.entities.push(entity);
                 this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'add', entity: entity });
+                    return listener({ type: 'add', archetype: _this, entity: entity });
                 });
             }
         }
     };
     Archetype.prototype.handleEntityRemove = function (entity) {
+        var _this = this;
         if (this.hasEntity(entity)) {
             var idx = this.entities.indexOf(entity);
             if (idx !== -1) {
                 this.entities.splice(idx, 1);
                 this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'remove', entity: entity });
+                    return listener({ type: 'remove', archetype: _this, entity: entity });
                 });
             }
         }

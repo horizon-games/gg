@@ -85,6 +85,7 @@ describe('Archetype', function () {
         expect(spy).toHaveBeenCalled();
         expect(spy).toHaveBeenCalledWith({
             type: 'add',
+            archetype: archetype,
             entity: entity
         });
         entity.removeComponent('position');
@@ -92,6 +93,7 @@ describe('Archetype', function () {
         expect(archetype.entities).toHaveLength(0);
         expect(spy).toHaveBeenCalledWith({
             type: 'remove',
+            archetype: archetype,
             entity: entity
         });
         disposer();

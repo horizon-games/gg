@@ -5,6 +5,7 @@ declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entit
 declare type ArchetypeChangeEventTypes = 'add' | 'remove';
 interface ArchetypeChangeEvent<C extends ComponentTypes> {
     type: ArchetypeChangeEventTypes;
+    archetype: Archetype<C>;
     entity: Entity<C>;
 }
 export declare type ArchetypeChangeListener<C extends ComponentTypes> = (ev: ArchetypeChangeEvent<C>) => void;
