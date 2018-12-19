@@ -23,6 +23,7 @@ export default class World<C extends ComponentTypes> {
   addSystem(system: System<C>) {
     if (!this.systems.has(system.type)) {
       this.systems.set(system.type, system)
+      system.init(this.manager)
     } else {
       throw new Error(
         `World: Could not add system as '${system.type}' already exists.`
