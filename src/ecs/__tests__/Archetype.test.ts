@@ -114,6 +114,7 @@ describe('Archetype', () => {
     expect(spy).toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith({
       type: 'add',
+      archetype,
       entity
     })
 
@@ -125,6 +126,7 @@ describe('Archetype', () => {
 
     expect(spy).toHaveBeenCalledWith({
       type: 'remove',
+      archetype,
       entity
     })
 

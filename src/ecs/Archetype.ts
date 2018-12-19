@@ -12,6 +12,7 @@ type ArchetypeChangeEventTypes = 'add' | 'remove'
 
 interface ArchetypeChangeEvent<C extends ComponentTypes> {
   type: ArchetypeChangeEventTypes
+  archetype: Archetype<C>
   entity: Entity<C>
 }
 
@@ -79,7 +80,7 @@ export default class Archetype<C extends ComponentTypes> {
       if (!this.hasEntity(entity)) {
         this.entities.push(entity)
         this.onChangeListeners.forEach(listener =>
-          listener({ type: 'add', entity })
+          listener({ type: 'add', archetype: this, entity })
         )
       }
     }
@@ -92,7 +93,7 @@ export default class Archetype<C extends ComponentTypes> {
       if (idx !== -1) {
         this.entities.splice(idx, 1)
         this.onChangeListeners.forEach(listener =>
-          listener({ type: 'remove', entity })
+          listener({ type: 'remove', archetype: this, entity })
         )
       }
     }
