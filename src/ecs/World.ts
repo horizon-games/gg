@@ -12,9 +12,18 @@ World registers systems, archetypes and entities. Updates systems.
 
 */
 
+interface WorldOptions {
+  poolSize: number
+}
+
 export default class World<C extends ComponentTypes> {
-  private systems: Map<string, System<C>> = new Map()
   manager: EntityManager<C> = new EntityManager<C>()
+
+  private systems: Map<string, System<C>> = new Map()
+
+  constructor({ poolSize }: WorldOptions = { poolSize: 1000 }) {
+    this.manager = new EntityManager<C>({ poolSize })
+  }
 
   get systemTypes(): string[] {
     return Array.from(this.systems.keys())
