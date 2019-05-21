@@ -13,6 +13,7 @@ export default class Archetype<C extends ComponentTypes> {
     static include: ArchetypeComponentFilter<ComponentTypes>;
     static exclude: ArchetypeComponentFilter<ComponentTypes>;
     static only: ArchetypeComponentFilter<ComponentTypes>;
+    static any: ArchetypeComponentFilter<ComponentTypes>;
     id: number;
     filters: Array<ArchetypeFilterPredicate<C>>;
     readonly entities: Array<Entity<C>>;

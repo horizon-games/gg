@@ -7,13 +7,17 @@ var Archetype_1 = __importDefault(require("../Archetype"));
 var Archetypes;
 (function (Archetypes) {
     Archetypes[Archetypes["All"] = 0] = "All";
-    Archetypes[Archetypes["Empty"] = 1] = "Empty";
-    Archetypes[Archetypes["NonEmpty"] = 2] = "NonEmpty";
-    Archetypes[Archetypes["PositionOnly"] = 3] = "PositionOnly";
-    Archetypes[Archetypes["Position"] = 4] = "Position";
-    Archetypes[Archetypes["Physical"] = 5] = "Physical";
+    Archetypes[Archetypes["Any"] = 1] = "Any";
+    Archetypes[Archetypes["Empty"] = 2] = "Empty";
+    Archetypes[Archetypes["NonEmpty"] = 3] = "NonEmpty";
+    Archetypes[Archetypes["PositionOnly"] = 4] = "PositionOnly";
+    Archetypes[Archetypes["Position"] = 5] = "Position";
+    Archetypes[Archetypes["Physical"] = 6] = "Physical";
 })(Archetypes = exports.Archetypes || (exports.Archetypes = {}));
 exports.allArchetype = new Archetype_1.default(Archetypes.All);
+exports.anyArchetype = new Archetype_1.default(Archetypes.Any, [
+    Archetype_1.default.any('position', 'static')
+]);
 exports.emptyArchetype = new Archetype_1.default(Archetypes.Empty, [
     Archetype_1.default.only()
 ]);

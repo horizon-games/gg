@@ -4,9 +4,13 @@ import Entity from './Entity';
 import EntityManager from './EntityManager';
 import System from './System';
 declare type ValueOf<T> = T[keyof T];
+interface WorldOptions {
+    poolSize: number;
+}
 export default class World<C extends ComponentTypes> {
-    private systems;
     manager: EntityManager<C>;
+    private systems;
+    constructor({ poolSize }?: WorldOptions);
     readonly systemTypes: string[];
     addSystem(system: System<C>): void;
     addSystems(...systems: Array<System<C>>): void;

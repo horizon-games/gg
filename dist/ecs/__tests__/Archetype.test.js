@@ -9,11 +9,12 @@ var component_fixtures_1 = require("./component.fixtures");
 var Archetypes;
 (function (Archetypes) {
     Archetypes[Archetypes["All"] = 0] = "All";
-    Archetypes[Archetypes["Empty"] = 1] = "Empty";
-    Archetypes[Archetypes["NonEmpty"] = 2] = "NonEmpty";
-    Archetypes[Archetypes["PositionOnly"] = 3] = "PositionOnly";
-    Archetypes[Archetypes["Position"] = 4] = "Position";
-    Archetypes[Archetypes["Physical"] = 5] = "Physical";
+    Archetypes[Archetypes["Any"] = 1] = "Any";
+    Archetypes[Archetypes["Empty"] = 2] = "Empty";
+    Archetypes[Archetypes["NonEmpty"] = 3] = "NonEmpty";
+    Archetypes[Archetypes["PositionOnly"] = 4] = "PositionOnly";
+    Archetypes[Archetypes["Position"] = 5] = "Position";
+    Archetypes[Archetypes["Physical"] = 6] = "Physical";
 })(Archetypes || (Archetypes = {}));
 describe('Archetype', function () {
     test('can create archetype', function () {
@@ -26,6 +27,9 @@ describe('Archetype', function () {
     });
     test('can create archetype with filters', function () {
         var allArchetype = new Archetype_1.default(Archetypes.All);
+        var anyArchetype = new Archetype_1.default(Archetypes.Any, [
+            Archetype_1.default.any('position', 'rotation')
+        ]);
         var emptyArchetype = new Archetype_1.default(Archetypes.Empty, [
             Archetype_1.default.only()
         ]);
@@ -44,6 +48,7 @@ describe('Archetype', function () {
         ]);
         var entity = new Entity_1.default();
         expect(allArchetype.matchesEntity(entity)).toBe(true);
+        expect(anyArchetype.matchesEntity(entity)).toBe(false);
         expect(emptyArchetype.matchesEntity(entity)).toBe(true);
         expect(nonEmptyArchetype.matchesEntity(entity)).toBe(false);
         expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false);
@@ -51,6 +56,7 @@ describe('Archetype', function () {
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         expect(allArchetype.matchesEntity(entity)).toBe(true);
+        expect(anyArchetype.matchesEntity(entity)).toBe(true);
         expect(emptyArchetype.matchesEntity(entity)).toBe(false);
         expect(nonEmptyArchetype.matchesEntity(entity)).toBe(true);
         expect(positionOnlyArchetype.matchesEntity(entity)).toBe(true);
@@ -58,6 +64,7 @@ describe('Archetype', function () {
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         entity.addComponent(new component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 }));
         expect(allArchetype.matchesEntity(entity)).toBe(true);
+        expect(anyArchetype.matchesEntity(entity)).toBe(true);
         expect(emptyArchetype.matchesEntity(entity)).toBe(false);
         expect(nonEmptyArchetype.matchesEntity(entity)).toBe(true);
         expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false);

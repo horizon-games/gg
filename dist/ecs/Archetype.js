@@ -79,6 +79,15 @@ var Archetype = /** @class */ (function () {
             return componentTypes.length === entity.componentTypes.length && entity.hasComponents.apply(entity, componentTypes);
         };
     };
+    Archetype.any = function () {
+        var componentTypes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            componentTypes[_i] = arguments[_i];
+        }
+        return function (entity) {
+            return componentTypes.some(function (type) { return entity.hasComponent(type); });
+        };
+    };
     return Archetype;
 }());
 exports.default = Archetype;

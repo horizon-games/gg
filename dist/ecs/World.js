@@ -4,15 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var EntityManager_1 = __importDefault(require("./EntityManager"));
-/*
-
-World registers systems, archetypes and entities. Updates systems.
-
-*/
 var World = /** @class */ (function () {
-    function World() {
-        this.systems = new Map();
+    function World(_a) {
+        var poolSize = (_a === void 0 ? { poolSize: 1000 } : _a).poolSize;
         this.manager = new EntityManager_1.default();
+        this.systems = new Map();
+        this.manager = new EntityManager_1.default({ poolSize: poolSize });
     }
     Object.defineProperty(World.prototype, "systemTypes", {
         get: function () {
