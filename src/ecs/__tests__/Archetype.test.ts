@@ -11,6 +11,7 @@ import {
 
 enum Archetypes {
   All,
+  Any,
   Empty,
   NonEmpty,
   PositionOnly,
@@ -31,6 +32,9 @@ describe('Archetype', () => {
 
   test('can create archetype with filters', () => {
     const allArchetype = new Archetype<Components>(Archetypes.All)
+    const anyArchetype = new Archetype<Components>(Archetypes.Any, [
+      Archetype.any('position', 'rotation')
+    ])
     const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
       Archetype.only()
     ])
@@ -54,6 +58,7 @@ describe('Archetype', () => {
     const entity = new Entity()
 
     expect(allArchetype.matchesEntity(entity)).toBe(true)
+    expect(anyArchetype.matchesEntity(entity)).toBe(false)
     expect(emptyArchetype.matchesEntity(entity)).toBe(true)
     expect(nonEmptyArchetype.matchesEntity(entity)).toBe(false)
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false)
@@ -63,6 +68,7 @@ describe('Archetype', () => {
     entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
 
     expect(allArchetype.matchesEntity(entity)).toBe(true)
+    expect(anyArchetype.matchesEntity(entity)).toBe(true)
     expect(emptyArchetype.matchesEntity(entity)).toBe(false)
     expect(nonEmptyArchetype.matchesEntity(entity)).toBe(true)
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(true)
@@ -72,6 +78,7 @@ describe('Archetype', () => {
     entity.addComponent(new RotationComponent({ x: 0, y: 0, z: 0 }))
 
     expect(allArchetype.matchesEntity(entity)).toBe(true)
+    expect(anyArchetype.matchesEntity(entity)).toBe(true)
     expect(emptyArchetype.matchesEntity(entity)).toBe(false)
     expect(nonEmptyArchetype.matchesEntity(entity)).toBe(true)
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false)

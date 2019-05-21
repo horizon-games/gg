@@ -35,6 +35,11 @@ export default class Archetype<C extends ComponentTypes> {
     componentTypes.length === entity.componentTypes.length &&
     entity.hasComponents(...(componentTypes as string[]))
 
+  static any: ArchetypeComponentFilter<ComponentTypes> = (
+    ...componentTypes
+  ) => entity =>
+    componentTypes.some(type => entity.hasComponent(type as string))
+
   id: number
 
   filters: Array<ArchetypeFilterPredicate<C>>

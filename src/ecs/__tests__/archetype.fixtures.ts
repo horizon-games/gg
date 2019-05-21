@@ -4,6 +4,7 @@ import { Components } from './component.fixtures'
 
 export enum Archetypes {
   All,
+  Any,
   Empty,
   NonEmpty,
   PositionOnly,
@@ -12,6 +13,9 @@ export enum Archetypes {
 }
 
 export const allArchetype = new Archetype<Components>(Archetypes.All)
+export const anyArchetype = new Archetype<Components>(Archetypes.Any, [
+  Archetype.any('position', 'static')
+])
 export const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
   Archetype.only()
 ])
