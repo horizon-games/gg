@@ -27,7 +27,8 @@ export default class Archetype<C extends ComponentTypes> {
 
   static exclude: ArchetypeComponentFilter<ComponentTypes> = (
     ...componentTypes
-  ) => entity => !entity.hasComponents(...(componentTypes as string[]))
+  ) => entity =>
+    componentTypes.every(type => !entity.hasComponent(type as string))
 
   static only: ArchetypeComponentFilter<ComponentTypes> = (
     ...componentTypes

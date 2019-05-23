@@ -16,7 +16,8 @@ enum Archetypes {
   NonEmpty,
   PositionOnly,
   Position,
-  Physical
+  Physical,
+  Exclude
 }
 
 describe('Archetype', () => {
@@ -49,10 +50,11 @@ describe('Archetype', () => {
       Archetype.include('position')
     ])
     const physicalArchetype = new Archetype<Components>(Archetypes.Physical, [
-      Archetype.include('position'),
-      Archetype.include('rotation'),
-      Archetype.include('velocity'),
+      Archetype.include('position', 'rotation', 'velocity'),
       Archetype.exclude('static')
+    ])
+    const excludeArchetype = new Archetype<Components>(Archetypes.Exclude, [
+      Archetype.exclude('position', 'rotation', 'velocity')
     ])
 
     const entity = new Entity()
@@ -64,6 +66,7 @@ describe('Archetype', () => {
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false)
     expect(positionArchetype.matchesEntity(entity)).toBe(false)
     expect(physicalArchetype.matchesEntity(entity)).toBe(false)
+    expect(excludeArchetype.matchesEntity(entity)).toBe(true)
 
     entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
 
@@ -74,6 +77,7 @@ describe('Archetype', () => {
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(true)
     expect(positionArchetype.matchesEntity(entity)).toBe(true)
     expect(physicalArchetype.matchesEntity(entity)).toBe(false)
+    expect(excludeArchetype.matchesEntity(entity)).toBe(false)
 
     entity.addComponent(new RotationComponent({ x: 0, y: 0, z: 0 }))
 
@@ -84,14 +88,28 @@ describe('Archetype', () => {
     expect(positionOnlyArchetype.matchesEntity(entity)).toBe(false)
     expect(positionArchetype.matchesEntity(entity)).toBe(true)
     expect(physicalArchetype.matchesEntity(entity)).toBe(false)
+    expect(excludeArchetype.matchesEntity(entity)).toBe(false)
 
     entity.addComponent(new VelocityComponent({ x: 0, y: 0, z: 0 }))
 
     expect(physicalArchetype.matchesEntity(entity)).toBe(true)
+    expect(excludeArchetype.matchesEntity(entity)).toBe(false)
 
     entity.addComponent(new StaticComponent())
 
     expect(physicalArchetype.matchesEntity(entity)).toBe(false)
+
+    entity.removeComponent('position')
+
+    expect(excludeArchetype.matchesEntity(entity)).toBe(false)
+
+    entity.removeComponent('rotation')
+
+    expect(excludeArchetype.matchesEntity(entity)).toBe(false)
+
+    entity.removeComponent('velocity')
+
+    expect(excludeArchetype.matchesEntity(entity)).toBe(true)
   })
 
   test('can handle onChange event', () => {
