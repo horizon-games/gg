@@ -66,7 +66,7 @@ export default class World<C extends ComponentTypes> {
       return system
     } else {
       throw new Error(
-        `World: Could not delete system as '${type}' does not exists.`
+        `World: Could not get system as '${type}' does not exists.`
       )
     }
   }
