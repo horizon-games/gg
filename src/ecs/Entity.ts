@@ -14,7 +14,7 @@ type EntityChangeEventTypes = 'add' | 'remove'
 interface EntityChangeEvent<C extends ComponentTypes> {
   type: EntityChangeEventTypes
   entity: Entity<C>
-  componentType: keyof C
+  component: C[keyof C]
 }
 
 export type EntityChangeListener<C extends ComponentTypes> = (
@@ -57,11 +57,11 @@ export default class Entity<C extends ComponentTypes> {
 
   addComponent = (component: ValueOf<C>) => {
     if (!this.hasComponent(component.type)) {
-      this.components[component.type] = component
+      this.components[component.type as keyof C] = component
 
       component.onAttach(this)
       this.onChangeListeners.forEach(listener =>
-        listener({ type: 'add', entity: this, componentType: component.type })
+        listener({ type: 'add', entity: this, component })
       )
     } else {
       throw new Error(
@@ -74,12 +74,13 @@ export default class Entity<C extends ComponentTypes> {
 
   removeComponent = (type: string) => {
     if (this.hasComponent(type)) {
+      const component = this.components[type]!
       this.components[type]!.onDetach(this)
 
       delete this.components[type]
 
       this.onChangeListeners.forEach(listener =>
-        listener({ type: 'remove', entity: this, componentType: type })
+        listener({ type: 'remove', entity: this, component })
       )
     }
   }
@@ -134,4 +135,6 @@ export default class Entity<C extends ComponentTypes> {
       this.removeComponent(componentType)
     }
   }
+
+  toggle = this.toggleComponent
 }

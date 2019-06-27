@@ -99,16 +99,17 @@ describe('Entity', () => {
     expect(spy).toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith({
       type: 'add',
-      componentType: 'tag',
-      entity
+      // componentType: 'tag',
+      entity,
+      component: new TagComponent()
     })
 
     entity.toggleComponent(TagComponent, false)
 
     expect(spy).toHaveBeenCalledWith({
       type: 'remove',
-      componentType: 'tag',
-      entity
+      entity,
+      component: new TagComponent()
     })
 
     disposer()

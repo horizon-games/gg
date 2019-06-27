@@ -104,7 +104,7 @@ export default class World<C extends ComponentTypes> {
   }
 
   getEntities(entityIds: number[]): Array<Entity<C>> {
-    return entityIds.map(this.getEntity.bind(this)) //.filter(entity => entity !== undefined)
+    return entityIds.map(this.getEntity.bind(this))
   }
 
   update(dt: number, time: number) {

@@ -18,7 +18,9 @@ export default abstract class System<C extends ComponentTypes> {
     Object.assign(this, options)
   }
 
-  init(_manager: EntityManager<C>): void {}
+  init(_: EntityManager<C>): void {
+    // stub
+  }
 
   abstract update(manager: EntityManager<C>, dt: number, time: number): void
 

@@ -13,9 +13,13 @@ export default class Component {
     this.value = value
   }
 
-  onAttach(entity: Entity<any>) {}
+  onAttach(entity: Entity<any>) {
+    // stub
+  }
 
-  onDetach(entity: Entity<any>) {}
+  onDetach(entity: Entity<any>) {
+    // stub
+  }
 }
 
 export interface ComponentTypes {

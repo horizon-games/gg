@@ -1,6 +1,8 @@
 import { ComponentTypes } from './Component'
 import Entity from './Entity'
 
+type ValueOf<T> = T[keyof T]
+
 type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: Array<keyof C>
 ) => ArchetypeFilterPredicate<C>
@@ -14,6 +16,7 @@ export interface ArchetypeChangeEvent<C extends ComponentTypes> {
   type: ArchetypeChangeEventTypes
   archetype: Archetype<C>
   entity: Entity<C>
+  component: ValueOf<C> | undefined
 }
 
 export type ArchetypeChangeListener<C extends ComponentTypes> = (
@@ -67,39 +70,39 @@ export default class Archetype<C extends ComponentTypes> {
     return this.entities.indexOf(entity) !== -1
   }
 
-  handleEntityChange(entity: Entity<C>) {
+  handleEntityChange(entity: Entity<C>, component?: ValueOf<C>) {
     if (this.hasEntity(entity)) {
       // Does this entity need to be removed
       if (!this.matchesEntity(entity)) {
-        this.handleEntityRemove(entity)
+        this.handleEntityRemove(entity, component)
       }
     } else {
       // Does this entity need to be added
       if (this.matchesEntity(entity)) {
-        this.handleEntityAdd(entity)
+        this.handleEntityAdd(entity, component)
       }
     }
   }
 
-  handleEntityAdd(entity: Entity<C>) {
+  handleEntityAdd(entity: Entity<C>, component?: ValueOf<C>) {
     if (this.matchesEntity(entity)) {
       if (!this.hasEntity(entity)) {
         this.entities.push(entity)
         this.onChangeListeners.forEach(listener =>
-          listener({ type: 'add', archetype: this, entity })
+          listener({ type: 'add', archetype: this, entity, component })
         )
       }
     }
   }
 
-  handleEntityRemove(entity: Entity<C>) {
+  handleEntityRemove(entity: Entity<C>, component?: ValueOf<C>) {
     if (this.hasEntity(entity)) {
       const idx = this.entities.indexOf(entity)
 
       if (idx !== -1) {
         this.entities.splice(idx, 1)
         this.onChangeListeners.forEach(listener =>
-          listener({ type: 'remove', archetype: this, entity })
+          listener({ type: 'remove', archetype: this, entity, component })
         )
       }
     }
