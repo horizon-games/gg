@@ -23,13 +23,13 @@ var EntityManager = /** @class */ (function () {
             this.entities.set(entity.id, entity);
             // Add entity listener
             this.entityChangeDisposers.set(entity.id, entity.onChange(function (ev) {
-                var type = ev.type, entity = ev.entity, componentType = ev.componentType;
+                var type = ev.type, entity = ev.entity, component = ev.component;
                 switch (type) {
                     case 'add':
-                        _this.handleEntityAddComponent(entity, componentType);
+                        _this.handleEntityAddComponent(entity, component);
                         break;
                     case 'remove':
-                        _this.handleEntityRemoveComponent(entity, componentType);
+                        _this.handleEntityRemoveComponent(entity, component);
                 }
             }));
             // Add entity to archetypes
@@ -92,17 +92,17 @@ var EntityManager = /** @class */ (function () {
             throw new Error('EntityManager does not contain Archetype');
         }
     };
-    EntityManager.prototype.handleEntityAddComponent = function (entity, _) {
+    EntityManager.prototype.handleEntityAddComponent = function (entity, component) {
         if (this.hasEntity(entity.id)) {
             this.archetypes.forEach(function (archetype) {
-                archetype.handleEntityChange(entity);
+                archetype.handleEntityChange(entity, component);
             });
         }
     };
-    EntityManager.prototype.handleEntityRemoveComponent = function (entity, _) {
+    EntityManager.prototype.handleEntityRemoveComponent = function (entity, component) {
         if (this.hasEntity(entity.id)) {
             this.archetypes.forEach(function (archetype) {
-                archetype.handleEntityChange(entity);
+                archetype.handleEntityChange(entity, component);
             });
         }
     };

@@ -54,7 +54,7 @@ var World = /** @class */ (function () {
             return system;
         }
         else {
-            throw new Error("World: Could not delete system as '" + type + "' does not exists.");
+            throw new Error("World: Could not get system as '" + type + "' does not exists.");
         }
     };
     World.prototype.addArchetype = function (archetype) {
@@ -83,7 +83,7 @@ var World = /** @class */ (function () {
         return this.manager.getEntity(entityId);
     };
     World.prototype.getEntities = function (entityIds) {
-        return entityIds.map(this.getEntity.bind(this)); //.filter(entity => entity !== undefined)
+        return entityIds.map(this.getEntity.bind(this));
     };
     World.prototype.update = function (dt, time) {
         var _this = this;

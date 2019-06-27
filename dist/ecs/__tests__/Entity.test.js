@@ -100,14 +100,15 @@ describe('Entity', function () {
         expect(spy).toHaveBeenCalled();
         expect(spy).toHaveBeenCalledWith({
             type: 'add',
-            componentType: 'tag',
-            entity: entity
+            // componentType: 'tag',
+            entity: entity,
+            component: new TagComponent()
         });
         entity.toggleComponent(TagComponent, false);
         expect(spy).toHaveBeenCalledWith({
             type: 'remove',
-            componentType: 'tag',
-            entity: entity
+            entity: entity,
+            component: new TagComponent()
         });
         disposer();
         entity.toggleComponent(TagComponent, true);

@@ -8,7 +8,7 @@ export default abstract class System<C extends ComponentTypes> {
     readonly type: string;
     enabled: boolean;
     constructor(options?: Partial<SystemOptions>);
-    init(_manager: EntityManager<C>): void;
+    init(_: EntityManager<C>): void;
     abstract update(manager: EntityManager<C>, dt: number, time: number): void;
     enable(): void;
     disable(): void;

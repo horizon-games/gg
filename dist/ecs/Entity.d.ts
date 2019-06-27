@@ -4,7 +4,7 @@ declare type EntityChangeEventTypes = 'add' | 'remove';
 interface EntityChangeEvent<C extends ComponentTypes> {
     type: EntityChangeEventTypes;
     entity: Entity<C>;
-    componentType: keyof C;
+    component: C[keyof C];
 }
 export declare type EntityChangeListener<C extends ComponentTypes> = (ev: EntityChangeEvent<C>) => void;
 export default class Entity<C extends ComponentTypes> {
@@ -30,6 +30,7 @@ export default class Entity<C extends ComponentTypes> {
     toggleComponent(componentClass: {
         new (): ValueOf<C>;
     }, predicate: boolean): void;
+    toggle: (componentClass: new () => C[keyof C], predicate: boolean) => void;
 }
 export {};
 //# sourceMappingURL=Entity.d.ts.map

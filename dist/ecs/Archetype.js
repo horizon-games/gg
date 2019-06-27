@@ -19,39 +19,39 @@ var Archetype = /** @class */ (function () {
     Archetype.prototype.hasEntity = function (entity) {
         return this.entities.indexOf(entity) !== -1;
     };
-    Archetype.prototype.handleEntityChange = function (entity) {
+    Archetype.prototype.handleEntityChange = function (entity, component) {
         if (this.hasEntity(entity)) {
             // Does this entity need to be removed
             if (!this.matchesEntity(entity)) {
-                this.handleEntityRemove(entity);
+                this.handleEntityRemove(entity, component);
             }
         }
         else {
             // Does this entity need to be added
             if (this.matchesEntity(entity)) {
-                this.handleEntityAdd(entity);
+                this.handleEntityAdd(entity, component);
             }
         }
     };
-    Archetype.prototype.handleEntityAdd = function (entity) {
+    Archetype.prototype.handleEntityAdd = function (entity, component) {
         var _this = this;
         if (this.matchesEntity(entity)) {
             if (!this.hasEntity(entity)) {
                 this.entities.push(entity);
                 this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'add', archetype: _this, entity: entity });
+                    return listener({ type: 'add', archetype: _this, entity: entity, component: component });
                 });
             }
         }
     };
-    Archetype.prototype.handleEntityRemove = function (entity) {
+    Archetype.prototype.handleEntityRemove = function (entity, component) {
         var _this = this;
         if (this.hasEntity(entity)) {
             var idx = this.entities.indexOf(entity);
             if (idx !== -1) {
                 this.entities.splice(idx, 1);
                 this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'remove', archetype: _this, entity: entity });
+                    return listener({ type: 'remove', archetype: _this, entity: entity, component: component });
                 });
             }
         }

@@ -10,7 +10,9 @@ var System = /** @class */ (function () {
         this.enabled = true;
         Object.assign(this, options);
     }
-    System.prototype.init = function (_manager) { };
+    System.prototype.init = function (_) {
+        // stub
+    };
     System.prototype.enable = function () {
         this.enabled = true;
     };

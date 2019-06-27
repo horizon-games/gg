@@ -10,8 +10,12 @@ var Component = /** @class */ (function () {
         this.type = exports.getComponentTypeFromClass(this.constructor);
         this.value = value;
     }
-    Component.prototype.onAttach = function (entity) { };
-    Component.prototype.onDetach = function (entity) { };
+    Component.prototype.onAttach = function (entity) {
+        // stub
+    };
+    Component.prototype.onDetach = function (entity) {
+        // stub
+    };
     return Component;
 }());
 exports.default = Component;

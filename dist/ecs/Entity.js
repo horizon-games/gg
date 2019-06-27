@@ -13,7 +13,7 @@ var Entity = /** @class */ (function () {
                 _this.components[component.type] = component;
                 component.onAttach(_this);
                 _this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'add', entity: _this, componentType: component.type });
+                    return listener({ type: 'add', entity: _this, component: component });
                 });
             }
             else {
@@ -23,10 +23,11 @@ var Entity = /** @class */ (function () {
         this.add = this.addComponent;
         this.removeComponent = function (type) {
             if (_this.hasComponent(type)) {
+                var component_1 = _this.components[type];
                 _this.components[type].onDetach(_this);
                 delete _this.components[type];
                 _this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'remove', entity: _this, componentType: type });
+                    return listener({ type: 'remove', entity: _this, component: component_1 });
                 });
             }
         };
@@ -41,6 +42,7 @@ var Entity = /** @class */ (function () {
         };
         this.get = this.getComponent;
         this.set = this.setComponent;
+        this.toggle = this.toggleComponent;
         this.reset();
         this.renew(components);
     }
