@@ -6,8 +6,10 @@ interface SystemOptions {
   enabled: boolean
 }
 
+const SystemTypeRegExp = /System$/
 const getSystemTypeFromClass = (klass: any) =>
-  klass.name.replace(/System$/, '').toLowerCase()
+  klass.name.charAt(0).toLowerCase() +
+  klass.name.slice(1).replace(SystemTypeRegExp, '')
 
 export default abstract class System<C extends ComponentTypes> {
   readonly type: string = getSystemTypeFromClass(this.constructor)
