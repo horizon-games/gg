@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var SystemTypeRegExp = /System$/;
 var getSystemTypeFromClass = function (klass) {
-    return klass.name.replace(/System$/, '').toLowerCase();
+    return klass.name.charAt(0).toLowerCase() +
+        klass.name.slice(1).replace(SystemTypeRegExp, '');
 };
 var System = /** @class */ (function () {
     function System(options) {
