@@ -5,7 +5,6 @@ interface SystemOptions {
     enabled: boolean;
 }
 export default abstract class System<C extends ComponentTypes> {
-    readonly type: string;
     enabled: boolean;
     constructor(options?: Partial<SystemOptions>);
     init(_: EntityManager<C>): void;

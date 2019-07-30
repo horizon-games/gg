@@ -19,12 +19,13 @@ var World = /** @class */ (function () {
         configurable: true
     });
     World.prototype.addSystem = function (system) {
-        if (!this.systems.has(system.type)) {
-            this.systems.set(system.type, system);
+        var type = system.constructor.name;
+        if (!this.systems.has(type)) {
+            this.systems.set(type, system);
             system.init(this.manager);
         }
         else {
-            throw new Error("World: Could not add system as '" + system.type + "' already exists.");
+            throw new Error("World: Could not add system as '" + type + "' already exists.");
         }
     };
     World.prototype.addSystems = function () {
@@ -45,16 +46,16 @@ var World = /** @class */ (function () {
             throw new Error("World: Could not delete system as '" + type + "' does not exists.");
         }
     };
-    World.prototype.hasSystem = function (type) {
-        return this.systems.has(type);
+    World.prototype.hasSystem = function (klass) {
+        return this.systems.has(klass.name);
     };
-    World.prototype.getSystem = function (type) {
-        var system = this.systems.get(type);
+    World.prototype.getSystem = function (klass) {
+        var system = this.systems.get(klass.name);
         if (system) {
             return system;
         }
         else {
-            throw new Error("World: Could not get system as '" + type + "' does not exists.");
+            throw new Error("World: Could not get system as '" + klass.name + "' does not exists.");
         }
     };
     World.prototype.addArchetype = function (archetype) {

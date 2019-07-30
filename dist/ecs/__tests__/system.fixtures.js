@@ -29,6 +29,9 @@ var PhysicsSystem = /** @class */ (function (_super) {
             entity.getComponent('position').x += 1;
         });
     };
+    PhysicsSystem.prototype.someMethod = function () {
+        return 5;
+    };
     return PhysicsSystem;
 }(System_1.default));
 exports.PhysicsSystem = PhysicsSystem;

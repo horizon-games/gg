@@ -36,7 +36,15 @@ describe('World', function () {
         expect(world
             .getArchetype(archetype_fixtures_1.Archetypes.Physical)
             .entities[0].getComponent('position').x).toBe(1);
-        expect(world.systemTypes).toEqual(['physics']);
+        expect(world.systemTypes).toEqual(['PhysicsSystem']);
+    });
+    test('can get systems', function () {
+        var world = new World_1.default();
+        world.addArchetype(archetype_fixtures_1.physicalArchetype);
+        world.addSystems(new system_fixtures_1.PhysicsSystem());
+        expect(world.hasSystem(system_fixtures_1.PhysicsSystem)).toBe(true);
+        var a = world.getSystem(system_fixtures_1.PhysicsSystem);
+        expect(a).toBeInstanceOf(system_fixtures_1.PhysicsSystem);
     });
 });
 //# sourceMappingURL=World.test.js.map

@@ -40,7 +40,6 @@ describe('System', function () {
     test('can create', function () {
         var system = new PhysicsSystem();
         expect(system.enabled).toBe(true);
-        expect(system.type).toBe('physics');
     });
 });
 //# sourceMappingURL=System.test.js.map
