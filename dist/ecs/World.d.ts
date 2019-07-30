@@ -16,10 +16,10 @@ export default class World<C extends ComponentTypes> {
     addSystems(...systems: Array<System<C>>): void;
     removeSystem(type: string): System<C>;
     hasSystem<T extends System<C>>(klass: {
-        new (): T;
+        new (...args: any[]): T;
     }): boolean;
     getSystem<T extends System<C>>(klass: {
-        new (): T;
+        new (...args: any[]): T;
     }): T;
     addArchetype(archetype: Archetype<C>): void;
     removeArchetype(archetypeID: number): void;
