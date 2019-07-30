@@ -57,11 +57,11 @@ export default class World<C extends ComponentTypes> {
     }
   }
 
-  hasSystem<T extends System<C>>(klass: { new (): T }): boolean {
+  hasSystem<T extends System<C>>(klass: { new (...args: any[]): T }): boolean {
     return this.systems.has(klass.name)
   }
 
-  getSystem<T extends System<C>>(klass: { new (): T }): T {
+  getSystem<T extends System<C>>(klass: { new (...args: any[]): T }): T {
     const system = this.systems.get(klass.name)
     if (system) {
       return system as T
