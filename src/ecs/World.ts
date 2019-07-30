@@ -30,12 +30,13 @@ export default class World<C extends ComponentTypes> {
   }
 
   addSystem(system: System<C>) {
-    if (!this.systems.has(system.type)) {
-      this.systems.set(system.type, system)
+    const type = system.constructor.name
+    if (!this.systems.has(type)) {
+      this.systems.set(type, system)
       system.init(this.manager)
     } else {
       throw new Error(
-        `World: Could not add system as '${system.type}' already exists.`
+        `World: Could not add system as '${type}' already exists.`
       )
     }
   }
@@ -56,17 +57,17 @@ export default class World<C extends ComponentTypes> {
     }
   }
 
-  hasSystem(type: string): boolean {
-    return this.systems.has(type)
+  hasSystem<T extends System<C>>(klass: { new (): T }): boolean {
+    return this.systems.has(klass.name)
   }
 
-  getSystem(type: string): System<C> {
-    const system = this.systems.get(type)
+  getSystem<T extends System<C>>(klass: { new (): T }): T {
+    const system = this.systems.get(klass.name)
     if (system) {
-      return system
+      return system as T
     } else {
       throw new Error(
-        `World: Could not get system as '${type}' does not exists.`
+        `World: Could not get system as '${klass.name}' does not exists.`
       )
     }
   }

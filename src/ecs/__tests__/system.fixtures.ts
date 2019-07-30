@@ -11,4 +11,8 @@ export class PhysicsSystem extends System<Components> {
       entity.getComponent('position').x += 1
     })
   }
+
+  someMethod() {
+    return 5
+  }
 }

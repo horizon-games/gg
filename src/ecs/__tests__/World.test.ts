@@ -43,6 +43,17 @@ describe('World', () => {
         .getArchetype(Archetypes.Physical)
         .entities[0].getComponent('position').x
     ).toBe(1)
-    expect(world.systemTypes).toEqual(['physics'])
+    expect(world.systemTypes).toEqual(['PhysicsSystem'])
+  })
+
+  test('can get systems', () => {
+    const world = new World<Components>()
+    world.addArchetype(physicalArchetype)
+    world.addSystems(new PhysicsSystem())
+
+    expect(world.hasSystem(PhysicsSystem)).toBe(true)
+
+    const a = world.getSystem(PhysicsSystem)
+    expect(a).toBeInstanceOf(PhysicsSystem)
   })
 })

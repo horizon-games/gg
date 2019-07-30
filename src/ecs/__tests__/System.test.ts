@@ -22,6 +22,5 @@ describe('System', () => {
   test('can create', () => {
     const system = new PhysicsSystem()
     expect(system.enabled).toBe(true)
-    expect(system.type).toBe('physics')
   })
 })
