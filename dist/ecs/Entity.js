@@ -24,8 +24,8 @@ var Entity = /** @class */ (function () {
         this.removeComponent = function (type) {
             if (_this.hasComponent(type)) {
                 var component_1 = _this.components[type];
-                _this.components[type].onDetach(_this);
                 delete _this.components[type];
+                component_1.onDetach(_this);
                 _this.onChangeListeners.forEach(function (listener) {
                     return listener({ type: 'remove', entity: _this, component: component_1 });
                 });
