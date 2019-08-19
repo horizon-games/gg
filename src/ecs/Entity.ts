@@ -60,6 +60,7 @@ export default class Entity<C extends ComponentTypes> {
       this.components[component.type as keyof C] = component
 
       component.onAttach(this)
+
       this.onChangeListeners.forEach(listener =>
         listener({ type: 'add', entity: this, component })
       )
@@ -75,9 +76,10 @@ export default class Entity<C extends ComponentTypes> {
   removeComponent = (type: string) => {
     if (this.hasComponent(type)) {
       const component = this.components[type]!
-      this.components[type]!.onDetach(this)
 
       delete this.components[type]
+
+      component.onDetach(this)
 
       this.onChangeListeners.forEach(listener =>
         listener({ type: 'remove', entity: this, component })
