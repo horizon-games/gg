@@ -71,6 +71,7 @@ export default class Entity<C extends ComponentTypes> {
     }
   }
 
+  // tslint:disable-next-line
   add = this.addComponent
 
   removeComponent = (type: string) => {
@@ -87,26 +88,29 @@ export default class Entity<C extends ComponentTypes> {
     }
   }
 
+  // tslint:disable-next-line
   remove = this.removeComponent
 
   hasComponent(type: string): boolean {
     return !!this.components[type]
   }
 
+  // tslint:disable-next-line
   has = this.hasComponent
 
   hasComponents = (...types: string[]): boolean => {
     return types.every(type => this.hasComponent(type))
   }
 
-  getComponent<T extends keyof C>(type: T): C[T]['value'] {
+  getComponent<T extends keyof C>(type: T): C[T]['value'] | undefined {
     if (this.hasComponent(type as string)) {
       return this.components[type]!.value
-    } else {
-      throw new Error(`Entity does not contain component of ${type}.`)
     }
+
+    return
   }
 
+  // tslint:disable-next-line
   get = this.getComponent
 
   setComponent<T extends keyof C>(
@@ -124,6 +128,7 @@ export default class Entity<C extends ComponentTypes> {
     }
   }
 
+  // tslint:disable-next-line
   set = this.setComponent
 
   toggleComponent(componentClass: { new (): ValueOf<C> }, predicate: boolean) {
@@ -138,5 +143,6 @@ export default class Entity<C extends ComponentTypes> {
     }
   }
 
+  // tslint:disable-next-line
   toggle = this.toggleComponent
 }

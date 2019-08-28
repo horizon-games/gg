@@ -46,7 +46,7 @@ describe('Entity', () => {
       new ArrayValueComponent([1, 2])
     ])
 
-    const component = entity.getComponent('position')
+    const component = entity.getComponent('position')!
     component.x = 1
 
     expect(entity.getComponent('position')).toEqual({
