@@ -15,12 +15,8 @@ export default class World<C extends ComponentTypes> {
     addSystem(system: System<C>): void;
     addSystems(...systems: Array<System<C>>): void;
     removeSystem(type: string): System<C>;
-    hasSystem<T extends System<C>>(klass: {
-        new (...args: any[]): T;
-    }): boolean;
-    getSystem<T extends System<C>>(klass: {
-        new (...args: any[]): T;
-    }): T;
+    hasSystem<T extends System<C>>(klass: new (...args: any[]) => T): boolean;
+    getSystem<T extends System<C>>(klass: new (...args: any[]) => T): T;
     addArchetype(archetype: Archetype<C>): void;
     removeArchetype(archetypeID: number): void;
     hasArchetype(archetypeID: number): boolean;
