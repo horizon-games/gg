@@ -5,7 +5,7 @@ import {
   VelocityComponent,
   AccelerationComponent,
   PlayerControllableComponent
-} from './component.fixtures'
+} from './Component.fixtures'
 
 export const createEntityFixture = () => {
   const pos = new PositionComponent({ x: 0, y: 0, z: 0 })

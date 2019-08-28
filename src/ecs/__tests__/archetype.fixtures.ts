@@ -1,6 +1,6 @@
 import Archetype from '../Archetype'
 import Entity from '../Entity'
-import { Components } from './component.fixtures'
+import { Components } from './Component.fixtures'
 
 export enum Archetypes {
   All,

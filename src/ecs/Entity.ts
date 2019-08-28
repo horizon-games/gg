@@ -91,7 +91,7 @@ export default class Entity<C extends ComponentTypes> {
   // tslint:disable-next-line
   remove = this.removeComponent
 
-  hasComponent(type: string): boolean {
+  hasComponent(type: keyof C): boolean {
     return !!this.components[type]
   }
 
@@ -103,11 +103,9 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   getComponent<T extends keyof C>(type: T): C[T]['value'] | undefined {
-    if (this.hasComponent(type as string)) {
-      return this.components[type]!.value
-    }
+    const component = this.components[type]
 
-    return
+    return component && component.value
   }
 
   // tslint:disable-next-line
