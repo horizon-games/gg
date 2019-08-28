@@ -16,4 +16,4 @@ export declare const nonEmptyArchetype: Archetype<Components>;
 export declare const positionOnlyArchetype: Archetype<Components>;
 export declare const positionArchetype: Archetype<Components>;
 export declare const physicalArchetype: Archetype<Components>;
-//# sourceMappingURL=archetype.fixtures.d.ts.map
+//# sourceMappingURL=Archetype.fixtures.d.ts.map

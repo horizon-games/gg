@@ -20,6 +20,7 @@ var Entity = /** @class */ (function () {
                 throw new Error("Entity already contains component of type " + component.type + ".");
             }
         };
+        // tslint:disable-next-line
         this.add = this.addComponent;
         this.removeComponent = function (type) {
             if (_this.hasComponent(type)) {
@@ -31,7 +32,9 @@ var Entity = /** @class */ (function () {
                 });
             }
         };
+        // tslint:disable-next-line
         this.remove = this.removeComponent;
+        // tslint:disable-next-line
         this.has = this.hasComponent;
         this.hasComponents = function () {
             var types = [];
@@ -40,8 +43,11 @@ var Entity = /** @class */ (function () {
             }
             return types.every(function (type) { return _this.hasComponent(type); });
         };
+        // tslint:disable-next-line
         this.get = this.getComponent;
+        // tslint:disable-next-line
         this.set = this.setComponent;
+        // tslint:disable-next-line
         this.toggle = this.toggleComponent;
         this.reset();
         this.renew(components);
@@ -76,9 +82,7 @@ var Entity = /** @class */ (function () {
         if (this.hasComponent(type)) {
             return this.components[type].value;
         }
-        else {
-            throw new Error("Entity does not contain component of " + type + ".");
-        }
+        return;
     };
     Entity.prototype.setComponent = function (type, value) {
         if (this.hasComponent(type)) {

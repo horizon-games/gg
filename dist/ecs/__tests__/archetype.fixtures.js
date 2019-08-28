@@ -30,4 +30,4 @@ exports.physicalArchetype = new Archetype_1.default(Archetypes.Physical, [
     Archetype_1.default.include('velocity'),
     Archetype_1.default.exclude('static')
 ]);
-//# sourceMappingURL=archetype.fixtures.js.map
+//# sourceMappingURL=Archetype.fixtures.js.map
