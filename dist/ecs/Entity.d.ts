@@ -20,8 +20,8 @@ export default class Entity<C extends ComponentTypes> {
     add: (component: C[keyof C]) => void;
     removeComponent: (type: string) => void;
     remove: (type: string) => void;
-    hasComponent(type: string): boolean;
-    has: (type: string) => boolean;
+    hasComponent(type: keyof C): boolean;
+    has: (type: keyof C) => boolean;
     hasComponents: (...types: string[]) => boolean;
     getComponent<T extends keyof C>(type: T): C[T]['value'] | undefined;
     get: <T extends keyof C>(type: T) => C[T]["value"] | undefined;

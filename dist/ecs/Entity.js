@@ -79,10 +79,8 @@ var Entity = /** @class */ (function () {
         return !!this.components[type];
     };
     Entity.prototype.getComponent = function (type) {
-        if (this.hasComponent(type)) {
-            return this.components[type].value;
-        }
-        return;
+        var component = this.components[type];
+        return component && component.value;
     };
     Entity.prototype.setComponent = function (type, value) {
         if (this.hasComponent(type)) {

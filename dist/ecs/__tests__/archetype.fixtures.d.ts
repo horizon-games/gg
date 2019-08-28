@@ -1,5 +1,5 @@
 import Archetype from '../Archetype';
-import { Components } from './component.fixtures';
+import { Components } from './Component.fixtures';
 export declare enum Archetypes {
     All = 0,
     Any = 1,
@@ -16,4 +16,4 @@ export declare const nonEmptyArchetype: Archetype<Components>;
 export declare const positionOnlyArchetype: Archetype<Components>;
 export declare const positionArchetype: Archetype<Components>;
 export declare const physicalArchetype: Archetype<Components>;
-//# sourceMappingURL=Archetype.fixtures.d.ts.map
+//# sourceMappingURL=archetype.fixtures.d.ts.map
