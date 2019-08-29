@@ -108,14 +108,24 @@ export default class Entity<C extends ComponentTypes> {
     return component && component.value
   }
 
+  unsafe_getComponent<T extends keyof C>(type: T): C[T]['value'] {
+    const component = this.getComponent(type)
+
+    if (component) {
+      return component
+    } else {
+      throw new Error(`Entity does not contain component of type ${type}.`)
+    }
+  }
+
   // tslint:disable-next-line
-  get = this.getComponent
+  get = this.unsafe_getComponent
 
   setComponent<T extends keyof C>(
     type: T,
     value: Partial<C[T]['value']> | C[T]['value']
   ) {
-    if (this.hasComponent(type as string)) {
+    if (this.hasComponent(type)) {
       if (typeof value === 'object' && !Array.isArray(value)) {
         Object.assign(this.getComponent(type), value)
       } else {
