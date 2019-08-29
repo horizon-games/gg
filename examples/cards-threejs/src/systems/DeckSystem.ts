@@ -33,8 +33,8 @@ export default class DeckSystem extends System<Components> {
         entity => entity.components.card!.value.status === CardStatus.Deck
       )
       .forEach((entity, idx) => {
-        const position = entity.getComponent('position')
-        const player = entity.getComponent('player')
+        const position = entity.getComponentValue('position')
+        const player = entity.getComponentValue('player')
         updateCardPosition(playerDeckPosition, position, idx)
       })
 
@@ -43,8 +43,8 @@ export default class DeckSystem extends System<Components> {
         entity => entity.components.card!.value.status === CardStatus.Deck
       )
       .forEach((entity, idx) => {
-        const position = entity.getComponent('position')
-        const player = entity.getComponent('player')
+        const position = entity.getComponentValue('position')
+        const player = entity.getComponentValue('player')
         updateCardPosition(opponentDeckPosition, position, idx)
       })
   }

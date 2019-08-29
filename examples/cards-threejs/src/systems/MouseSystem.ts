@@ -12,8 +12,8 @@ const raycaster = new Raycaster()
 
 window.addEventListener('click', () => {
   if (hoveredEntity) {
-    const player = hoveredEntity.getComponent('player')
-    const card = hoveredEntity.getComponent('card')
+    const player = hoveredEntity.getComponentValue('player')
+    const card = hoveredEntity.getComponentValue('card')
     switch (card.status) {
       case CardStatus.Deck:
         drawCard(player.id)

@@ -7,9 +7,9 @@ export default class RenderSystem extends System<Components> {
     const { entities } = manager.getArchetype(Archetypes.Renderable)
 
     entities.forEach(entity => {
-      const position = entity.getComponent('position')
-      const rotation = entity.getComponent('rotation')
-      const mesh = entity.getComponent('mesh')
+      const position = entity.getComponentValue('position')
+      const rotation = entity.getComponentValue('rotation')
+      const mesh = entity.getComponentValue('mesh')
       mesh.position.set(position.x, position.y, position.z)
       mesh.rotation.set(rotation.x, rotation.y, rotation.z)
     })

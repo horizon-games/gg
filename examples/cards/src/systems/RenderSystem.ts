@@ -10,16 +10,16 @@ export default class RenderSystem extends System<Components> {
     const { entities } = manager.getArchetype(Archetypes.Renderable)
 
     entities.forEach(entity => {
-      const { element, className } = entity.getComponent('dom')
-      const width = entity.getComponent('width')
-      const height = entity.getComponent('height')
-      const boxShadow = entity.getComponent('boxShadow')
-      const position = entity.getComponent('position')
-      const borderRadius = entity.getComponent('borderRadius')
-      const rotation = entity.getComponent('rotation')
-      const card = entity.getComponent('card')
-      const material = entity.getComponent('material')
-      const player = entity.getComponent('player')
+      const { element, className } = entity.getComponentValue('dom')
+      const width = entity.getComponentValue('width')
+      const height = entity.getComponentValue('height')
+      const boxShadow = entity.getComponentValue('boxShadow')
+      const position = entity.getComponentValue('position')
+      const borderRadius = entity.getComponentValue('borderRadius')
+      const rotation = entity.getComponentValue('rotation')
+      const card = entity.getComponentValue('card')
+      const material = entity.getComponentValue('material')
+      const player = entity.getComponentValue('player')
       const isPlayer = player.id === 1
       const showFace =
         (isPlayer && card.status !== CardStatus.Deck) ||

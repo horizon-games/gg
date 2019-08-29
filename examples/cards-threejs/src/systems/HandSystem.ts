@@ -99,10 +99,10 @@ const updateCardPosition = (
   isHovering: boolean,
   hoveringIdx: number
 ) => {
-  const position = entity.getComponent('position')
-  const rotation = entity.getComponent('rotation')
-  const player = entity.getComponent('player')
-  const order = entity.getComponent('order')
+  const position = entity.getComponentValue('position')
+  const rotation = entity.getComponentValue('rotation')
+  const player = entity.getComponentValue('player')
+  const order = entity.getComponentValue('order')
 
   const isPlayer = player.id === 1
   const xStep = 100

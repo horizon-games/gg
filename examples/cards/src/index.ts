@@ -86,7 +86,7 @@ $('body').mousemove(function(ev) {
   const id = Number(target.data('id'))
   world.manager.entities.forEach(entity => {
     if (entity.hasComponent('hover')) {
-      entity.setComponent('hover', false)
+      entity.setComponentValue('hover', false)
     }
   })
 
@@ -96,7 +96,7 @@ $('body').mousemove(function(ev) {
       const { status } = entity.components.card!.value
 
       if (status !== CardStatus.Deck) {
-        entity.setComponent('hover', true)
+        entity.setComponentValue('hover', true)
       }
     }
   }

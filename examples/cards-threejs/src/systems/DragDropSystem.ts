@@ -72,16 +72,16 @@ export default class DragDropSystem extends System<Components> {
 
     if (isDragging) {
       if (mouse.isPressed) {
-        const card = dragSource.getComponent('card')
-        const player = dragSource.getComponent('player')
+        const card = dragSource.getComponentValue('card')
+        const player = dragSource.getComponentValue('player')
 
         if (card.status === CardStatus.Deck) {
           return
         }
 
-        const position = dragSource.getComponent('position')
-        const rotation = dragSource.getComponent('rotation')
-        const mesh = dragSource.getComponent('mesh')
+        const position = dragSource.getComponentValue('position')
+        const rotation = dragSource.getComponentValue('rotation')
+        const mesh = dragSource.getComponentValue('mesh')
         const pos = get2DPositionAtDepth(
           camera,
           mouse.position.x,
@@ -99,8 +99,8 @@ export default class DragDropSystem extends System<Components> {
         rotation.z = lerp(mesh.rotation.z, 0, 0.5)
       } else {
         if (dragSource && dropTarget) {
-          const card = dragSource.getComponent('card')
-          const player = dragSource.getComponent('player')
+          const card = dragSource.getComponentValue('card')
+          const player = dragSource.getComponentValue('player')
           playCard(player.id, card.id)
         }
 

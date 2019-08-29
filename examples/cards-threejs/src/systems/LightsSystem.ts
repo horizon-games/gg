@@ -7,7 +7,7 @@ export default class LightsSystem extends System<Components> {
     const { entities } = manager.getArchetype(Archetypes.Lights)
 
     entities.forEach((entity, idx) => {
-      const light = entity.getComponent('light')
+      const light = entity.getComponentValue('light')
 
       if (idx % 2 === 0) {
         light.position.set(
