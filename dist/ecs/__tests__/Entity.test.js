@@ -52,7 +52,7 @@ describe('Entity', function () {
         entity.addComponent(pos);
         expect(entity.componentTypes.length).toBe(1);
         expect(entity.hasComponents('position')).toBe(true);
-        expect(entity.getComponent('position')).toEqual({
+        expect(entity.getComponentValue('position')).toEqual({
             x: 1,
             y: 2,
             z: 3
@@ -64,25 +64,27 @@ describe('Entity', function () {
             new PrimitiveValueComponent(1),
             new ArrayValueComponent([1, 2])
         ]);
+        expect(entity.getComponent('unknown')).toBeUndefined();
+        expect(function () { return entity.getComponentValue('unknown'); }).toThrow();
         var component = entity.getComponent('position');
-        component.x = 1;
-        expect(entity.getComponent('position')).toEqual({
+        component.value.x = 1;
+        expect(entity.getComponentValue('position')).toEqual({
             x: 1,
             y: 0,
             z: 0
         });
-        entity.setComponent('position', { y: 2 });
-        expect(entity.getComponent('position')).toEqual({
+        entity.setComponentValue('position', { y: 2 });
+        expect(entity.getComponentValue('position')).toEqual({
             x: 1,
             y: 2,
             z: 0
         });
-        expect(entity.getComponent('primitiveValue')).toBe(1);
-        entity.setComponent('primitiveValue', 2);
-        expect(entity.getComponent('primitiveValue')).toBe(2);
-        expect(entity.getComponent('arrayValue')).toEqual([1, 2]);
-        entity.setComponent('arrayValue', [3, 4]);
-        expect(entity.getComponent('arrayValue')).toEqual([3, 4]);
+        expect(entity.getComponentValue('primitiveValue')).toBe(1);
+        entity.setComponentValue('primitiveValue', 2);
+        expect(entity.getComponentValue('primitiveValue')).toBe(2);
+        expect(entity.getComponentValue('arrayValue')).toEqual([1, 2]);
+        entity.setComponentValue('arrayValue', [3, 4]);
+        expect(entity.getComponentValue('arrayValue')).toEqual([3, 4]);
     });
     test('can toggle a tag component', function () {
         var entity = new Entity_1.default();

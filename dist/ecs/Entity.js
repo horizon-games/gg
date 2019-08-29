@@ -8,6 +8,15 @@ var Entity = /** @class */ (function () {
         var _this = this;
         this.components = {};
         this.onChangeListeners = new Set();
+        // tslint:disable-next-line
+        this.has = this.hasComponent;
+        this.hasComponents = function () {
+            var types = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                types[_i] = arguments[_i];
+            }
+            return types.every(function (type) { return _this.hasComponent(type); });
+        };
         this.addComponent = function (component) {
             if (!_this.hasComponent(component.type)) {
                 _this.components[component.type] = component;
@@ -35,20 +44,11 @@ var Entity = /** @class */ (function () {
         // tslint:disable-next-line
         this.remove = this.removeComponent;
         // tslint:disable-next-line
-        this.has = this.hasComponent;
-        this.hasComponents = function () {
-            var types = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                types[_i] = arguments[_i];
-            }
-            return types.every(function (type) { return _this.hasComponent(type); });
-        };
-        // tslint:disable-next-line
-        this.get = this.unsafe_getComponent;
-        // tslint:disable-next-line
-        this.set = this.setComponent;
-        // tslint:disable-next-line
         this.toggle = this.toggleComponent;
+        // tslint:disable-next-line
+        this.get = this.getComponentValue;
+        // tslint:disable-next-line
+        this.set = this.setComponentValue;
         this.reset();
         this.renew(components);
     }
@@ -78,32 +78,6 @@ var Entity = /** @class */ (function () {
     Entity.prototype.hasComponent = function (type) {
         return !!this.components[type];
     };
-    Entity.prototype.getComponent = function (type) {
-        var component = this.components[type];
-        return component && component.value;
-    };
-    Entity.prototype.unsafe_getComponent = function (type) {
-        var component = this.getComponent(type);
-        if (component) {
-            return component;
-        }
-        else {
-            throw new Error("Entity does not contain component of type " + type + ".");
-        }
-    };
-    Entity.prototype.setComponent = function (type, value) {
-        if (this.hasComponent(type)) {
-            if (typeof value === 'object' && !Array.isArray(value)) {
-                Object.assign(this.getComponent(type), value);
-            }
-            else {
-                this.components[type].value = value;
-            }
-        }
-        else {
-            throw new Error("Entity does not contain component of type " + type + ".");
-        }
-    };
     Entity.prototype.toggleComponent = function (componentClass, predicate) {
         var componentType = Component_1.getComponentTypeFromClass(componentClass);
         if (predicate) {
@@ -113,6 +87,31 @@ var Entity = /** @class */ (function () {
         }
         else {
             this.removeComponent(componentType);
+        }
+    };
+    // Get component instance
+    Entity.prototype.getComponent = function (type) {
+        return this.components[type];
+    };
+    Entity.prototype.getComponentValue = function (type) {
+        if (this.hasComponent(type)) {
+            return this.components[type].value;
+        }
+        else {
+            throw new Error("Entity does not contain component of type " + type + ".");
+        }
+    };
+    Entity.prototype.setComponentValue = function (type, value) {
+        if (this.hasComponent(type)) {
+            if (typeof value === 'object' && !Array.isArray(value)) {
+                Object.assign(this.components[type].value, value);
+            }
+            else {
+                this.components[type].value = value;
+            }
+        }
+        else {
+            throw new Error("Entity does not contain component of type " + type + ".");
         }
     };
     return Entity;

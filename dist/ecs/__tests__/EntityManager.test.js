@@ -16,27 +16,6 @@ var Archetypes;
     Archetypes[Archetypes["Position"] = 4] = "Position";
     Archetypes[Archetypes["Physical"] = 5] = "Physical";
 })(Archetypes || (Archetypes = {}));
-// interface ComponentTypes {
-//   position: PositionComponent,
-//   rotation: RotationComponent,
-//   velocity: VelocityComponent,
-//   static: StaticComponent
-// }
-// type ComponentTuple = [
-//   PositionComponent, RotationComponent, VelocityComponent, StaticComponent
-// ]
-// const c: Partial<ComponentTypes> = {
-//   position: new PositionComponent(),
-//   rotation: new RotationComponent(),
-//   velocity: new VelocityComponent()
-// }
-// const getComponent = <T extends keyof ComponentTypes>(type: T) => {
-//   return c[type] as ComponentTypes[T]
-// }
-// const x = getComponent('velocity')
-// const getComponent2 = <T extends ComponentTuple>(klass: T) => {
-//   return c2[klass]
-// }
 describe('EntityManager', function () {
     test('can create', function () {
         var manager = new EntityManager_1.default();

@@ -35,7 +35,7 @@ describe('World', function () {
         expect(world.getArchetype(archetype_fixtures_1.Archetypes.Physical).entities.length).toBe(4);
         expect(world
             .getArchetype(archetype_fixtures_1.Archetypes.Physical)
-            .entities[0].getComponent('position').x).toBe(1);
+            .entities[0].getComponentValue('position').x).toBe(1);
         expect(world.systemTypes).toEqual(['PhysicsSystem']);
     });
     test('can get systems', function () {

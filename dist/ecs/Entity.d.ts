@@ -16,20 +16,20 @@ export default class Entity<C extends ComponentTypes> {
     renew(components?: Array<ValueOf<C>>): Entity<C>;
     reset(): Entity<C>;
     onChange(listener: EntityChangeListener<C>): () => boolean;
+    hasComponent(type: keyof C): boolean;
+    has: (type: keyof C) => boolean;
+    hasComponents: (...types: string[]) => boolean;
     addComponent: (component: C[keyof C]) => void;
     add: (component: C[keyof C]) => void;
     removeComponent: (type: string) => void;
     remove: (type: string) => void;
-    hasComponent(type: keyof C): boolean;
-    has: (type: keyof C) => boolean;
-    hasComponents: (...types: string[]) => boolean;
-    getComponent<T extends keyof C>(type: T): C[T]['value'] | undefined;
-    unsafe_getComponent<T extends keyof C>(type: T): C[T]['value'];
-    get: <T extends keyof C>(type: T) => C[T]["value"];
-    setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']> | C[T]['value']): void;
-    set: <T extends keyof C>(type: T, value: C[T]["value"] | Partial<C[T]["value"]>) => void;
     toggleComponent(componentClass: new () => ValueOf<C>, predicate: boolean): void;
     toggle: (componentClass: new () => C[keyof C], predicate: boolean) => void;
+    getComponent<T extends keyof C>(type: T): C[T] | undefined;
+    getComponentValue<T extends keyof C>(type: T): C[T]['value'];
+    get: <T extends keyof C>(type: T) => C[T]["value"];
+    setComponentValue<T extends keyof C>(type: T, value: Partial<C[T]['value']> | C[T]['value']): void;
+    set: <T extends keyof C>(type: T, value: C[T]["value"] | Partial<C[T]["value"]>) => void;
 }
 export {};
 //# sourceMappingURL=Entity.d.ts.map
