@@ -41,7 +41,7 @@ describe('World', () => {
     expect(
       world
         .getArchetype(Archetypes.Physical)
-        .entities[0].getComponent('position')!.x
+        .entities[0].getComponentValue('position').x
     ).toBe(1)
     expect(world.systemTypes).toEqual(['PhysicsSystem'])
   })

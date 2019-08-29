@@ -8,7 +8,7 @@ export class PhysicsSystem extends System<Components> {
     const all = manager.getArchetype(Archetypes.Physical)
 
     all.entities.forEach(entity => {
-      entity.getComponent('position')!.x += 1
+      entity.getComponentValue('position').x += 1
     })
   }
 

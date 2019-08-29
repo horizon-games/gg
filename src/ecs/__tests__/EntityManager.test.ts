@@ -19,32 +19,6 @@ enum Archetypes {
   Physical
 }
 
-// interface ComponentTypes {
-//   position: PositionComponent,
-//   rotation: RotationComponent,
-//   velocity: VelocityComponent,
-//   static: StaticComponent
-// }
-
-// type ComponentTuple = [
-//   PositionComponent, RotationComponent, VelocityComponent, StaticComponent
-// ]
-
-// const c: Partial<ComponentTypes> = {
-//   position: new PositionComponent(),
-//   rotation: new RotationComponent(),
-//   velocity: new VelocityComponent()
-// }
-
-// const getComponent = <T extends keyof ComponentTypes>(type: T) => {
-//   return c[type] as ComponentTypes[T]
-// }
-// const x = getComponent('velocity')
-
-// const getComponent2 = <T extends ComponentTuple>(klass: T) => {
-//   return c2[klass]
-// }
-
 describe('EntityManager', () => {
   test('can create', () => {
     const manager = new EntityManager<Components>()
