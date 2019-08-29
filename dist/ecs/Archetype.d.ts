@@ -20,8 +20,12 @@ export default class Archetype<C extends ComponentTypes> {
     filters: Array<ArchetypeFilterPredicate<C>>;
     readonly entities: Array<Entity<C>>;
     private onChangeListeners;
+    private onAddListeners;
+    private onRemoveListeners;
     constructor(id: number, filters?: Array<ArchetypeFilterPredicate<C>>);
     onChange(listener: ArchetypeChangeListener<C>): () => boolean;
+    onAdd(listener: ArchetypeChangeListener<C>): () => boolean;
+    onRemove(listener: ArchetypeChangeListener<C>): () => boolean;
     matchesEntity(entity: Entity<C>): boolean;
     hasEntity(entity: Entity<C>): boolean;
     handleEntityChange(entity: Entity<C>, component?: ValueOf<C>): void;

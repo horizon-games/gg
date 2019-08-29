@@ -120,5 +120,63 @@ describe('Archetype', function () {
         archetype.handleEntityChange(entity);
         expect(spy.mock.calls).toHaveLength(2);
     });
+    test('can handle onAdd event', function () {
+        var archetype = new Archetype_1.default(Archetypes.Position, [
+            Archetype_1.default.include('position')
+        ]);
+        var spy = jest.fn();
+        var disposer = archetype.onAdd(spy);
+        expect(spy).not.toHaveBeenCalled();
+        var entity = new Entity_1.default();
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(0);
+        expect(spy).not.toHaveBeenCalled();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(1);
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith({
+            type: 'add',
+            archetype: archetype,
+            entity: entity
+        });
+        entity.removeComponent('position');
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(0);
+        disposer();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        expect(spy.mock.calls).toHaveLength(1);
+    });
+    test('can handle onRemove event', function () {
+        var archetype = new Archetype_1.default(Archetypes.Position, [
+            Archetype_1.default.include('position')
+        ]);
+        var spy = jest.fn();
+        var disposer = archetype.onRemove(spy);
+        expect(spy).not.toHaveBeenCalled();
+        var entity = new Entity_1.default();
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(0);
+        expect(spy).not.toHaveBeenCalled();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        expect(archetype.entities).toHaveLength(1);
+        expect(spy).not.toHaveBeenCalled();
+        entity.removeComponent('position');
+        archetype.handleEntityChange(entity);
+        expect(spy).toHaveBeenCalledWith({
+            type: 'remove',
+            archetype: archetype,
+            entity: entity
+        });
+        expect(archetype.entities).toHaveLength(0);
+        disposer();
+        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        archetype.handleEntityChange(entity);
+        entity.removeComponent('position');
+        archetype.handleEntityChange(entity);
+        expect(spy.mock.calls).toHaveLength(1);
+    });
 });
 //# sourceMappingURL=Archetype.test.js.map

@@ -44,7 +44,7 @@ var Entity = /** @class */ (function () {
             return types.every(function (type) { return _this.hasComponent(type); });
         };
         // tslint:disable-next-line
-        this.get = this.getComponent;
+        this.get = this.unsafe_getComponent;
         // tslint:disable-next-line
         this.set = this.setComponent;
         // tslint:disable-next-line
@@ -81,6 +81,15 @@ var Entity = /** @class */ (function () {
     Entity.prototype.getComponent = function (type) {
         var component = this.components[type];
         return component && component.value;
+    };
+    Entity.prototype.unsafe_getComponent = function (type) {
+        var component = this.getComponent(type);
+        if (component) {
+            return component;
+        }
+        else {
+            throw new Error("Entity does not contain component of type " + type + ".");
+        }
     };
     Entity.prototype.setComponent = function (type, value) {
         if (this.hasComponent(type)) {

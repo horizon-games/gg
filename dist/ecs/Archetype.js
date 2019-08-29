@@ -5,6 +5,8 @@ var Archetype = /** @class */ (function () {
         if (filters === void 0) { filters = []; }
         this.entities = [];
         this.onChangeListeners = new Set();
+        this.onAddListeners = new Set();
+        this.onRemoveListeners = new Set();
         this.id = id;
         this.filters = filters;
     }
@@ -12,6 +14,16 @@ var Archetype = /** @class */ (function () {
         var _this = this;
         this.onChangeListeners.add(listener);
         return function () { return _this.onChangeListeners.delete(listener); };
+    };
+    Archetype.prototype.onAdd = function (listener) {
+        var _this = this;
+        this.onAddListeners.add(listener);
+        return function () { return _this.onAddListeners.delete(listener); };
+    };
+    Archetype.prototype.onRemove = function (listener) {
+        var _this = this;
+        this.onRemoveListeners.add(listener);
+        return function () { return _this.onRemoveListeners.delete(listener); };
     };
     Archetype.prototype.matchesEntity = function (entity) {
         return this.filters.every(function (filter) { return filter(entity); });
@@ -34,25 +46,33 @@ var Archetype = /** @class */ (function () {
         }
     };
     Archetype.prototype.handleEntityAdd = function (entity, component) {
-        var _this = this;
         if (this.matchesEntity(entity)) {
             if (!this.hasEntity(entity)) {
+                var ev_1 = {
+                    type: 'add',
+                    archetype: this,
+                    entity: entity,
+                    component: component
+                };
                 this.entities.push(entity);
-                this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'add', archetype: _this, entity: entity, component: component });
-                });
+                this.onAddListeners.forEach(function (listener) { return listener(ev_1); });
+                this.onChangeListeners.forEach(function (listener) { return listener(ev_1); });
             }
         }
     };
     Archetype.prototype.handleEntityRemove = function (entity, component) {
-        var _this = this;
         if (this.hasEntity(entity)) {
             var idx = this.entities.indexOf(entity);
             if (idx !== -1) {
+                var ev_2 = {
+                    type: 'remove',
+                    archetype: this,
+                    entity: entity,
+                    component: component
+                };
                 this.entities.splice(idx, 1);
-                this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'remove', archetype: _this, entity: entity, component: component });
-                });
+                this.onRemoveListeners.forEach(function (listener) { return listener(ev_2); });
+                this.onChangeListeners.forEach(function (listener) { return listener(ev_2); });
             }
         }
     };

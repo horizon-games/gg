@@ -24,7 +24,8 @@ export default class Entity<C extends ComponentTypes> {
     has: (type: keyof C) => boolean;
     hasComponents: (...types: string[]) => boolean;
     getComponent<T extends keyof C>(type: T): C[T]['value'] | undefined;
-    get: <T extends keyof C>(type: T) => C[T]["value"] | undefined;
+    unsafe_getComponent<T extends keyof C>(type: T): C[T]['value'];
+    get: <T extends keyof C>(type: T) => C[T]["value"];
     setComponent<T extends keyof C>(type: T, value: Partial<C[T]['value']> | C[T]['value']): void;
     set: <T extends keyof C>(type: T, value: C[T]["value"] | Partial<C[T]["value"]>) => void;
     toggleComponent(componentClass: new () => ValueOf<C>, predicate: boolean): void;
