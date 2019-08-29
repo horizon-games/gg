@@ -51,6 +51,8 @@ export default class Archetype<C extends ComponentTypes> {
   readonly entities: Array<Entity<C>> = []
 
   private onChangeListeners: Set<ArchetypeChangeListener<C>> = new Set()
+  private onAddListeners: Set<ArchetypeChangeListener<C>> = new Set()
+  private onRemoveListeners: Set<ArchetypeChangeListener<C>> = new Set()
 
   constructor(id: number, filters: Array<ArchetypeFilterPredicate<C>> = []) {
     this.id = id
@@ -60,6 +62,16 @@ export default class Archetype<C extends ComponentTypes> {
   onChange(listener: ArchetypeChangeListener<C>) {
     this.onChangeListeners.add(listener)
     return () => this.onChangeListeners.delete(listener)
+  }
+
+  onAdd(listener: ArchetypeChangeListener<C>) {
+    this.onAddListeners.add(listener)
+    return () => this.onAddListeners.delete(listener)
+  }
+
+  onRemove(listener: ArchetypeChangeListener<C>) {
+    this.onRemoveListeners.add(listener)
+    return () => this.onRemoveListeners.delete(listener)
   }
 
   matchesEntity(entity: Entity<C>): boolean {
@@ -87,10 +99,16 @@ export default class Archetype<C extends ComponentTypes> {
   handleEntityAdd(entity: Entity<C>, component?: ValueOf<C>) {
     if (this.matchesEntity(entity)) {
       if (!this.hasEntity(entity)) {
+        const ev: ArchetypeChangeEvent<C> = {
+          type: 'add',
+          archetype: this,
+          entity,
+          component
+        }
+
         this.entities.push(entity)
-        this.onChangeListeners.forEach(listener =>
-          listener({ type: 'add', archetype: this, entity, component })
-        )
+        this.onAddListeners.forEach(listener => listener(ev))
+        this.onChangeListeners.forEach(listener => listener(ev))
       }
     }
   }
@@ -100,10 +118,16 @@ export default class Archetype<C extends ComponentTypes> {
       const idx = this.entities.indexOf(entity)
 
       if (idx !== -1) {
+        const ev: ArchetypeChangeEvent<C> = {
+          type: 'remove',
+          archetype: this,
+          entity,
+          component
+        }
+
         this.entities.splice(idx, 1)
-        this.onChangeListeners.forEach(listener =>
-          listener({ type: 'remove', archetype: this, entity, component })
-        )
+        this.onRemoveListeners.forEach(listener => listener(ev))
+        this.onChangeListeners.forEach(listener => listener(ev))
       }
     }
   }

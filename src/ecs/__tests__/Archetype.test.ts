@@ -163,4 +163,101 @@ describe('Archetype', () => {
 
     expect(spy.mock.calls).toHaveLength(2)
   })
+
+  test('can handle onAdd event', () => {
+    const archetype = new Archetype<Components>(Archetypes.Position, [
+      Archetype.include('position')
+    ])
+
+    const spy = jest.fn()
+    const disposer = archetype.onAdd(spy)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    const entity = new Entity<any>()
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(0)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(1)
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith({
+      type: 'add',
+      archetype,
+      entity
+    })
+
+    entity.removeComponent('position')
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(0)
+
+    disposer()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    expect(spy.mock.calls).toHaveLength(1)
+  })
+
+  test('can handle onRemove event', () => {
+    const archetype = new Archetype<Components>(Archetypes.Position, [
+      Archetype.include('position')
+    ])
+
+    const spy = jest.fn()
+    const disposer = archetype.onRemove(spy)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    const entity = new Entity<any>()
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(0)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    expect(archetype.entities).toHaveLength(1)
+
+    expect(spy).not.toHaveBeenCalled()
+
+    entity.removeComponent('position')
+
+    archetype.handleEntityChange(entity)
+
+    expect(spy).toHaveBeenCalledWith({
+      type: 'remove',
+      archetype,
+      entity
+    })
+
+    expect(archetype.entities).toHaveLength(0)
+
+    disposer()
+
+    entity.addComponent(new PositionComponent({ x: 0, y: 0, z: 0 }))
+
+    archetype.handleEntityChange(entity)
+
+    entity.removeComponent('position')
+
+    archetype.handleEntityChange(entity)
+
+    expect(spy.mock.calls).toHaveLength(1)
+  })
 })
