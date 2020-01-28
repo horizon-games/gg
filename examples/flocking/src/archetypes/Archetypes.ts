@@ -1,4 +1,4 @@
-const enum Archetypes {
+enum Archetypes {
   Birds
 }
 
