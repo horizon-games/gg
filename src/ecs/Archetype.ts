@@ -4,7 +4,7 @@ import Entity from './Entity'
 type ValueOf<T> = T[keyof T]
 
 type ArchetypeComponentFilter<C extends ComponentTypes> = (
-  ...componentTypes: Array<keyof C>
+  ...componentTypes: (keyof C)[]
 ) => ArchetypeFilterPredicate<C>
 type ArchetypeFilterPredicate<C extends ComponentTypes> = (
   entity: Entity<C>
@@ -46,15 +46,15 @@ export default class Archetype<C extends ComponentTypes> {
 
   id: number
 
-  filters: Array<ArchetypeFilterPredicate<C>>
+  filters: ArchetypeFilterPredicate<C>[]
 
-  readonly entities: Array<Entity<C>> = []
+  readonly entities: Entity<C>[] = []
 
   private onChangeListeners: Set<ArchetypeChangeListener<C>> = new Set()
   private onAddListeners: Set<ArchetypeChangeListener<C>> = new Set()
   private onRemoveListeners: Set<ArchetypeChangeListener<C>> = new Set()
 
-  constructor(id: number, filters: Array<ArchetypeFilterPredicate<C>> = []) {
+  constructor(id: number, filters: ArchetypeFilterPredicate<C>[] = []) {
     this.id = id
     this.filters = filters
   }

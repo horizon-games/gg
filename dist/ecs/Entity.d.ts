@@ -10,10 +10,10 @@ export declare type EntityChangeListener<C extends ComponentTypes> = (ev: Entity
 export default class Entity<C extends ComponentTypes> {
     id: number;
     components: Partial<C>;
-    readonly componentTypes: Array<keyof C>;
+    get componentTypes(): (keyof C)[];
     private onChangeListeners;
-    constructor(components?: Array<ValueOf<C>>);
-    renew(components?: Array<ValueOf<C>>): Entity<C>;
+    constructor(components?: ValueOf<C>[]);
+    renew(components?: ValueOf<C>[]): Entity<C>;
     reset(): Entity<C>;
     onChange(listener: EntityChangeListener<C>): () => boolean;
     hasComponent(type: keyof C): boolean;

@@ -5,7 +5,7 @@ type ValueOf<T> = T[keyof T]
 
 export default class EntityPool<C extends ComponentTypes> {
   head: number = -1
-  entities: Array<Entity<C>>
+  entities: Entity<C>[]
 
   constructor(public size: number) {
     this.entities = new Array(size)
@@ -20,7 +20,7 @@ export default class EntityPool<C extends ComponentTypes> {
   }
 
   // Take an Entity from the pool
-  renew(components: Array<ValueOf<C>> = []): Entity<C> {
+  renew(components: ValueOf<C>[] = []): Entity<C> {
     if (this.head >= 0) {
       const entity = this.entities[this.head--]
       return entity.renew(components)

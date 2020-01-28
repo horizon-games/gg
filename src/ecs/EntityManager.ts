@@ -19,7 +19,7 @@ export default class EntityManager<C extends ComponentTypes> {
     this.entityPool = new EntityPool<C>(poolSize)
   }
 
-  filter(types: string[]): Array<Entity<C>> {
+  filter(types: string[]): Entity<C>[] {
     return Array.from(this.entities.values()).filter(entity =>
       entity.hasComponents(...types)
     )
@@ -77,7 +77,7 @@ export default class EntityManager<C extends ComponentTypes> {
     return this.entities.get(entityId)
   }
 
-  renewEntity(components: Array<ValueOf<C>> = []): Entity<C> {
+  renewEntity(components: ValueOf<C>[] = []): Entity<C> {
     const entity = this.entityPool.renew(components)
     this.addEntity(entity)
     return entity

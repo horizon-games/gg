@@ -12,12 +12,12 @@ export default class EntityManager<C extends ComponentTypes> {
     entityPool: EntityPool<C>;
     entityChangeDisposers: Map<number, () => void>;
     constructor({ poolSize }?: EntityManagerOptions);
-    filter(types: string[]): Array<Entity<C>>;
+    filter(types: string[]): Entity<C>[];
     addEntity(entity: Entity<C>): void;
     removeEntity(entity: Entity<C>): void;
     hasEntity(entityId: number): boolean;
     getEntity(entityId: number): Entity<C> | undefined;
-    renewEntity(components?: Array<ValueOf<C>>): Entity<C>;
+    renewEntity(components?: ValueOf<C>[]): Entity<C>;
     releaseEntity(entity: Entity<C>): void;
     addArchetype(archetype: Archetype<C>): void;
     removeArchetype(archetypeID: number): void;

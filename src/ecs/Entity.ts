@@ -27,18 +27,18 @@ export default class Entity<C extends ComponentTypes> {
   id: number
   components: Partial<C> = {}
 
-  get componentTypes(): Array<keyof C> {
+  get componentTypes(): (keyof C)[] {
     return Object.keys(this.components)
   }
 
   private onChangeListeners: Set<EntityChangeListener<C>> = new Set()
 
-  constructor(components: Array<ValueOf<C>> = []) {
+  constructor(components: ValueOf<C>[] = []) {
     this.reset()
     this.renew(components)
   }
 
-  renew(components: Array<ValueOf<C>> = []): Entity<C> {
+  renew(components: ValueOf<C>[] = []): Entity<C> {
     components.forEach(this.addComponent)
     return this
   }

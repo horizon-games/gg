@@ -41,7 +41,7 @@ export default class World<C extends ComponentTypes> {
     }
   }
 
-  addSystems(...systems: Array<System<C>>) {
+  addSystems(...systems: System<C>[]) {
     systems.forEach(system => this.addSystem(system))
   }
 
@@ -88,7 +88,7 @@ export default class World<C extends ComponentTypes> {
     return this.manager.getArchetype(archetypeID)
   }
 
-  createEntity(components: Array<ValueOf<C>> = []): Entity<C> {
+  createEntity(components: ValueOf<C>[] = []): Entity<C> {
     return this.manager.renewEntity(components)
   }
 
@@ -104,7 +104,7 @@ export default class World<C extends ComponentTypes> {
     return this.manager.getEntity(entityId)
   }
 
-  getEntities(entityIds: number[]): Array<Entity<C>> {
+  getEntities(entityIds: number[]): Entity<C>[] {
     return entityIds.map(this.getEntity.bind(this))
   }
 

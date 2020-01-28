@@ -4,8 +4,8 @@ var Component_1 = require("./Component");
 var instanceIdx = 0;
 var Entity = /** @class */ (function () {
     function Entity(components) {
-        if (components === void 0) { components = []; }
         var _this = this;
+        if (components === void 0) { components = []; }
         this.components = {};
         this.onChangeListeners = new Set();
         // tslint:disable-next-line
