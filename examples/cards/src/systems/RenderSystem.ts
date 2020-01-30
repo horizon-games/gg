@@ -84,7 +84,7 @@ export default class RenderSystem extends System<Components> {
 
       if (material) {
         $element.find('.face').css({
-          'background-image': `linear-gradient(rgba(32,64,255,0), rgba(32,64,255,0.1), rgba(255,32,128,0.2), rgba(32,0,64,0.8), rgba(16,0,32,1)), url("images/${
+          'background-image': `linear-gradient(rgba(32,64,255,0), rgba(32,64,255,0.1), rgba(255,32,128,0.2), rgba(32,0,64,0.8), rgba(16,0,32,1)), url("${
             material.imageSrc
           }")`
         })

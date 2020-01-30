@@ -16,6 +16,9 @@ import {
 import { Card, CardStatus } from '../types'
 import $ from 'jquery'
 
+// @ts-ignore
+import images from '../images/*.jpg'
+
 const CardAssemblage = (card: Card, status: CardStatus) => {
   const element = $('<div/>').get(0)
   const isPlayer = card.playerId === 1
@@ -29,7 +32,7 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       status
     }),
     new MaterialComponent({
-      imageSrc: `${card.artId}.jpg`
+      imageSrc: images[card.artId]
     }),
     new PlayerComponent({ id: card.playerId }),
     new WidthComponent(125),
