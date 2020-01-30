@@ -6,34 +6,21 @@
   "author": "Corban Riley",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "start": "parcel src/index.html",
     "tslint": "tslint -c tslint.json $(find src -type f -name *.ts)",
     "tslint:fix": "tslint -c tslint.json --fix $(find src -type f -name *.ts)",
     "prettier": "prettier-check --config .prettierrc $(find src -type f -name *.ts)",
-    "prettier:fix": "prettier --config .prettierrc --write $(find src -type f -name *.ts)",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "prettier:fix": "prettier --config .prettierrc --write $(find src -type f -name *.ts)"
   },
   "devDependencies": {
-    "@types/dotenv": "^6.1.0",
-    "@types/jest": "^23.3.9",
-    "@types/stats": "^0.16.30",
     "@types/jquery": "^3.3.22",
-    "@types/three": "^0.93.10",
-    "jest": "^23.6.0",
+    "@types/stats": "^0.16.30",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^1.14.3",
     "prettier-check": "^2.0.0",
-    "ts-jest": "^23.10.4",
-    "ts-loader": "^5.3.0",
-    "tslint": "^5.11.0",
+    "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.15.0",
-    "tslint-webpack-plugin": "^1.2.2",
-    "typescript": "^3.1.6",
-    "webpack": "^4.25.0",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "dotenv-webpack": "^1.5.7",
@@ -41,9 +28,8 @@
     "popmotion": "^8.5.3",
     "sillyname": "^0.1.0",
     "stats.js": "^0.17.0",
-    "three": "^0.98.0",
-    "three-gltf-loader": "^1.98.0",
-    "unistore": "^3.1.0"
+    "three": ">=0.111.0",
+    "unistore": "^3.5.1"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -35,7 +35,7 @@ import {
   PositionComponent,
   RotationComponent
 } from './components'
-import CardAssemblage from './assemblages/CardAssemblage'
+import createCardAssemblage from './assemblages/CardAssemblage'
 import DeckSystem from './systems/DeckSystem'
 import HandSystem from './systems/HandSystem'
 import FieldSystem from './systems/FieldSystem'
@@ -47,6 +47,9 @@ import screen from './screen'
 import camera from './camera'
 import scene from './scene'
 import LightAssemblage from './assemblages/LightAssemblage'
+
+// @ts-ignore
+import backgroundImage from './images/background.png'
 
 const world = new World<Components>()
 console.log(world)
@@ -72,7 +75,7 @@ const renderer = new WebGLRenderer({ antialias: true })
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
-const backgroundTexture = new TextureLoader().load('images/background.png')
+const backgroundTexture = new TextureLoader().load(backgroundImage)
 backgroundTexture.wrapS = RepeatWrapping
 backgroundTexture.wrapT = RepeatWrapping
 backgroundTexture.repeat.set(10, 10)
@@ -113,7 +116,7 @@ const cards: Map<number, Entity<Components>> = new Map()
 
 const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
   if (!cards.has(card.id)) {
-    const entity = world.createEntity(CardAssemblage(card, status))
+    const entity = world.createEntity(createCardAssemblage(card, status))
     cards.set(card.id, entity)
   } else {
     const entity = cards.get(card.id)

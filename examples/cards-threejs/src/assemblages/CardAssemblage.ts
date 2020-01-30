@@ -18,11 +18,13 @@ import {
   MeshPhysicalMaterial
 } from 'three'
 import { degreesToRadians } from '../utils'
-import scene from '../scene'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 // @ts-ignore
-import GLTFLoader from 'three-gltf-loader'
+import cardModel from '../models/card.glb'
+// @ts-ignore
+import images from '../images/*.jpg'
 
-const backTexture = new TextureLoader().load(`images/back.jpg`)
+const backTexture = new TextureLoader().load(images.back)
 const backMaterial = new MeshStandardMaterial({
   map: backTexture
 })
@@ -30,8 +32,8 @@ const backMaterial = new MeshStandardMaterial({
 const loader = new GLTFLoader()
 let group: any
 
-loader.load('models/card.glb', (gltf: any) => {
-  console.log(gltf)
+loader.load(cardModel, (gltf: any) => {
+  console.log('gltf', gltf)
   group = gltf.scene.children[0]
   group.scale.set(0.2, 0.2, 0.2)
   const [face, trim, back] = group.children
@@ -43,12 +45,11 @@ loader.load('models/card.glb', (gltf: any) => {
   })
 })
 
-const CardAssemblage = (card: Card, status: CardStatus) => {
+const createCardAssemblage = (card: Card, status: CardStatus) => {
   const isPlayer = card.playerId === 1
 
-  const texture = new TextureLoader().load(`images/${card.artId}.jpg`)
+  const texture = new TextureLoader().load(images[card.artId])
   const material = new MeshPhysicalMaterial({ map: texture })
-  material.clearCoat = 0
   material.reflectivity = 0
   material.metalness = 0
   const object3d = group.clone()
@@ -82,4 +83,4 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
   ]
 }
 
-export default CardAssemblage
+export default createCardAssemblage
