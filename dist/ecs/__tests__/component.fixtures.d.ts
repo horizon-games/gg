@@ -8,42 +8,25 @@ export interface Components extends ComponentTypes {
     static: StaticComponent;
     collider: ColliderComponent;
 }
-export declare class PositionComponent extends Component {
-    value: {
-        x: number;
-        y: number;
-        z: number;
-    };
+interface Vec3 {
+    x: number;
+    y: number;
+    z: number;
 }
-export declare class RotationComponent extends Component {
-    value: {
-        x: number;
-        y: number;
-        z: number;
-    };
+export declare class PositionComponent extends Component<Vec3> {
 }
-export declare class VelocityComponent extends Component {
-    value: {
-        x: number;
-        y: number;
-        z: number;
-    };
+export declare class RotationComponent extends Component<Vec3> {
 }
-export declare class AccelerationComponent extends Component {
-    value: {
-        x: number;
-        y: number;
-        z: number;
-    };
+export declare class VelocityComponent extends Component<Vec3> {
 }
-export declare class PlayerControllableComponent extends Component {
-    value: boolean;
+export declare class AccelerationComponent extends Component<Vec3> {
 }
-export declare class StaticComponent extends Component {
-    value: boolean;
+export declare class PlayerControllableComponent extends Component<boolean> {
 }
-export declare class ColliderComponent extends Component {
-    value: boolean;
+export declare class StaticComponent extends Component<void> {
+}
+export declare class ColliderComponent extends Component<boolean> {
 }
 export declare const physicalAssemblage: () => (PositionComponent | RotationComponent | VelocityComponent | AccelerationComponent | ColliderComponent)[];
+export {};
 //# sourceMappingURL=component.fixtures.d.ts.map

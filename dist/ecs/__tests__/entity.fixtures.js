@@ -10,7 +10,7 @@ exports.createEntityFixture = function () {
     var rot = new Component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 });
     var vel = new Component_fixtures_1.VelocityComponent({ x: 0, y: 0, z: 0 });
     var acc = new Component_fixtures_1.AccelerationComponent({ x: 0, y: 0, z: 0 });
-    var playerControlled = new Component_fixtures_1.PlayerControllableComponent({ value: true });
+    var playerControlled = new Component_fixtures_1.PlayerControllableComponent(true);
     return new Entity_1.default([pos, rot, vel, acc, playerControlled]);
 };
 //# sourceMappingURL=entity.fixtures.js.map

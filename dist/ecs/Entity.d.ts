@@ -23,8 +23,8 @@ export default class Entity<C extends ComponentTypes> {
     add: (component: C[keyof C]) => void;
     removeComponent: (type: string) => void;
     remove: (type: string) => void;
-    toggleComponent(componentClass: new () => ValueOf<C>, predicate: boolean): void;
-    toggle: (componentClass: new () => C[keyof C], predicate: boolean) => void;
+    toggleComponent(componentClass: new (value: void) => ValueOf<C>, predicate: boolean): void;
+    toggle: (componentClass: new (value: void) => C[keyof C], predicate: boolean) => void;
     getComponent<T extends keyof C>(type: T): C[T] | undefined;
     getComponentValue<T extends keyof C>(type: T): C[T]['value'];
     get: <T extends keyof C>(type: T) => C[T]["value"];

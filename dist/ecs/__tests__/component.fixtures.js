@@ -17,20 +17,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Component_1 = __importDefault(require("../Component"));
-// export type Components = ComponentConfig<{
-//   position: PositionComponent
-//   rotation: RotationComponent
-//   velocity: VelocityComponent
-//   acceleration: AccelerationComponent
-//   playerControllable: PlayerControllableComponent
-//   static: StaticComponent
-//   collider: ColliderComponent
-// }>
-// export interface PositionComponent extends Component {
-//   x: number
-//   y: number
-//   z: number
-// }
 var PositionComponent = /** @class */ (function (_super) {
     __extends(PositionComponent, _super);
     function PositionComponent() {

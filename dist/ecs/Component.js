@@ -7,8 +7,8 @@ exports.getComponentTypeFromClass = function (klass) {
 };
 var Component = /** @class */ (function () {
     function Component(value) {
-        this.type = exports.getComponentTypeFromClass(this.constructor);
         this.value = value;
+        this.type = exports.getComponentTypeFromClass(this.constructor);
     }
     Component.prototype.onAttach = function (entity) {
         // stub
