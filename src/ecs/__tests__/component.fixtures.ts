@@ -26,49 +26,25 @@ export interface Components extends ComponentTypes {
 //   z: number
 // }
 
-export class PositionComponent extends Component {
-  value: {
-    x: number
-    y: number
-    z: number
-  }
+interface Vec3 {
+  x: number
+  y: number
+  z: number
 }
 
-export class RotationComponent extends Component {
-  value: {
-    x: number
-    y: number
-    z: number
-  }
-}
+export class PositionComponent extends Component<Vec3> {}
 
-export class VelocityComponent extends Component {
-  value: {
-    x: number
-    y: number
-    z: number
-  }
-}
+export class RotationComponent extends Component<Vec3> {}
 
-export class AccelerationComponent extends Component {
-  value: {
-    x: number
-    y: number
-    z: number
-  }
-}
+export class VelocityComponent extends Component<Vec3> {}
 
-export class PlayerControllableComponent extends Component {
-  value: boolean
-}
+export class AccelerationComponent extends Component<Vec3> {}
 
-export class StaticComponent extends Component {
-  value: boolean
-}
+export class PlayerControllableComponent extends Component<boolean> {}
 
-export class ColliderComponent extends Component {
-  value: boolean
-}
+export class StaticComponent extends Component<void> {}
+
+export class ColliderComponent extends Component<boolean> {}
 
 export const physicalAssemblage = () => {
   return [

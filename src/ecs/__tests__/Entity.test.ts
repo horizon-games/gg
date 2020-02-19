@@ -3,13 +3,9 @@ import Entity from '../Entity'
 import { Components, PositionComponent } from './component.fixtures'
 import Component from '../Component'
 
-class TagComponent extends Component {}
-class PrimitiveValueComponent extends Component {
-  value: number
-}
-class ArrayValueComponent extends Component {
-  value: number[]
-}
+class TagComponent extends Component<void> {}
+class PrimitiveValueComponent extends Component<number> {}
+class ArrayValueComponent extends Component<number[]> {}
 
 describe('Entity', () => {
   test('can create', () => {

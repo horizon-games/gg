@@ -102,7 +102,10 @@ export default class Entity<C extends ComponentTypes> {
   // tslint:disable-next-line
   remove = this.removeComponent
 
-  toggleComponent(componentClass: new () => ValueOf<C>, predicate: boolean) {
+  toggleComponent(
+    componentClass: new (value: void) => ValueOf<C>,
+    predicate: boolean
+  ) {
     const componentType = getComponentTypeFromClass(componentClass)
 
     if (predicate) {

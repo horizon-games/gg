@@ -31,6 +31,7 @@ export default class RenderSystem extends System<Components> {
       $element.attr('data-id', entity.id)
 
       if (document.body.contains(element)) {
+        //
       } else {
         if (card) {
           $element

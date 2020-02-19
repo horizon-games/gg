@@ -5,13 +5,10 @@ export const getComponentTypeFromClass = (klass: any): string =>
   klass.name.charAt(0).toLowerCase() +
   klass.name.slice(1).replace(ComponentTypeRegExp, '')
 
-export default class Component {
+export default class Component<T extends any> {
   readonly type: string = getComponentTypeFromClass(this.constructor)
-  value?: any
 
-  constructor(value?: any) {
-    this.value = value
-  }
+  constructor(public value: T) {}
 
   onAttach(entity: Entity<any>) {
     // stub
@@ -23,5 +20,5 @@ export default class Component {
 }
 
 export interface ComponentTypes {
-  [key: string]: Component
+  [key: string]: Component<any>
 }
