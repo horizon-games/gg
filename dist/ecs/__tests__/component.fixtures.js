@@ -82,4 +82,4 @@ exports.physicalAssemblage = function () {
         new ColliderComponent(true)
     ];
 };
-//# sourceMappingURL=component.fixtures.js.map
+//# sourceMappingURL=Component.fixtures.js.map

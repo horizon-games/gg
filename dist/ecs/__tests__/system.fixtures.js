@@ -17,14 +17,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var System_1 = __importDefault(require("../System"));
-var archetype_fixtures_1 = require("./archetype.fixtures");
+var Archetype_fixtures_1 = require("./Archetype.fixtures");
 var PhysicsSystem = /** @class */ (function (_super) {
     __extends(PhysicsSystem, _super);
     function PhysicsSystem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PhysicsSystem.prototype.update = function (manager, dt) {
-        var all = manager.getArchetype(archetype_fixtures_1.Archetypes.Physical);
+        var all = manager.getArchetype(Archetype_fixtures_1.Archetypes.Physical);
         all.entities.forEach(function (entity) {
             entity.getComponentValue('position').x += 1;
         });
@@ -35,4 +35,4 @@ var PhysicsSystem = /** @class */ (function (_super) {
     return PhysicsSystem;
 }(System_1.default));
 exports.PhysicsSystem = PhysicsSystem;
-//# sourceMappingURL=system.fixtures.js.map
+//# sourceMappingURL=System.fixtures.js.map

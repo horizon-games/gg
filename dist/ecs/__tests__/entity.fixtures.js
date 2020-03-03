@@ -13,4 +13,4 @@ exports.createEntityFixture = function () {
     var playerControlled = new Component_fixtures_1.PlayerControllableComponent(true);
     return new Entity_1.default([pos, rot, vel, acc, playerControlled]);
 };
-//# sourceMappingURL=entity.fixtures.js.map
+//# sourceMappingURL=Entity.fixtures.js.map
