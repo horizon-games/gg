@@ -1,3 +1,3 @@
 import { Component } from '../../../../src/ecs'
 
-export default class HoverComponent extends Component {}
+export default class HoverComponent extends Component<void> {}

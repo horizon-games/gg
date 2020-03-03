@@ -1,5 +1,3 @@
 import { Component } from '../../../../src/ecs'
 
-export default class OrderComponent extends Component {
-  value: number
-}
+export default class OrderComponent extends Component<number> {}

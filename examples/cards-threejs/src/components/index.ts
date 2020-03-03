@@ -12,7 +12,7 @@ import LightComponent from './LightComponent'
 import DraggableComponent from './DraggableComponent'
 import DroppableComponent from './DroppableComponent'
 
-export interface Components extends ComponentTypes {
+export type Components = {
   player: PlayerComponent
   position: PositionComponent
   rotation: RotationComponent

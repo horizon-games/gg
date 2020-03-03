@@ -1,6 +1,6 @@
 import Component, { ComponentTypes } from '../Component'
 
-export interface Components extends ComponentTypes {
+export type Components = {
   position: PositionComponent
   rotation: RotationComponent
   velocity: VelocityComponent

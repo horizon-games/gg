@@ -2,9 +2,7 @@ import { Component, Entity } from '../../../../src/ecs'
 import { Object3D } from 'three'
 import scene from '../scene'
 
-export default class MeshComponent extends Component {
-  value: Object3D
-
+export default class MeshComponent extends Component<Object3D> {
   onAttach(entity: Entity<any>) {
     this.value.userData.entityId = entity.id
     scene.add(this.value)

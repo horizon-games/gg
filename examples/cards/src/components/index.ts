@@ -13,7 +13,7 @@ import BorderRadiusComponent from './BorderRadiusComponent'
 import MaterialComponent from './MaterialComponent'
 import OrderComponent from './OrderComponent'
 
-export interface Components extends ComponentTypes {
+export type Components = {
   player: PlayerComponent
   position: PositionComponent
   rotation: RotationComponent

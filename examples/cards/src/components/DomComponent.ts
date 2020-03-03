@@ -1,8 +1,6 @@
 import { Component } from '../../../../src/ecs'
 
-export default class DomComponent extends Component {
-  value: {
-    className: string
-    element: HTMLElement
-  }
-}
+export default class DomComponent extends Component<{
+  className: string
+  element: HTMLElement
+}> {}

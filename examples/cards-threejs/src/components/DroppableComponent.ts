@@ -1,8 +1,6 @@
 import { Component } from '../../../../src/ecs'
 
-export default class DroppableComponent extends Component {
-  value: {
-    receives: string[]
-    isHovered: boolean
-  }
-}
+export default class DroppableComponent extends Component<{
+  receives: string[]
+  isHovered: boolean
+}> {}
