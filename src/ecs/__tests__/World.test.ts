@@ -2,7 +2,7 @@ import World from '../World'
 import Archetype from '../Archetype'
 import { Components, physicalAssemblage } from './Component.fixtures'
 import { PhysicsSystem } from './System.fixtures'
-import { Archetypes, physicalArchetype } from './archetype.fixtures'
+import { Archetypes, physicalArchetype } from './Archetype.fixtures'
 
 describe('World', () => {
   test('can create', () => {
