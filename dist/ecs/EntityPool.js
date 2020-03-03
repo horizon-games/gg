@@ -1,0 +1,51 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var Entity_1 = __importDefault(require("./Entity"));
+var EntityPool = /** @class */ (function () {
+    function EntityPool(size) {
+        this.size = size;
+        this.head = -1;
+        this.entities = new Array(size);
+        for (var idx = 0; idx < size; idx++) {
+            this.entities[++this.head] = new Entity_1.default();
+        }
+    }
+    Object.defineProperty(EntityPool.prototype, "length", {
+        get: function () {
+            return this.size - this.head - 1;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    // Take an Entity from the pool
+    EntityPool.prototype.renew = function (components) {
+        if (components === void 0) { components = []; }
+        if (this.head >= 0) {
+            var entity = this.entities[this.head--];
+            return entity.renew(components);
+        }
+        else {
+            throw new Error('EntityPool: Attempted to take an Entity from an exhausted pool.');
+        }
+    };
+    // Release an Entity back into the pool
+    EntityPool.prototype.release = function (entity) {
+        if (entity instanceof Entity_1.default) {
+            if (this.head < this.size - 1) {
+                this.entities[++this.head] = entity.reset();
+            }
+            else {
+                throw new Error('EntityPool: Attempted to release an Entity back into a full pool.');
+            }
+        }
+        else {
+            throw new Error('EntityPool: Released object was not an Entity.');
+        }
+    };
+    return EntityPool;
+}());
+exports.default = EntityPool;
+//# sourceMappingURL=EntityPool.js.map
