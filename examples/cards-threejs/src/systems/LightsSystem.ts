@@ -1,10 +1,10 @@
 import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components } from '../components'
-import { Archetypes } from '../archetypes'
+import { LightsArchetype } from '../archetypes'
 
 export default class LightsSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number, time: number) {
-    const { entities } = manager.getArchetype(Archetypes.Lights)
+    const { entities } = manager.getArchetype(LightsArchetype)
 
     entities.forEach((entity, idx) => {
       const light = entity.getComponentValue('light')

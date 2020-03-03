@@ -14,7 +14,7 @@ describe('World', () => {
 
     class AllArchetype extends Archetype<Components> {}
 
-    world.addArchetype(new AllArchetype())
+    world.addArchetype(AllArchetype)
 
     expect(world.hasArchetype(AllArchetype)).toBe(true)
 
@@ -25,7 +25,7 @@ describe('World', () => {
 
   test('can add systems', () => {
     const world = new World<Components>()
-    world.addArchetype(new PhysicalArchetype())
+    world.addArchetype(PhysicalArchetype)
     world.addSystems(new PhysicsSystem())
 
     // No entities yet, should have no effect
@@ -51,7 +51,7 @@ describe('World', () => {
 
   test('can get systems', () => {
     const world = new World<Components>()
-    world.addArchetype(new PhysicalArchetype())
+    world.addArchetype(PhysicalArchetype)
     world.addSystems(new PhysicsSystem())
 
     expect(world.hasSystem(PhysicsSystem)).toBe(true)

@@ -3,7 +3,7 @@ import { World } from '../../../src/ecs'
 import { createRenderingContext } from './RenderingContext'
 
 import { Components } from './components'
-import { BirdArchetype } from './archetypes'
+import { BirdsArchetype } from './archetypes'
 import BirdAssemblage from './assemblages/BirdAssemblage'
 import FlockingSystem from './systems/FlockingSystem'
 import RenderSystem from './systems/RenderSystem'
@@ -15,7 +15,7 @@ const stats = new Stats()
 const world = new World<Components>()
 
 // Archetypes
-world.addArchetype(BirdArchetype)
+world.addArchetype(BirdsArchetype)
 
 // Systems
 world.addSystems(new FlockingSystem(), new RenderSystem())

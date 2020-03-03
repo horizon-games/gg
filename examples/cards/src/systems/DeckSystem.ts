@@ -1,6 +1,6 @@
 import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components, PositionComponent } from '../components'
-import { Archetypes } from '../archetypes'
+import { PlayerCardsArchetype, OpponentCardsArchetype } from '../archetypes'
 import { CardStatus } from '../types'
 
 const updateDeckPosition = (
@@ -15,11 +15,9 @@ const updateDeckPosition = (
 
 export default class DeckSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities: playerCards } = manager.getArchetype(
-      Archetypes.PlayerCards
-    )
+    const { entities: playerCards } = manager.getArchetype(PlayerCardsArchetype)
     const { entities: opponentCards } = manager.getArchetype(
-      Archetypes.OpponentCards
+      OpponentCardsArchetype
     )
 
     playerCards

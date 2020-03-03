@@ -81,19 +81,12 @@ describe('EntityManager', () => {
       ]
     }
 
-    const allArchetype = new AllArchetype()
-    const emptyArchetype = new EmptyArchetype()
-    const nonEmptyArchetype = new NonEmptyArchetype()
-    const positionOnlyArchetype = new PositionOnlyArchetype()
-    const positionArchetype = new PositionArchetype()
-    const physicalArchetype = new PhysicalArchetype()
-
-    manager.addArchetype(allArchetype)
-    manager.addArchetype(emptyArchetype)
-    manager.addArchetype(nonEmptyArchetype)
-    manager.addArchetype(positionOnlyArchetype)
-    manager.addArchetype(positionArchetype)
-    manager.addArchetype(physicalArchetype)
+    const allArchetype = manager.addArchetype(AllArchetype)
+    const emptyArchetype = manager.addArchetype(EmptyArchetype)
+    const nonEmptyArchetype = manager.addArchetype(NonEmptyArchetype)
+    const positionOnlyArchetype = manager.addArchetype(PositionOnlyArchetype)
+    const positionArchetype = manager.addArchetype(PositionArchetype)
+    const physicalArchetype = manager.addArchetype(PhysicalArchetype)
 
     expect(allArchetype.hasEntity(entity)).toBe(true)
     expect(emptyArchetype.hasEntity(entity)).toBe(true)

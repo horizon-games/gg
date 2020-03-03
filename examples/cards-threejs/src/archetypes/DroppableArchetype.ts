@@ -1,7 +1,6 @@
 import { Archetype } from '../../../../src/ecs'
-import Archetypes from './Archetypes'
 import { Components } from '../components'
 
-export default new Archetype<Components>(Archetypes.Droppable, [
-  Archetype.include('droppable')
-])
+export default class DroppableArchetype extends Archetype<Components> {
+  filters = [Archetype.include('droppable')]
+}

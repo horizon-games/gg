@@ -1,6 +1,6 @@
 import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components, PositionComponent, RotationComponent } from '../components'
-import { Archetypes } from '../archetypes'
+import { PlayerCardsArchetype, OpponentCardsArchetype } from '../archetypes'
 import { CardStatus } from '../types'
 import screen from '../screen'
 import { lerp } from '../utils'
@@ -108,9 +108,9 @@ const updateCardPosition = (
 
 export default class FieldSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    let { entities: playerCards } = manager.getArchetype(Archetypes.PlayerCards)
+    let { entities: playerCards } = manager.getArchetype(PlayerCardsArchetype)
     let { entities: opponentCards } = manager.getArchetype(
-      Archetypes.OpponentCards
+      OpponentCardsArchetype
     )
 
     playerCards = playerCards

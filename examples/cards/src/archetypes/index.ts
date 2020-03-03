@@ -1,4 +1,3 @@
-export { default as Archetypes } from './Archetypes'
 export { default as CardsArchetype } from './CardsArchetype'
 export { default as PlayerCardsArchetype } from './PlayerCardsArchetype'
 export { default as OpponentCardsArchetype } from './OpponentCardsArchetype'

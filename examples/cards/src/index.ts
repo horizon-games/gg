@@ -81,7 +81,7 @@ window.onkeydown = (ev: any) => {
   }
 }
 
-$('body').mousemove(function(ev) {
+$('body').mousemove(ev => {
   const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
   world.manager.entities.forEach(entity => {
@@ -102,7 +102,7 @@ $('body').mousemove(function(ev) {
   }
 })
 
-$('body').on('click', '.card', function(ev) {
+$('body').on('click', '.card', ev => {
   const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
 

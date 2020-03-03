@@ -1,6 +1,6 @@
 import { System, EntityManager } from '../../../../src/ecs'
 import { Components, HoverComponent } from '../components'
-import { Archetypes, PlayerCardsArchetype } from '../archetypes'
+import { DraggableArchetype, DroppableArchetype } from '../archetypes'
 import { Vector2, Raycaster } from 'three'
 import camera from '../camera'
 import scene from '../scene'
@@ -20,8 +20,8 @@ const mouseDist = new Vector2()
 
 export default class DragDropSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities: draggable } = manager.getArchetype(Archetypes.Draggable)
-    const { entities: droppable } = manager.getArchetype(Archetypes.Droppable)
+    const { entities: draggable } = manager.getArchetype(DraggableArchetype)
+    const { entities: droppable } = manager.getArchetype(DroppableArchetype)
 
     raycaster.setFromCamera(mouse.position, camera)
 

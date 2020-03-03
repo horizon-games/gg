@@ -1,7 +1,6 @@
 import { Archetype } from '../../../../src/ecs'
-import Archetypes from './Archetypes'
 import { Components } from '../components'
 
-export default new Archetype<Components>(Archetypes.Renderable, [
-  Archetype.include('dom')
-])
+export default class RenderableArchetype extends Archetype<Components> {
+  filters = [Archetype.include('dom')]
+}

@@ -1,13 +1,12 @@
 import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components } from '../components'
-import { Archetypes } from '../archetypes'
+import { RenderableArchetype } from '../archetypes'
 import $ from 'jquery'
-import { positionArchetype } from '../../../../src/ecs/__tests__/archetype.fixtures'
 import { CardStatus } from '../types'
 
 export default class RenderSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities } = manager.getArchetype(Archetypes.Renderable)
+    const { entities } = manager.getArchetype(RenderableArchetype)
 
     entities.forEach(entity => {
       const { element, className } = entity.getComponentValue('dom')

@@ -90,16 +90,19 @@ export default class EntityManager<C extends ComponentTypes> {
     }
   }
 
-  addArchetype(archetype: Archetype<C>) {
-    const type = archetype.constructor.name
+  addArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T) {
+    const type = klass.name
 
     if (!this.archetypes.has(type)) {
+      const archetype = new klass()
       this.archetypes.set(type, archetype)
 
       // Add matching entities to archetypes
       this.entities.forEach(entity => {
         archetype.handleEntityAdd(entity)
       })
+
+      return archetype
     } else {
       throw new Error(
         `EntityManager: Could not add archetype as '${type}' already exists.`

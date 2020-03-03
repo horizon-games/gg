@@ -2,7 +2,7 @@ import { System, EntityManager, Entity } from '../../../../src/ecs'
 import { Components } from '../components'
 import * as vec2 from '../lib/vec2'
 import { Vector2 } from '../lib/vec2'
-import { Archetypes } from '../archetypes'
+import { BirdsArchetype } from '../archetypes'
 
 const MAX_SPEED = Number(process.env.MAX_SPEED)
 const MAX_FORCE = Number(process.env.MAX_FORCE)
@@ -20,7 +20,7 @@ const desired: Vector2 = vec2.create()
 
 export default class FlockingSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities } = manager.getArchetype(Archetypes.Birds)
+    const { entities } = manager.getArchetype(BirdsArchetype)
     const { innerWidth: width, innerHeight: height } = window
     const len = entities.length
     for (let i = 0; i < len; i++) {

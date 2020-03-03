@@ -1,7 +1,6 @@
 import { Archetype } from '../../../../src/ecs'
-import Archetypes from './Archetypes'
 import { Components } from '../components'
 
-export default new Archetype<Components>(Archetypes.Lights, [
-  Archetype.include('light')
-])
+export default class LightsArchetype extends Archetype<Components> {
+  filters = [Archetype.include('light')]
+}

@@ -1,6 +1,6 @@
 import { System, Entity, EntityManager } from '../../../../src/ecs'
 import { Components } from '../components'
-import { Archetypes } from '../archetypes'
+import { BirdsArchetype } from '../archetypes'
 import { Vector2 } from '../lib/vec2'
 import { getRenderingContext } from '../RenderingContext'
 
@@ -10,7 +10,7 @@ const RADIUS = Number(process.env.RADIUS)
 export default class RenderSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     const ctx = getRenderingContext()
-    const { entities } = manager.getArchetype(Archetypes.Birds)
+    const { entities } = manager.getArchetype(BirdsArchetype)
 
     // Clear screen
     ctx.fillStyle = 'rgba(240, 240, 240, 0.1)'

@@ -1,7 +1,6 @@
 import { Archetype } from '../../../../src/ecs'
-import Archetypes from './Archetypes'
 import { Components } from '../components'
 
-export default new Archetype<Components>(Archetypes.HoveredCards, [
-  Archetype.include('hover')
-])
+export default class HoveredCardsArchetype extends Archetype<Components> {
+  filters = [Archetype.include('hover')]
+}

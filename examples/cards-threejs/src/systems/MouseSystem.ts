@@ -1,6 +1,6 @@
 import { System, EntityManager } from '../../../../src/ecs'
 import { Components, HoverComponent } from '../components'
-import { Archetypes } from '../archetypes'
+import { HoveredCardsArchetype } from '../archetypes'
 import { Raycaster } from 'three'
 import camera from '../camera'
 import scene from '../scene'
@@ -30,7 +30,7 @@ let hoveredEntity: any
 
 export default class MouseSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
-    const { entities } = manager.getArchetype(Archetypes.HoveredCards)
+    const { entities } = manager.getArchetype(HoveredCardsArchetype)
 
     raycaster.setFromCamera(mouse.position, camera)
 

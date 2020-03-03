@@ -74,8 +74,8 @@ export default class World<C extends ComponentTypes> {
     }
   }
 
-  addArchetype(archetype: Archetype<C>) {
-    this.manager.addArchetype(archetype)
+  addArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T) {
+    return this.manager.addArchetype(klass)
   }
 
   removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T) {
