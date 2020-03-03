@@ -24,25 +24,25 @@ export type ArchetypeChangeListener<C extends ComponentTypes> = (
 ) => void
 
 export default class Archetype<C extends ComponentTypes> {
-  static include: ArchetypeComponentFilter<ComponentTypes> = (
-    ...componentTypes
-  ) => entity => entity.hasComponents(...(componentTypes as string[]))
+  static include = <CT extends ComponentTypes>(
+    ...componentTypes: (keyof CT)[]
+  ) => (entity: Entity<CT>) =>
+    entity.hasComponents(...(componentTypes as string[]))
 
-  static exclude: ArchetypeComponentFilter<ComponentTypes> = (
-    ...componentTypes
-  ) => entity =>
+  static exclude = <CT extends ComponentTypes>(
+    ...componentTypes: (keyof CT)[]
+  ) => (entity: Entity<CT>) =>
     componentTypes.every(type => !entity.hasComponent(type as string))
 
-  static only: ArchetypeComponentFilter<ComponentTypes> = (
-    ...componentTypes
-  ) => entity =>
+  static only = <CT extends ComponentTypes>(
+    ...componentTypes: (keyof CT)[]
+  ) => (entity: Entity<CT>) =>
     componentTypes.length === entity.componentTypes.length &&
     entity.hasComponents(...(componentTypes as string[]))
 
-  static any: ArchetypeComponentFilter<ComponentTypes> = (
-    ...componentTypes
-  ) => entity =>
-    componentTypes.some(type => entity.hasComponent(type as string))
+  static any = <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (
+    entity: Entity<CT>
+  ) => componentTypes.some(type => entity.hasComponent(type as string))
 
   id: number
 

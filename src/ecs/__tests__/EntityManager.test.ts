@@ -27,7 +27,7 @@ describe('EntityManager', () => {
 
   test('can add an entity', () => {
     const manager = new EntityManager<Components>()
-    const entity = new Entity()
+    const entity = new Entity<Components>()
     manager.addEntity(entity)
     expect(manager.entities.size).toBe(1)
   })
@@ -35,7 +35,7 @@ describe('EntityManager', () => {
   test('can find entities with specific types', () => {
     const manager = new EntityManager<Components>()
 
-    const entity = new Entity([
+    const entity = new Entity<Components>([
       new PositionComponent({ x: 1, y: 2, z: 3 }),
       new RotationComponent({ x: 1, y: 2, z: 3 }),
       new VelocityComponent({ x: 1, y: 2, z: 3 })
@@ -50,7 +50,7 @@ describe('EntityManager', () => {
   test('can add archetypes', () => {
     const manager = new EntityManager()
 
-    const entity = new Entity()
+    const entity = new Entity<Components>()
 
     manager.addEntity(entity)
 

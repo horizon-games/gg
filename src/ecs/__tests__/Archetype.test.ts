@@ -24,7 +24,7 @@ describe('Archetype', () => {
   test('can create archetype', () => {
     const allArchetype = new Archetype<Components>(Archetypes.All)
     const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
-      Archetype.only()
+      Archetype.only<Components>()
     ])
 
     expect(allArchetype.filters.length).toBe(0)
@@ -34,30 +34,30 @@ describe('Archetype', () => {
   test('can create archetype with filters', () => {
     const allArchetype = new Archetype<Components>(Archetypes.All)
     const anyArchetype = new Archetype<Components>(Archetypes.Any, [
-      Archetype.any('position', 'rotation')
+      Archetype.any<Components>('position', 'rotation')
     ])
     const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
-      Archetype.only()
+      Archetype.only<Components>()
     ])
     const nonEmptyArchetype = new Archetype<Components>(Archetypes.NonEmpty, [
       (x: Entity<Components>) => x.componentTypes.length > 0
     ])
     const positionOnlyArchetype = new Archetype<Components>(
       Archetypes.PositionOnly,
-      [Archetype.only('position')]
+      [Archetype.only<Components>('position')]
     )
     const positionArchetype = new Archetype<Components>(Archetypes.Position, [
-      Archetype.include('position')
+      Archetype.include<Components>('position')
     ])
     const physicalArchetype = new Archetype<Components>(Archetypes.Physical, [
-      Archetype.include('position', 'rotation', 'velocity'),
-      Archetype.exclude('static')
+      Archetype.include<Components>('position', 'rotation', 'velocity'),
+      Archetype.exclude<Components>('static')
     ])
     const excludeArchetype = new Archetype<Components>(Archetypes.Exclude, [
-      Archetype.exclude('position', 'rotation', 'velocity')
+      Archetype.exclude<Components>('position', 'rotation', 'velocity')
     ])
 
-    const entity = new Entity()
+    const entity = new Entity<Components>()
 
     expect(allArchetype.matchesEntity(entity)).toBe(true)
     expect(anyArchetype.matchesEntity(entity)).toBe(false)
