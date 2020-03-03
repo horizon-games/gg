@@ -1,6 +1,6 @@
 import Entity from '../Entity'
 
-import { Components, PositionComponent } from './component.fixtures'
+import { Components, PositionComponent } from './Component.fixtures'
 import Component from '../Component'
 
 class TagComponent extends Component<void> {}

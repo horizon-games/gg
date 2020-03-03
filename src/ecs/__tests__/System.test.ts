@@ -1,7 +1,7 @@
 import System from '../System'
 import EntityManager from '../EntityManager'
 
-import { Components } from './component.fixtures'
+import { Components } from './Component.fixtures'
 
 enum Archetypes {
   All,

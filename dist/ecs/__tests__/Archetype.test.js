@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Archetype_1 = __importDefault(require("../Archetype"));
 var Entity_1 = __importDefault(require("../Entity"));
-var component_fixtures_1 = require("./component.fixtures");
+var Component_fixtures_1 = require("./Component.fixtures");
 var Archetypes;
 (function (Archetypes) {
     Archetypes[Archetypes["All"] = 0] = "All";
@@ -57,7 +57,7 @@ describe('Archetype', function () {
         expect(positionArchetype.matchesEntity(entity)).toBe(false);
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         expect(excludeArchetype.matchesEntity(entity)).toBe(true);
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         expect(allArchetype.matchesEntity(entity)).toBe(true);
         expect(anyArchetype.matchesEntity(entity)).toBe(true);
         expect(emptyArchetype.matchesEntity(entity)).toBe(false);
@@ -66,7 +66,7 @@ describe('Archetype', function () {
         expect(positionArchetype.matchesEntity(entity)).toBe(true);
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         expect(excludeArchetype.matchesEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 }));
         expect(allArchetype.matchesEntity(entity)).toBe(true);
         expect(anyArchetype.matchesEntity(entity)).toBe(true);
         expect(emptyArchetype.matchesEntity(entity)).toBe(false);
@@ -75,10 +75,10 @@ describe('Archetype', function () {
         expect(positionArchetype.matchesEntity(entity)).toBe(true);
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         expect(excludeArchetype.matchesEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.VelocityComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.VelocityComponent({ x: 0, y: 0, z: 0 }));
         expect(physicalArchetype.matchesEntity(entity)).toBe(true);
         expect(excludeArchetype.matchesEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.StaticComponent());
+        entity.addComponent(new Component_fixtures_1.StaticComponent());
         expect(physicalArchetype.matchesEntity(entity)).toBe(false);
         entity.removeComponent('position');
         expect(excludeArchetype.matchesEntity(entity)).toBe(false);
@@ -98,7 +98,7 @@ describe('Archetype', function () {
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(0);
         expect(spy).not.toHaveBeenCalled();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(1);
         expect(spy).toHaveBeenCalled();
@@ -116,7 +116,7 @@ describe('Archetype', function () {
             entity: entity
         });
         disposer();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         expect(spy.mock.calls).toHaveLength(2);
     });
@@ -131,7 +131,7 @@ describe('Archetype', function () {
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(0);
         expect(spy).not.toHaveBeenCalled();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(1);
         expect(spy).toHaveBeenCalled();
@@ -144,7 +144,7 @@ describe('Archetype', function () {
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(0);
         disposer();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         expect(spy.mock.calls).toHaveLength(1);
     });
@@ -159,7 +159,7 @@ describe('Archetype', function () {
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(0);
         expect(spy).not.toHaveBeenCalled();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         expect(archetype.entities).toHaveLength(1);
         expect(spy).not.toHaveBeenCalled();
@@ -172,7 +172,7 @@ describe('Archetype', function () {
         });
         expect(archetype.entities).toHaveLength(0);
         disposer();
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         archetype.handleEntityChange(entity);
         entity.removeComponent('position');
         archetype.handleEntityChange(entity);

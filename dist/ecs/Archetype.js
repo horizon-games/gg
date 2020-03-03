@@ -81,7 +81,9 @@ var Archetype = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             componentTypes[_i] = arguments[_i];
         }
-        return function (entity) { return entity.hasComponents.apply(entity, componentTypes); };
+        return function (entity) {
+            return entity.hasComponents.apply(entity, componentTypes);
+        };
     };
     Archetype.exclude = function () {
         var componentTypes = [];
@@ -106,9 +108,7 @@ var Archetype = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             componentTypes[_i] = arguments[_i];
         }
-        return function (entity) {
-            return componentTypes.some(function (type) { return entity.hasComponent(type); });
-        };
+        return function (entity) { return componentTypes.some(function (type) { return entity.hasComponent(type); }); };
     };
     return Archetype;
 }());

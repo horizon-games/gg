@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Entity_1 = __importDefault(require("../Entity"));
-var component_fixtures_1 = require("./component.fixtures");
+var Component_fixtures_1 = require("./Component.fixtures");
 var Component_1 = __importDefault(require("../Component"));
 var TagComponent = /** @class */ (function (_super) {
     __extends(TagComponent, _super);
@@ -46,7 +46,7 @@ describe('Entity', function () {
         expect(entity.componentTypes.length).toBe(0);
     });
     test('can add component', function () {
-        var pos = new component_fixtures_1.PositionComponent({ x: 1, y: 2, z: 3 });
+        var pos = new Component_fixtures_1.PositionComponent({ x: 1, y: 2, z: 3 });
         var entity = new Entity_1.default();
         expect(entity.componentTypes.length).toBe(0);
         entity.addComponent(pos);
@@ -60,7 +60,7 @@ describe('Entity', function () {
     });
     test('can set component value', function () {
         var entity = new Entity_1.default([
-            new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }),
+            new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }),
             new PrimitiveValueComponent(1),
             new ArrayValueComponent([1, 2])
         ]);

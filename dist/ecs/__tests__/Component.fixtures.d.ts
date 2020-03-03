@@ -29,4 +29,4 @@ export declare class ColliderComponent extends Component<boolean> {
 }
 export declare const physicalAssemblage: () => (PositionComponent | RotationComponent | VelocityComponent | AccelerationComponent | ColliderComponent)[];
 export {};
-//# sourceMappingURL=component.fixtures.d.ts.map
+//# sourceMappingURL=Component.fixtures.d.ts.map

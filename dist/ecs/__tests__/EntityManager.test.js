@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var EntityManager_1 = __importDefault(require("../EntityManager"));
 var Entity_1 = __importDefault(require("../Entity"));
 var Archetype_1 = __importDefault(require("../Archetype"));
-var component_fixtures_1 = require("./component.fixtures");
+var Component_fixtures_1 = require("./Component.fixtures");
 var Archetypes;
 (function (Archetypes) {
     Archetypes[Archetypes["All"] = 0] = "All";
@@ -30,9 +30,9 @@ describe('EntityManager', function () {
     test('can find entities with specific types', function () {
         var manager = new EntityManager_1.default();
         var entity = new Entity_1.default([
-            new component_fixtures_1.PositionComponent({ x: 1, y: 2, z: 3 }),
-            new component_fixtures_1.RotationComponent({ x: 1, y: 2, z: 3 }),
-            new component_fixtures_1.VelocityComponent({ x: 1, y: 2, z: 3 })
+            new Component_fixtures_1.PositionComponent({ x: 1, y: 2, z: 3 }),
+            new Component_fixtures_1.RotationComponent({ x: 1, y: 2, z: 3 }),
+            new Component_fixtures_1.VelocityComponent({ x: 1, y: 2, z: 3 })
         ]);
         manager.addEntity(entity);
         expect(manager.filter(['position'])).toEqual([entity]);
@@ -72,20 +72,20 @@ describe('EntityManager', function () {
         expect(positionOnlyArchetype.hasEntity(entity)).toBe(false);
         expect(positionArchetype.hasEntity(entity)).toBe(false);
         expect(physicalArchetype.hasEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));
         expect(emptyArchetype.hasEntity(entity)).toBe(false);
         expect(nonEmptyArchetype.hasEntity(entity)).toBe(true);
         expect(positionOnlyArchetype.hasEntity(entity)).toBe(true);
         expect(positionArchetype.hasEntity(entity)).toBe(true);
         expect(physicalArchetype.hasEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.RotationComponent({ x: 0, y: 0, z: 0 }));
         expect(positionOnlyArchetype.hasEntity(entity)).toBe(false);
         expect(positionArchetype.hasEntity(entity)).toBe(true);
         expect(physicalArchetype.hasEntity(entity)).toBe(false);
-        entity.addComponent(new component_fixtures_1.VelocityComponent({ x: 0, y: 0, z: 0 }));
+        entity.addComponent(new Component_fixtures_1.VelocityComponent({ x: 0, y: 0, z: 0 }));
         expect(positionArchetype.hasEntity(entity)).toBe(true);
         expect(physicalArchetype.hasEntity(entity)).toBe(true);
-        entity.addComponent(new component_fixtures_1.StaticComponent());
+        entity.addComponent(new Component_fixtures_1.StaticComponent());
         expect(physicalArchetype.hasEntity(entity)).toBe(false);
     });
     test('can renew and release entities from entity pool', function () {

@@ -1,5 +1,5 @@
 import Component from '../Component'
-import { PositionComponent } from './component.fixtures'
+import { PositionComponent } from './Component.fixtures'
 
 describe('Component', () => {
   test('can create', () => {

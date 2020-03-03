@@ -7,7 +7,7 @@ import {
   RotationComponent,
   VelocityComponent,
   StaticComponent
-} from './component.fixtures'
+} from './Component.fixtures'
 
 enum Archetypes {
   All,
