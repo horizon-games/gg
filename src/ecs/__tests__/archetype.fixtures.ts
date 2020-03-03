@@ -2,41 +2,27 @@ import Archetype from '../Archetype'
 import Entity from '../Entity'
 import { Components } from './Component.fixtures'
 
-export enum Archetypes {
-  All,
-  Any,
-  Empty,
-  NonEmpty,
-  PositionOnly,
-  Position,
-  Physical
+export class AllArchetype extends Archetype<Components> {}
+export class AnyArchetype extends Archetype<Components> {
+  filters = [Archetype.include<Components>('position', 'static')]
 }
-
-export const allArchetype = new Archetype<Components>(Archetypes.All)
-export const anyArchetype = new Archetype<Components>(Archetypes.Any, [
-  Archetype.any('position', 'static')
-])
-export const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
-  Archetype.only()
-])
-export const nonEmptyArchetype = new Archetype<Components>(
-  Archetypes.NonEmpty,
-  [(entity: Entity<Components>) => entity.componentTypes.length > 0]
-)
-export const positionOnlyArchetype = new Archetype<Components>(
-  Archetypes.PositionOnly,
-  [Archetype.only('position')]
-)
-export const positionArchetype = new Archetype<Components>(
-  Archetypes.Position,
-  [Archetype.include('position')]
-)
-export const physicalArchetype = new Archetype<Components>(
-  Archetypes.Physical,
-  [
+export class EmptyArchetype extends Archetype<Components> {
+  filters = [Archetype.only()]
+}
+export class NonEmptyArchetype extends Archetype<Components> {
+  filters = [(entity: Entity<Components>) => entity.componentTypes.length > 0]
+}
+export class PositionOnlyArchetype extends Archetype<Components> {
+  filters = [Archetype.only('position')]
+}
+export class PositionArchetype extends Archetype<Components> {
+  filters = [Archetype.include('position')]
+}
+export class PhysicalArchetype extends Archetype<Components> {
+  filters = [
     Archetype.include('position'),
     Archetype.include('rotation'),
     Archetype.include('velocity'),
     Archetype.exclude('static')
   ]
-)
+}

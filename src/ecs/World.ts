@@ -45,14 +45,16 @@ export default class World<C extends ComponentTypes> {
     systems.forEach(system => this.addSystem(system))
   }
 
-  removeSystem(type: string): System<C> {
-    const system = this.systems.get(type)
+  removeSystem<T extends System<C>>(
+    klass: new (...args: any[]) => T
+  ): System<C> {
+    const system = this.systems.get(klass.name)
     if (system) {
-      this.systems.delete(type)
+      this.systems.delete(klass.name)
       return system
     } else {
       throw new Error(
-        `World: Could not delete system as '${type}' does not exists.`
+        `World: Could not delete system as '${klass.name}' does not exists.`
       )
     }
   }
@@ -76,16 +78,18 @@ export default class World<C extends ComponentTypes> {
     this.manager.addArchetype(archetype)
   }
 
-  removeArchetype(archetypeID: number) {
-    this.manager.removeArchetype(archetypeID)
+  removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T) {
+    return this.manager.removeArchetype(klass)
   }
 
-  hasArchetype(archetypeID: number): boolean {
-    return this.manager.hasArchetype(archetypeID)
+  hasArchetype<T extends Archetype<C>>(
+    klass: new (...args: any[]) => T
+  ): boolean {
+    return this.manager.hasArchetype(klass)
   }
 
-  getArchetype(archetypeID: number): Archetype<C> {
-    return this.manager.getArchetype(archetypeID)
+  getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T {
+    return this.manager.getArchetype(klass)
   }
 
   createEntity(components: ValueOf<C>[] = []): Entity<C> {

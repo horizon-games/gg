@@ -2,7 +2,7 @@ import World from '../World'
 import Archetype from '../Archetype'
 import { Components, physicalAssemblage } from './Component.fixtures'
 import { PhysicsSystem } from './System.fixtures'
-import { Archetypes, physicalArchetype } from './Archetype.fixtures'
+import { PhysicalArchetype } from './Archetype.fixtures'
 
 describe('World', () => {
   test('can create', () => {
@@ -11,18 +11,21 @@ describe('World', () => {
 
   test('can add archetype', () => {
     const world = new World<Components>()
-    world.addArchetype(new Archetype(Archetypes.All))
 
-    expect(world.hasArchetype(Archetypes.All)).toBe(true)
+    class AllArchetype extends Archetype<Components> {}
+
+    world.addArchetype(new AllArchetype())
+
+    expect(world.hasArchetype(AllArchetype)).toBe(true)
 
     world.createEntity(physicalAssemblage())
 
-    expect(world.getArchetype(Archetypes.All).entities.length).toBe(1)
+    expect(world.getArchetype(AllArchetype).entities.length).toBe(1)
   })
 
   test('can add systems', () => {
     const world = new World<Components>()
-    world.addArchetype(physicalArchetype)
+    world.addArchetype(new PhysicalArchetype())
     world.addSystems(new PhysicsSystem())
 
     // No entities yet, should have no effect
@@ -37,10 +40,10 @@ describe('World', () => {
     // Now the system should modify this entity
     world.update(16, 2)
 
-    expect(world.getArchetype(Archetypes.Physical).entities.length).toBe(4)
+    expect(world.getArchetype(PhysicalArchetype).entities.length).toBe(4)
     expect(
       world
-        .getArchetype(Archetypes.Physical)
+        .getArchetype(PhysicalArchetype)
         .entities[0].getComponentValue('position').x
     ).toBe(1)
     expect(world.systemTypes).toEqual(['PhysicsSystem'])
@@ -48,7 +51,7 @@ describe('World', () => {
 
   test('can get systems', () => {
     const world = new World<Components>()
-    world.addArchetype(physicalArchetype)
+    world.addArchetype(new PhysicalArchetype())
     world.addSystems(new PhysicsSystem())
 
     expect(world.hasSystem(PhysicsSystem)).toBe(true)

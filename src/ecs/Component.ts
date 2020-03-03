@@ -5,7 +5,7 @@ export const getComponentTypeFromClass = (klass: any): string =>
   klass.name.charAt(0).toLowerCase() +
   klass.name.slice(1).replace(ComponentTypeRegExp, '')
 
-export default class Component<T extends any> {
+export default abstract class Component<T extends any> {
   readonly type: string = getComponentTypeFromClass(this.constructor)
 
   constructor(public value: T) {}

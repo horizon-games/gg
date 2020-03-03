@@ -11,7 +11,7 @@ interface EntityManagerOptions {
 
 export default class EntityManager<C extends ComponentTypes> {
   entities: Map<number, Entity<C>> = new Map()
-  archetypes: Map<number, Archetype<C>> = new Map()
+  archetypes: Map<string, Archetype<C>> = new Map()
   entityPool: EntityPool<C>
   entityChangeDisposers: Map<number, () => void> = new Map()
 
@@ -91,29 +91,50 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   addArchetype(archetype: Archetype<C>) {
-    this.archetypes.set(archetype.id, archetype)
+    const type = archetype.constructor.name
 
-    // Add matching entities to archetypes
-    this.entities.forEach(entity => {
-      archetype.handleEntityAdd(entity)
-    })
+    if (!this.archetypes.has(type)) {
+      this.archetypes.set(type, archetype)
+
+      // Add matching entities to archetypes
+      this.entities.forEach(entity => {
+        archetype.handleEntityAdd(entity)
+      })
+    } else {
+      throw new Error(
+        `EntityManager: Could not add archetype as '${type}' already exists.`
+      )
+    }
   }
 
-  removeArchetype(archetypeID: number) {
-    this.archetypes.delete(archetypeID)
-  }
-
-  hasArchetype(archetypeID: number): boolean {
-    return this.archetypes.has(archetypeID)
-  }
-
-  getArchetype(archetypeID: number): Archetype<C> {
-    const archetype = this.archetypes.get(archetypeID)
-
+  removeArchetype<T extends Archetype<C>>(
+    klass: new (...args: any[]) => T
+  ): Archetype<C> {
+    const archetype = this.archetypes.get(klass.name)
     if (archetype) {
+      this.archetypes.delete(klass.name)
       return archetype
     } else {
-      throw new Error('EntityManager does not contain Archetype')
+      throw new Error(
+        `EntityManager: Could not delete archetype as '${klass.name}' does not exists.`
+      )
+    }
+  }
+
+  hasArchetype<T extends Archetype<C>>(
+    klass: new (...args: any[]) => T
+  ): boolean {
+    return this.archetypes.has(klass.name)
+  }
+
+  getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T {
+    const archetype = this.archetypes.get(klass.name)
+    if (archetype) {
+      return archetype as T
+    } else {
+      throw new Error(
+        `EntityManager: Could not get archetype as '${klass.name}' does not exists.`
+      )
     }
   }
 

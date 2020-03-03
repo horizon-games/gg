@@ -9,55 +9,56 @@ import {
   StaticComponent
 } from './Component.fixtures'
 
-enum Archetypes {
-  All,
-  Any,
-  Empty,
-  NonEmpty,
-  PositionOnly,
-  Position,
-  Physical,
-  Exclude
-}
-
 describe('Archetype', () => {
   test('can create archetype', () => {
-    const allArchetype = new Archetype<Components>(Archetypes.All)
-    const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
-      Archetype.only<Components>()
-    ])
+    class AllArchetype extends Archetype<Components> {}
+    class EmptyArchetype extends Archetype<Components> {
+      filters = [Archetype.only<Components>()]
+    }
 
-    expect(allArchetype.filters.length).toBe(0)
-    expect(emptyArchetype.filters.length).toBe(1)
+    expect(new AllArchetype().filters.length).toBe(0)
+    expect(new EmptyArchetype().filters.length).toBe(1)
   })
 
   test('can create archetype with filters', () => {
-    const allArchetype = new Archetype<Components>(Archetypes.All)
-    const anyArchetype = new Archetype<Components>(Archetypes.Any, [
-      Archetype.any<Components>('position', 'rotation')
-    ])
-    const emptyArchetype = new Archetype<Components>(Archetypes.Empty, [
-      Archetype.only<Components>()
-    ])
-    const nonEmptyArchetype = new Archetype<Components>(Archetypes.NonEmpty, [
-      (x: Entity<Components>) => x.componentTypes.length > 0
-    ])
-    const positionOnlyArchetype = new Archetype<Components>(
-      Archetypes.PositionOnly,
-      [Archetype.only<Components>('position')]
-    )
-    const positionArchetype = new Archetype<Components>(Archetypes.Position, [
-      Archetype.include<Components>('position')
-    ])
-    const physicalArchetype = new Archetype<Components>(Archetypes.Physical, [
-      Archetype.include<Components>('position', 'rotation', 'velocity'),
-      Archetype.exclude<Components>('static')
-    ])
-    const excludeArchetype = new Archetype<Components>(Archetypes.Exclude, [
-      Archetype.exclude<Components>('position', 'rotation', 'velocity')
-    ])
+    class AllArchetype extends Archetype<Components> {}
+    class AnyArchetype extends Archetype<Components> {
+      filters = [Archetype.any<Components>('position', 'rotation')]
+    }
+    class EmptyArchetype extends Archetype<Components> {
+      filters = [Archetype.only<Components>()]
+    }
+    class NonEmptyArchetype extends Archetype<Components> {
+      filters = [(x: Entity<Components>) => x.componentTypes.length > 0]
+    }
+    class PositionOnlyArchetype extends Archetype<Components> {
+      filters = [Archetype.only<Components>('position')]
+    }
+    class PositionArchetype extends Archetype<Components> {
+      filters = [Archetype.include<Components>('position')]
+    }
+    class PhysicalArchetype extends Archetype<Components> {
+      filters = [
+        Archetype.include<Components>('position', 'rotation', 'velocity'),
+        Archetype.exclude<Components>('static')
+      ]
+    }
+    class ExcludeArchetype extends Archetype<Components> {
+      filters = [
+        Archetype.exclude<Components>('position', 'rotation', 'velocity')
+      ]
+    }
 
     const entity = new Entity<Components>()
+
+    const allArchetype = new AllArchetype()
+    const anyArchetype = new AnyArchetype()
+    const emptyArchetype = new EmptyArchetype()
+    const nonEmptyArchetype = new NonEmptyArchetype()
+    const positionOnlyArchetype = new PositionOnlyArchetype()
+    const positionArchetype = new PositionArchetype()
+    const physicalArchetype = new PhysicalArchetype()
+    const excludeArchetype = new ExcludeArchetype()
 
     expect(allArchetype.matchesEntity(entity)).toBe(true)
     expect(anyArchetype.matchesEntity(entity)).toBe(false)
@@ -113,9 +114,10 @@ describe('Archetype', () => {
   })
 
   test('can handle onChange event', () => {
-    const archetype = new Archetype<Components>(Archetypes.Position, [
-      Archetype.include('position')
-    ])
+    class PositionArchetype extends Archetype<Components> {
+      filters = [Archetype.include('position')]
+    }
+    const archetype = new PositionArchetype()
 
     const spy = jest.fn()
     const disposer = archetype.onChange(spy)
@@ -165,9 +167,11 @@ describe('Archetype', () => {
   })
 
   test('can handle onAdd event', () => {
-    const archetype = new Archetype<Components>(Archetypes.Position, [
-      Archetype.include('position')
-    ])
+    class PositionArchetype extends Archetype<Components> {
+      filters = [Archetype.include('position')]
+    }
+
+    const archetype = new PositionArchetype()
 
     const spy = jest.fn()
     const disposer = archetype.onAdd(spy)
@@ -211,9 +215,11 @@ describe('Archetype', () => {
   })
 
   test('can handle onRemove event', () => {
-    const archetype = new Archetype<Components>(Archetypes.Position, [
-      Archetype.include('position')
-    ])
+    class PositionArchetype extends Archetype<Components> {
+      filters = [Archetype.include('position')]
+    }
+
+    const archetype = new PositionArchetype()
 
     const spy = jest.fn()
     const disposer = archetype.onRemove(spy)

@@ -23,25 +23,25 @@ export type ArchetypeChangeListener<C extends ComponentTypes> = (
   ev: ArchetypeChangeEvent<C>
 ) => void
 
-export default class Archetype<C extends ComponentTypes> {
-  static include = <CT extends ComponentTypes>(
-    ...componentTypes: (keyof CT)[]
-  ) => (entity: Entity<CT>) =>
+export default abstract class Archetype<C extends ComponentTypes> {
+  static include = <C extends ComponentTypes>(
+    ...componentTypes: (keyof C)[]
+  ) => (entity: Entity<C>) =>
     entity.hasComponents(...(componentTypes as string[]))
 
-  static exclude = <CT extends ComponentTypes>(
-    ...componentTypes: (keyof CT)[]
-  ) => (entity: Entity<CT>) =>
+  static exclude = <C extends ComponentTypes>(
+    ...componentTypes: (keyof C)[]
+  ) => (entity: Entity<C>) =>
     componentTypes.every(type => !entity.hasComponent(type as string))
 
-  static only = <CT extends ComponentTypes>(
-    ...componentTypes: (keyof CT)[]
-  ) => (entity: Entity<CT>) =>
+  static only = <C extends ComponentTypes>(...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
+  ) =>
     componentTypes.length === entity.componentTypes.length &&
     entity.hasComponents(...(componentTypes as string[]))
 
-  static any = <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (
-    entity: Entity<CT>
+  static any = <C extends ComponentTypes>(...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
   ) => componentTypes.some(type => entity.hasComponent(type as string))
 
   id: number
@@ -54,8 +54,7 @@ export default class Archetype<C extends ComponentTypes> {
   private onAddListeners: Set<ArchetypeChangeListener<C>> = new Set()
   private onRemoveListeners: Set<ArchetypeChangeListener<C>> = new Set()
 
-  constructor(id: number, filters: ArchetypeFilterPredicate<C>[] = []) {
-    this.id = id
+  constructor(filters: ArchetypeFilterPredicate<C>[] = []) {
     this.filters = filters
   }
 

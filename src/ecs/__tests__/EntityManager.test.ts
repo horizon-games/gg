@@ -9,6 +9,11 @@ import {
   VelocityComponent,
   StaticComponent
 } from './Component.fixtures'
+import {
+  EmptyArchetype,
+  PositionOnlyArchetype,
+  PhysicalArchetype
+} from './Archetype.fixtures'
 
 enum Archetypes {
   All,
@@ -54,23 +59,34 @@ describe('EntityManager', () => {
 
     manager.addEntity(entity)
 
-    const allArchetype = new Archetype(Archetypes.All)
-    const emptyArchetype = new Archetype(Archetypes.Empty, [Archetype.only()])
-    const nonEmptyArchetype = new Archetype(Archetypes.NonEmpty, [
-      (x: Entity<Components>) => x.componentTypes.length > 0
-    ])
-    const positionOnlyArchetype = new Archetype(Archetypes.PositionOnly, [
-      Archetype.only('position')
-    ])
-    const positionArchetype = new Archetype(Archetypes.Position, [
-      Archetype.include('position')
-    ])
-    const physicalArchetype = new Archetype(Archetypes.Physical, [
-      Archetype.include('position'),
-      Archetype.include('rotation'),
-      Archetype.include('velocity'),
-      Archetype.exclude('static')
-    ])
+    class AllArchetype extends Archetype<Components> {}
+    class EmptyArchetype extends Archetype<Components> {
+      filters = [Archetype.only()]
+    }
+    class NonEmptyArchetype extends Archetype<Components> {
+      filters = [(x: Entity<Components>) => x.componentTypes.length > 0]
+    }
+    class PositionOnlyArchetype extends Archetype<Components> {
+      filters = [Archetype.only('position')]
+    }
+    class PositionArchetype extends Archetype<Components> {
+      filters = [Archetype.include('position')]
+    }
+    class PhysicalArchetype extends Archetype<Components> {
+      filters = [
+        Archetype.include('position'),
+        Archetype.include('rotation'),
+        Archetype.include('velocity'),
+        Archetype.exclude('static')
+      ]
+    }
+
+    const allArchetype = new AllArchetype()
+    const emptyArchetype = new EmptyArchetype()
+    const nonEmptyArchetype = new NonEmptyArchetype()
+    const positionOnlyArchetype = new PositionOnlyArchetype()
+    const positionArchetype = new PositionArchetype()
+    const physicalArchetype = new PhysicalArchetype()
 
     manager.addArchetype(allArchetype)
     manager.addArchetype(emptyArchetype)
