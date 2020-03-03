@@ -62,7 +62,7 @@ export default class Entity<C extends ComponentTypes> {
   // tslint:disable-next-line
   has = this.hasComponent
 
-  hasComponents = (...types: string[]): boolean => {
+  hasComponents = (...types: (keyof C)[]): boolean => {
     return types.every(type => this.hasComponent(type))
   }
 
@@ -85,7 +85,7 @@ export default class Entity<C extends ComponentTypes> {
   // tslint:disable-next-line
   add = this.addComponent
 
-  removeComponent = (type: string) => {
+  removeComponent = (type: keyof C) => {
     if (this.hasComponent(type)) {
       const component = this.components[type]!
 
