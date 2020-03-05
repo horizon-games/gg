@@ -122,9 +122,17 @@ describe('EntityManager', () => {
   test('can renew and release entities from entity pool', () => {
     const manager = new EntityManager({ poolSize: 10 })
     const entity = manager.renewEntity()
-
+    const { id } = entity
+    entity.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
     expect(entity).toBeInstanceOf(Entity)
 
     manager.releaseEntity(entity)
+
+    expect(entity.componentTypes.length).toBe(0)
+    expect(entity.id).not.toBe(id)
+
+    const entity2 = manager.renewEntity()
+
+    expect(entity2).toBe(entity)
   })
 })
