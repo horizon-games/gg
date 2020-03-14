@@ -1,6 +1,5 @@
 import { PositionComponent, LightComponent } from '../components'
 import { DirectionalLight } from 'three'
-import scene from '../scene'
 
 const LightAssemblage = (color: number, intensity: number) => {
   return [

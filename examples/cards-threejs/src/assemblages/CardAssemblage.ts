@@ -58,7 +58,7 @@ const createCardAssemblage = (card: Card, status: CardStatus) => {
   return [
     new CardComponent({
       id: card.id,
-      cardType: card.type,
+      type: card.type,
       name: card.name,
       cost: card.cost,
       status

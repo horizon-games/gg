@@ -1,4 +1,6 @@
 import { Component } from '../../../../src/ecs'
-import { MeshBasicMaterial, Texture } from 'three'
+import { MeshBasicMaterial, MeshPhysicalMaterial } from 'three'
 
-export default class MaterialComponent extends Component<MeshBasicMaterial> {}
+export default class MaterialComponent extends Component<
+  MeshBasicMaterial | MeshPhysicalMaterial
+> {}

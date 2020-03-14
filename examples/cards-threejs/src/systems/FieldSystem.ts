@@ -125,17 +125,17 @@ export default class FieldSystem extends System<Components> {
       )
       .sort((a, b) => a.components.order!.value - b.components.order!.value)
 
-    const isHoveringPlayerCards = playerCards.some(
-      entity => entity.components.hover!.value
+    const isHoveringPlayerCards = playerCards.some(entity =>
+      entity.has('hover')
     )
-    const isHoveringOpponentCards = opponentCards.some(
-      entity => entity.components.hover!.value
+    const isHoveringOpponentCards = opponentCards.some(entity =>
+      entity.has('hover')
     )
-    const playerHoveringIdx = playerCards.findIndex(
-      entity => entity.components.hover!.value
+    const playerHoveringIdx = playerCards.findIndex(entity =>
+      entity.has('hover')
     )
-    const opponentHoveringIdx = opponentCards.findIndex(
-      entity => entity.components.hover!.value
+    const opponentHoveringIdx = opponentCards.findIndex(entity =>
+      entity.has('hover')
     )
 
     playerCards.forEach((entity, idx) => {
