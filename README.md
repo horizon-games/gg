@@ -55,19 +55,19 @@ They specify component filters to group on.
 
 #### Filter presets
 
-`Archetype.include(...componentTypes: ComponentType[])`
+`include(...componentTypes: ComponentType[])`
 
 Grouped entities will contain these component types.
 
-`Archetype.exclude(...componentTypes: ComponentType[])`
+`exclude(...componentTypes: ComponentType[])`
 
 Grouped entities will not contain these component types.
 
-`Archetype.only(...componentTypes: ComponentType[])`
+`only(...componentTypes: ComponentType[])`
 
 Grouped entities will contain only these componet types.
 
-`Archetype.any(...componentTypes: ComponentType[])`
+`any(...componentTypes: ComponentType[])`
 
 Grouped entities will contain any of these component types.
 

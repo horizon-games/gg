@@ -61,23 +61,21 @@ describe('EntityManager', () => {
 
     class AllArchetype extends Archetype<Components> {}
     class EmptyArchetype extends Archetype<Components> {
-      filters = [Archetype.only()]
+      filters = [this.only()]
     }
     class NonEmptyArchetype extends Archetype<Components> {
       filters = [(x: Entity<Components>) => x.componentTypes.length > 0]
     }
     class PositionOnlyArchetype extends Archetype<Components> {
-      filters = [Archetype.only('position')]
+      filters = [this.only('position')]
     }
     class PositionArchetype extends Archetype<Components> {
-      filters = [Archetype.include('position')]
+      filters = [this.include('position')]
     }
     class PhysicalArchetype extends Archetype<Components> {
       filters = [
-        Archetype.include('position'),
-        Archetype.include('rotation'),
-        Archetype.include('velocity'),
-        Archetype.exclude('static')
+        this.include('position', 'rotation', 'velocity'),
+        this.exclude('static')
       ]
     }
 

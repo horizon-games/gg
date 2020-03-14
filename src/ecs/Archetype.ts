@@ -6,6 +6,7 @@ type ValueOf<T> = T[keyof T]
 type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: (keyof C)[]
 ) => ArchetypeFilterPredicate<C>
+
 type ArchetypeFilterPredicate<C extends ComponentTypes> = (
   entity: Entity<C>
 ) => boolean
@@ -23,40 +24,35 @@ export type ArchetypeChangeListener<C extends ComponentTypes> = (
   ev: ArchetypeChangeEvent<C>
 ) => void
 
-export default abstract class Archetype<C extends ComponentTypes> {
-  static include = <C extends ComponentTypes>(
-    ...componentTypes: (keyof C)[]
-  ) => (entity: Entity<C>) =>
-    entity.hasComponents(...(componentTypes as string[]))
+interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
+  include: ArchetypeComponentFilter<C>
+  exclude: ArchetypeComponentFilter<C>
+  only: ArchetypeComponentFilter<C>
+  any: ArchetypeComponentFilter<C>
+}
 
-  static exclude = <C extends ComponentTypes>(
-    ...componentTypes: (keyof C)[]
-  ) => (entity: Entity<C>) =>
-    componentTypes.every(type => !entity.hasComponent(type as string))
+export default abstract class Archetype<C extends ComponentTypes>
+  implements ArchetypeComponentFilterPresets<C> {
+  include = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
+    entity.hasComponents(...componentTypes)
 
-  static only = <C extends ComponentTypes>(...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) =>
+  exclude = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
+    componentTypes.every(type => !entity.hasComponent(type))
+
+  only = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
     componentTypes.length === entity.componentTypes.length &&
-    entity.hasComponents(...(componentTypes as string[]))
+    entity.hasComponents(...componentTypes)
 
-  static any = <C extends ComponentTypes>(...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) => componentTypes.some(type => entity.hasComponent(type as string))
+  any = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
+    componentTypes.some(type => entity.hasComponent(type))
 
-  id: number
-
-  filters: ArchetypeFilterPredicate<C>[]
+  filters: ArchetypeFilterPredicate<C>[] = []
 
   readonly entities: Entity<C>[] = []
 
   private onChangeListeners: Set<ArchetypeChangeListener<C>> = new Set()
   private onAddListeners: Set<ArchetypeChangeListener<C>> = new Set()
   private onRemoveListeners: Set<ArchetypeChangeListener<C>> = new Set()
-
-  constructor(filters: ArchetypeFilterPredicate<C>[] = []) {
-    this.filters = filters
-  }
 
   onChange(listener: ArchetypeChangeListener<C>) {
     this.onChangeListeners.add(listener)

@@ -13,7 +13,7 @@ describe('Archetype', () => {
   test('can create archetype', () => {
     class AllArchetype extends Archetype<Components> {}
     class EmptyArchetype extends Archetype<Components> {
-      filters = [Archetype.only<Components>()]
+      filters = [this.only()]
     }
 
     expect(new AllArchetype().filters.length).toBe(0)
@@ -23,30 +23,28 @@ describe('Archetype', () => {
   test('can create archetype with filters', () => {
     class AllArchetype extends Archetype<Components> {}
     class AnyArchetype extends Archetype<Components> {
-      filters = [Archetype.any<Components>('position', 'rotation')]
+      filters = [this.any('position', 'rotation')]
     }
     class EmptyArchetype extends Archetype<Components> {
-      filters = [Archetype.only<Components>()]
+      filters = [this.only()]
     }
     class NonEmptyArchetype extends Archetype<Components> {
       filters = [(x: Entity<Components>) => x.componentTypes.length > 0]
     }
     class PositionOnlyArchetype extends Archetype<Components> {
-      filters = [Archetype.only<Components>('position')]
+      filters = [this.only('position')]
     }
     class PositionArchetype extends Archetype<Components> {
-      filters = [Archetype.include<Components>('position')]
+      filters = [this.include('position')]
     }
     class PhysicalArchetype extends Archetype<Components> {
       filters = [
-        Archetype.include<Components>('position', 'rotation', 'velocity'),
-        Archetype.exclude<Components>('static')
+        this.include('position', 'rotation', 'velocity'),
+        this.exclude('static')
       ]
     }
     class ExcludeArchetype extends Archetype<Components> {
-      filters = [
-        Archetype.exclude<Components>('position', 'rotation', 'velocity')
-      ]
+      filters = [this.exclude('position', 'rotation', 'velocity')]
     }
 
     const entity = new Entity<Components>()
@@ -115,7 +113,7 @@ describe('Archetype', () => {
 
   test('can handle onChange event', () => {
     class PositionArchetype extends Archetype<Components> {
-      filters = [Archetype.include('position')]
+      filters = [this.include('position')]
     }
     const archetype = new PositionArchetype()
 
@@ -168,7 +166,7 @@ describe('Archetype', () => {
 
   test('can handle onAdd event', () => {
     class PositionArchetype extends Archetype<Components> {
-      filters = [Archetype.include('position')]
+      filters = [this.include('position')]
     }
 
     const archetype = new PositionArchetype()
@@ -216,7 +214,7 @@ describe('Archetype', () => {
 
   test('can handle onRemove event', () => {
     class PositionArchetype extends Archetype<Components> {
-      filters = [Archetype.include('position')]
+      filters = [this.include('position')]
     }
 
     const archetype = new PositionArchetype()
