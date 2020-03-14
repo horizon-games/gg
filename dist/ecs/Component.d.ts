@@ -1,6 +1,6 @@
 import Entity from './Entity';
 export declare const getComponentTypeFromClass: (klass: any) => string;
-export default class Component<T extends any> {
+export default abstract class Component<T extends any> {
     value: T;
     readonly type: string;
     constructor(value: T);

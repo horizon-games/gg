@@ -1,19 +1,24 @@
 import Archetype from '../Archetype';
+import Entity from '../Entity';
 import { Components } from './Component.fixtures';
-export declare enum Archetypes {
-    All = 0,
-    Any = 1,
-    Empty = 2,
-    NonEmpty = 3,
-    PositionOnly = 4,
-    Position = 5,
-    Physical = 6
+export declare class AllArchetype extends Archetype<Components> {
 }
-export declare const allArchetype: Archetype<Components>;
-export declare const anyArchetype: Archetype<Components>;
-export declare const emptyArchetype: Archetype<Components>;
-export declare const nonEmptyArchetype: Archetype<Components>;
-export declare const positionOnlyArchetype: Archetype<Components>;
-export declare const positionArchetype: Archetype<Components>;
-export declare const physicalArchetype: Archetype<Components>;
+export declare class AnyArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
+export declare class EmptyArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
+export declare class NonEmptyArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
+export declare class PositionOnlyArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
+export declare class PositionArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
+export declare class PhysicalArchetype extends Archetype<Components> {
+    filters: ((entity: Entity<Components>) => boolean)[];
+}
 //# sourceMappingURL=Archetype.fixtures.d.ts.map

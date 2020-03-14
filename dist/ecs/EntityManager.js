@@ -70,26 +70,41 @@ var EntityManager = /** @class */ (function () {
             this.entityPool.release(entity);
         }
     };
-    EntityManager.prototype.addArchetype = function (archetype) {
-        this.archetypes.set(archetype.id, archetype);
-        // Add matching entities to archetypes
-        this.entities.forEach(function (entity) {
-            archetype.handleEntityAdd(entity);
-        });
+    EntityManager.prototype.addArchetype = function (klass) {
+        var type = klass.name;
+        if (!this.archetypes.has(type)) {
+            var archetype_1 = new klass();
+            this.archetypes.set(type, archetype_1);
+            // Add matching entities to archetypes
+            this.entities.forEach(function (entity) {
+                archetype_1.handleEntityAdd(entity);
+            });
+            return archetype_1;
+        }
+        else {
+            throw new Error("EntityManager: Could not add archetype as '" + type + "' already exists.");
+        }
     };
-    EntityManager.prototype.removeArchetype = function (archetypeID) {
-        this.archetypes.delete(archetypeID);
+    EntityManager.prototype.removeArchetype = function (klass) {
+        var archetype = this.archetypes.get(klass.name);
+        if (archetype) {
+            this.archetypes.delete(klass.name);
+            return archetype;
+        }
+        else {
+            throw new Error("EntityManager: Could not delete archetype as '" + klass.name + "' does not exists.");
+        }
     };
-    EntityManager.prototype.hasArchetype = function (archetypeID) {
-        return this.archetypes.has(archetypeID);
+    EntityManager.prototype.hasArchetype = function (klass) {
+        return this.archetypes.has(klass.name);
     };
-    EntityManager.prototype.getArchetype = function (archetypeID) {
-        var archetype = this.archetypes.get(archetypeID);
+    EntityManager.prototype.getArchetype = function (klass) {
+        var archetype = this.archetypes.get(klass.name);
         if (archetype) {
             return archetype;
         }
         else {
-            throw new Error('EntityManager does not contain Archetype');
+            throw new Error("EntityManager: Could not get archetype as '" + klass.name + "' does not exists.");
         }
     };
     EntityManager.prototype.handleEntityAddComponent = function (entity, component) {

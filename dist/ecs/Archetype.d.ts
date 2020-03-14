@@ -1,6 +1,7 @@
 import { ComponentTypes } from './Component';
 import Entity from './Entity';
 declare type ValueOf<T> = T[keyof T];
+declare type ArchetypeComponentFilter<C extends ComponentTypes> = (...componentTypes: (keyof C)[]) => ArchetypeFilterPredicate<C>;
 declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entity<C>) => boolean;
 declare type ArchetypeChangeEventTypes = 'add' | 'remove';
 export interface ArchetypeChangeEvent<C extends ComponentTypes> {
@@ -10,18 +11,22 @@ export interface ArchetypeChangeEvent<C extends ComponentTypes> {
     component: ValueOf<C> | undefined;
 }
 export declare type ArchetypeChangeListener<C extends ComponentTypes> = (ev: ArchetypeChangeEvent<C>) => void;
-export default class Archetype<C extends ComponentTypes> {
-    static include: <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (entity: Entity<CT>) => boolean;
-    static exclude: <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (entity: Entity<CT>) => boolean;
-    static only: <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (entity: Entity<CT>) => boolean;
-    static any: <CT extends ComponentTypes>(...componentTypes: (keyof CT)[]) => (entity: Entity<CT>) => boolean;
-    id: number;
+interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
+    include: ArchetypeComponentFilter<C>;
+    exclude: ArchetypeComponentFilter<C>;
+    only: ArchetypeComponentFilter<C>;
+    any: ArchetypeComponentFilter<C>;
+}
+export default abstract class Archetype<C extends ComponentTypes> implements ArchetypeComponentFilterPresets<C> {
+    include: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
+    exclude: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
+    only: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
+    any: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
     filters: ArchetypeFilterPredicate<C>[];
     readonly entities: Entity<C>[];
     private onChangeListeners;
     private onAddListeners;
     private onRemoveListeners;
-    constructor(id: number, filters?: ArchetypeFilterPredicate<C>[]);
     onChange(listener: ArchetypeChangeListener<C>): () => boolean;
     onAdd(listener: ArchetypeChangeListener<C>): () => boolean;
     onRemove(listener: ArchetypeChangeListener<C>): () => boolean;

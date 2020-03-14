@@ -24,7 +24,7 @@ var PhysicsSystem = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PhysicsSystem.prototype.update = function (manager, dt) {
-        var all = manager.getArchetype(Archetype_fixtures_1.Archetypes.Physical);
+        var all = manager.getArchetype(Archetype_fixtures_1.PhysicalArchetype);
         all.entities.forEach(function (entity) {
             entity.getComponentValue('position').x += 1;
         });

@@ -36,14 +36,14 @@ var World = /** @class */ (function () {
         }
         systems.forEach(function (system) { return _this.addSystem(system); });
     };
-    World.prototype.removeSystem = function (type) {
-        var system = this.systems.get(type);
+    World.prototype.removeSystem = function (klass) {
+        var system = this.systems.get(klass.name);
         if (system) {
-            this.systems.delete(type);
+            this.systems.delete(klass.name);
             return system;
         }
         else {
-            throw new Error("World: Could not delete system as '" + type + "' does not exists.");
+            throw new Error("World: Could not delete system as '" + klass.name + "' does not exists.");
         }
     };
     World.prototype.hasSystem = function (klass) {
@@ -58,17 +58,17 @@ var World = /** @class */ (function () {
             throw new Error("World: Could not get system as '" + klass.name + "' does not exists.");
         }
     };
-    World.prototype.addArchetype = function (archetype) {
-        this.manager.addArchetype(archetype);
+    World.prototype.addArchetype = function (klass) {
+        return this.manager.addArchetype(klass);
     };
-    World.prototype.removeArchetype = function (archetypeID) {
-        this.manager.removeArchetype(archetypeID);
+    World.prototype.removeArchetype = function (klass) {
+        return this.manager.removeArchetype(klass);
     };
-    World.prototype.hasArchetype = function (archetypeID) {
-        return this.manager.hasArchetype(archetypeID);
+    World.prototype.hasArchetype = function (klass) {
+        return this.manager.hasArchetype(klass);
     };
-    World.prototype.getArchetype = function (archetypeID) {
-        return this.manager.getArchetype(archetypeID);
+    World.prototype.getArchetype = function (klass) {
+        return this.manager.getArchetype(klass);
     };
     World.prototype.createEntity = function (components) {
         if (components === void 0) { components = []; }

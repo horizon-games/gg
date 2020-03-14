@@ -1,14 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Archetype = /** @class */ (function () {
-    function Archetype(id, filters) {
-        if (filters === void 0) { filters = []; }
+    function Archetype() {
+        this.include = function () {
+            var componentTypes = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                componentTypes[_i] = arguments[_i];
+            }
+            return function (entity) {
+                return entity.hasComponents.apply(entity, componentTypes);
+            };
+        };
+        this.exclude = function () {
+            var componentTypes = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                componentTypes[_i] = arguments[_i];
+            }
+            return function (entity) {
+                return componentTypes.every(function (type) { return !entity.hasComponent(type); });
+            };
+        };
+        this.only = function () {
+            var componentTypes = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                componentTypes[_i] = arguments[_i];
+            }
+            return function (entity) {
+                return componentTypes.length === entity.componentTypes.length && entity.hasComponents.apply(entity, componentTypes);
+            };
+        };
+        this.any = function () {
+            var componentTypes = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                componentTypes[_i] = arguments[_i];
+            }
+            return function (entity) {
+                return componentTypes.some(function (type) { return entity.hasComponent(type); });
+            };
+        };
+        this.filters = [];
         this.entities = [];
         this.onChangeListeners = new Set();
         this.onAddListeners = new Set();
         this.onRemoveListeners = new Set();
-        this.id = id;
-        this.filters = filters;
     }
     Archetype.prototype.onChange = function (listener) {
         var _this = this;
@@ -75,40 +109,6 @@ var Archetype = /** @class */ (function () {
                 this.onChangeListeners.forEach(function (listener) { return listener(ev_2); });
             }
         }
-    };
-    Archetype.include = function () {
-        var componentTypes = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            componentTypes[_i] = arguments[_i];
-        }
-        return function (entity) {
-            return entity.hasComponents.apply(entity, componentTypes);
-        };
-    };
-    Archetype.exclude = function () {
-        var componentTypes = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            componentTypes[_i] = arguments[_i];
-        }
-        return function (entity) {
-            return componentTypes.every(function (type) { return !entity.hasComponent(type); });
-        };
-    };
-    Archetype.only = function () {
-        var componentTypes = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            componentTypes[_i] = arguments[_i];
-        }
-        return function (entity) {
-            return componentTypes.length === entity.componentTypes.length && entity.hasComponents.apply(entity, componentTypes);
-        };
-    };
-    Archetype.any = function () {
-        var componentTypes = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            componentTypes[_i] = arguments[_i];
-        }
-        return function (entity) { return componentTypes.some(function (type) { return entity.hasComponent(type); }); };
     };
     return Archetype;
 }());

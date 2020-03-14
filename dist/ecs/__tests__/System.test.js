@@ -17,22 +17,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var System_1 = __importDefault(require("../System"));
-var Archetypes;
-(function (Archetypes) {
-    Archetypes[Archetypes["All"] = 0] = "All";
-    Archetypes[Archetypes["Empty"] = 1] = "Empty";
-    Archetypes[Archetypes["NonEmpty"] = 2] = "NonEmpty";
-    Archetypes[Archetypes["PositionOnly"] = 3] = "PositionOnly";
-    Archetypes[Archetypes["Position"] = 4] = "Position";
-    Archetypes[Archetypes["Physical"] = 5] = "Physical";
-})(Archetypes || (Archetypes = {}));
+var Archetype_fixtures_1 = require("./Archetype.fixtures");
 var PhysicsSystem = /** @class */ (function (_super) {
     __extends(PhysicsSystem, _super);
     function PhysicsSystem() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     PhysicsSystem.prototype.update = function (manager, dt, time) {
-        var all = manager.getArchetype(Archetypes.All);
+        var all = manager.getArchetype(Archetype_fixtures_1.AllArchetype);
     };
     return PhysicsSystem;
 }(System_1.default));

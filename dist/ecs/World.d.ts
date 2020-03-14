@@ -14,13 +14,13 @@ export default class World<C extends ComponentTypes> {
     get systemTypes(): string[];
     addSystem(system: System<C>): void;
     addSystems(...systems: System<C>[]): void;
-    removeSystem(type: string): System<C>;
+    removeSystem<T extends System<C>>(klass: new (...args: any[]) => T): System<C>;
     hasSystem<T extends System<C>>(klass: new (...args: any[]) => T): boolean;
     getSystem<T extends System<C>>(klass: new (...args: any[]) => T): T;
-    addArchetype(archetype: Archetype<C>): void;
-    removeArchetype(archetypeID: number): void;
-    hasArchetype(archetypeID: number): boolean;
-    getArchetype(archetypeID: number): Archetype<C>;
+    addArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
+    removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): Archetype<C>;
+    hasArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): boolean;
+    getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
     createEntity(components?: ValueOf<C>[]): Entity<C>;
     removeEntity(entityId: number): void;
     getEntity(entityId: number): Entity<C> | undefined;

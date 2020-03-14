@@ -8,7 +8,7 @@ interface EntityManagerOptions {
 }
 export default class EntityManager<C extends ComponentTypes> {
     entities: Map<number, Entity<C>>;
-    archetypes: Map<number, Archetype<C>>;
+    archetypes: Map<string, Archetype<C>>;
     entityPool: EntityPool<C>;
     entityChangeDisposers: Map<number, () => void>;
     constructor({ poolSize }?: EntityManagerOptions);
@@ -19,10 +19,10 @@ export default class EntityManager<C extends ComponentTypes> {
     getEntity(entityId: number): Entity<C> | undefined;
     renewEntity(components?: ValueOf<C>[]): Entity<C>;
     releaseEntity(entity: Entity<C>): void;
-    addArchetype(archetype: Archetype<C>): void;
-    removeArchetype(archetypeID: number): void;
-    hasArchetype(archetypeID: number): boolean;
-    getArchetype(archetypeID: number): Archetype<C>;
+    addArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
+    removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): Archetype<C>;
+    hasArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): boolean;
+    getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
     private handleEntityAddComponent;
     private handleEntityRemoveComponent;
 }
