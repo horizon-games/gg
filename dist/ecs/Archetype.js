@@ -7,18 +7,14 @@ var Archetype = /** @class */ (function () {
             for (var _i = 0; _i < arguments.length; _i++) {
                 componentTypes[_i] = arguments[_i];
             }
-            return function (entity) {
-                return entity.hasComponents.apply(entity, componentTypes);
-            };
+            return function (entity) { return entity.hasComponents.apply(entity, componentTypes); };
         };
         this.exclude = function () {
             var componentTypes = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 componentTypes[_i] = arguments[_i];
             }
-            return function (entity) {
-                return componentTypes.every(function (type) { return !entity.hasComponent(type); });
-            };
+            return function (entity) { return componentTypes.every(function (type) { return !entity.hasComponent(type); }); };
         };
         this.only = function () {
             var componentTypes = [];
@@ -34,9 +30,7 @@ var Archetype = /** @class */ (function () {
             for (var _i = 0; _i < arguments.length; _i++) {
                 componentTypes[_i] = arguments[_i];
             }
-            return function (entity) {
-                return componentTypes.some(function (type) { return entity.hasComponent(type); });
-            };
+            return function (entity) { return componentTypes.some(function (type) { return entity.hasComponent(type); }); };
         };
         this.filters = [];
         this.entities = [];

@@ -18,10 +18,10 @@ interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
     any: ArchetypeComponentFilter<C>;
 }
 export default abstract class Archetype<C extends ComponentTypes> implements ArchetypeComponentFilterPresets<C> {
-    include: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
-    exclude: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
-    only: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
-    any: (...componentTypes: (keyof C)[]) => (entity: Entity<C>) => boolean;
+    include: ArchetypeComponentFilter<C>;
+    exclude: ArchetypeComponentFilter<C>;
+    only: ArchetypeComponentFilter<C>;
+    any: ArchetypeComponentFilter<C>;
     filters: ArchetypeFilterPredicate<C>[];
     readonly entities: Entity<C>[];
     private onChangeListeners;

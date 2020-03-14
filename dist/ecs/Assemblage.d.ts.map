@@ -1,0 +1,1 @@
+{"version":3,"file":"Assemblage.d.ts","sourceRoot":"","sources":["../../src/ecs/Assemblage.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,aAAa,CAAA;AAEnC,aAAK,UAAU,GAAG,CAAC,GAAG,IAAI,EAAE,GAAG,EAAE,KAAK,SAAS,CAAC,GAAG,CAAC,EAAE,CAAA;AAEtD,eAAe,UAAU,CAAA"}
