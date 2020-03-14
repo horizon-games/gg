@@ -3,11 +3,11 @@ import Entity from './Entity'
 
 type ValueOf<T> = T[keyof T]
 
-type ArchetypeComponentFilter<C extends ComponentTypes> = (
+export type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: (keyof C)[]
 ) => ArchetypeFilterPredicate<C>
 
-type ArchetypeFilterPredicate<C extends ComponentTypes> = (
+export type ArchetypeFilterPredicate<C extends ComponentTypes> = (
   entity: Entity<C>
 ) => boolean
 
