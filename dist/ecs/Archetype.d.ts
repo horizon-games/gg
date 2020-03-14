@@ -1,8 +1,8 @@
 import { ComponentTypes } from './Component';
 import Entity from './Entity';
 declare type ValueOf<T> = T[keyof T];
-declare type ArchetypeComponentFilter<C extends ComponentTypes> = (...componentTypes: (keyof C)[]) => ArchetypeFilterPredicate<C>;
-declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entity<C>) => boolean;
+export declare type ArchetypeComponentFilter<C extends ComponentTypes> = (...componentTypes: (keyof C)[]) => ArchetypeFilterPredicate<C>;
+export declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entity<C>) => boolean;
 declare type ArchetypeChangeEventTypes = 'add' | 'remove';
 export interface ArchetypeChangeEvent<C extends ComponentTypes> {
     type: ArchetypeChangeEventTypes;
