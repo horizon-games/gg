@@ -33,18 +33,23 @@ interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
 
 export default abstract class Archetype<C extends ComponentTypes>
   implements ArchetypeComponentFilterPresets<C> {
-  include = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
-    entity.hasComponents(...componentTypes)
+  include: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
+  ) => entity.hasComponents(...componentTypes)
 
-  exclude = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
-    componentTypes.every(type => !entity.hasComponent(type))
+  exclude: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
+  ) => componentTypes.every(type => !entity.hasComponent(type))
 
-  only = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
+  only: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
+  ) =>
     componentTypes.length === entity.componentTypes.length &&
     entity.hasComponents(...componentTypes)
 
-  any = (...componentTypes: (keyof C)[]) => (entity: Entity<C>) =>
-    componentTypes.some(type => entity.hasComponent(type))
+  any: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
+    entity: Entity<C>
+  ) => componentTypes.some(type => entity.hasComponent(type))
 
   filters: ArchetypeFilterPredicate<C>[] = []
 
