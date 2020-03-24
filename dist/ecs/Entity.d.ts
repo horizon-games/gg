@@ -1,7 +1,7 @@
 import { ComponentTypes } from './Component';
 declare type ValueOf<T> = T[keyof T];
-declare type EntityChangeEventTypes = 'add' | 'remove';
-interface EntityChangeEvent<C extends ComponentTypes> {
+export declare type EntityChangeEventTypes = 'add' | 'remove';
+export interface EntityChangeEvent<C extends ComponentTypes> {
     type: EntityChangeEventTypes;
     entity: Entity<C>;
     component: C[keyof C];
