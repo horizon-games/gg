@@ -9,9 +9,9 @@ type ValueOf<T> = T[keyof T]
 //   [type in keyof T]: T[type]['value']
 // }
 
-type EntityChangeEventTypes = 'add' | 'remove'
+export type EntityChangeEventTypes = 'add' | 'remove'
 
-interface EntityChangeEvent<C extends ComponentTypes> {
+export interface EntityChangeEvent<C extends ComponentTypes> {
   type: EntityChangeEventTypes
   entity: Entity<C>
   component: C[keyof C]

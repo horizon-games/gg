@@ -11,7 +11,7 @@ export type ArchetypeFilterPredicate<C extends ComponentTypes> = (
   entity: Entity<C>
 ) => boolean
 
-type ArchetypeChangeEventTypes = 'add' | 'remove'
+export type ArchetypeChangeEventTypes = 'add' | 'remove'
 
 export interface ArchetypeChangeEvent<C extends ComponentTypes> {
   type: ArchetypeChangeEventTypes
