@@ -55,6 +55,12 @@ export default class Entity<C extends ComponentTypes> {
     return () => this.onChangeListeners.delete(listener)
   }
 
+  removeOnChange(listener: EntityChangeListener<C>) {
+    if (this.onChangeListeners.has(listener)) {
+      this.onChangeListeners.delete(listener)
+    }
+  }
+
   hasComponent(type: keyof C): boolean {
     return !!this.components[type]
   }
