@@ -16,6 +16,7 @@ export default class Entity<C extends ComponentTypes> {
     renew(components?: ValueOf<C>[]): Entity<C>;
     reset(): Entity<C>;
     onChange(listener: EntityChangeListener<C>): () => boolean;
+    removeOnChange(listener: EntityChangeListener<C>): void;
     hasComponent(type: keyof C): boolean;
     has: (type: keyof C) => boolean;
     hasComponents: (...types: (keyof C)[]) => boolean;

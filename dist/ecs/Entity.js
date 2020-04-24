@@ -75,6 +75,11 @@ var Entity = /** @class */ (function () {
         this.onChangeListeners.add(listener);
         return function () { return _this.onChangeListeners.delete(listener); };
     };
+    Entity.prototype.removeOnChange = function (listener) {
+        if (this.onChangeListeners.has(listener)) {
+            this.onChangeListeners.delete(listener);
+        }
+    };
     Entity.prototype.hasComponent = function (type) {
         return !!this.components[type];
     };
