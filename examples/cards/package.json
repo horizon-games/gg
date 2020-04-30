@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@types/jquery": "^3.3.22",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "popmotion": "^8.5.3",
     "sillyname": "^0.1.0",
     "stats.js": "^0.17.0",
