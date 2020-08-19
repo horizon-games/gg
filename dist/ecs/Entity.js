@@ -1,44 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Component_1 = require("./Component");
-var instanceIdx = 0;
-var Entity = /** @class */ (function () {
-    function Entity(components) {
-        var _this = this;
-        if (components === void 0) { components = []; }
+const Component_1 = require("./Component");
+const UNDEFINED_ID = -1;
+let instanceIdx = 0;
+class Entity {
+    constructor(components = []) {
+        this.id = UNDEFINED_ID;
         this.components = {};
         this.onChangeListeners = new Set();
         // tslint:disable-next-line
         this.has = this.hasComponent;
-        this.hasComponents = function () {
-            var types = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                types[_i] = arguments[_i];
-            }
-            return types.every(function (type) { return _this.hasComponent(type); });
+        this.hasComponents = (...types) => {
+            return types.every(type => this.hasComponent(type));
         };
-        this.addComponent = function (component) {
-            if (!_this.hasComponent(component.type)) {
-                _this.components[component.type] = component;
-                component.onAttach(_this);
-                _this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'add', entity: _this, component: component });
-                });
+        this.addComponent = (component) => {
+            if (!this.hasComponent(component.type)) {
+                this.components[component.type] = component;
+                component.onAttach(this);
+                for (const listener of this.onChangeListeners) {
+                    listener({ type: 'add', entity: this, component });
+                }
             }
             else {
-                throw new Error("Entity already contains component of type " + component.type + ".");
+                throw new Error(`Entity already contains component of type ${component.type}.`);
             }
         };
         // tslint:disable-next-line
         this.add = this.addComponent;
-        this.removeComponent = function (type) {
-            if (_this.hasComponent(type)) {
-                var component_1 = _this.components[type];
-                delete _this.components[type];
-                component_1.onDetach(_this);
-                _this.onChangeListeners.forEach(function (listener) {
-                    return listener({ type: 'remove', entity: _this, component: component_1 });
-                });
+        this.removeComponent = (type) => {
+            if (this.hasComponent(type)) {
+                const component = this.components[type];
+                delete this.components[type];
+                component.onDetach(this);
+                for (const listener of this.onChangeListeners) {
+                    listener({ type: 'remove', entity: this, component });
+                }
             }
         };
         // tslint:disable-next-line
@@ -52,39 +48,37 @@ var Entity = /** @class */ (function () {
         this.reset();
         this.renew(components);
     }
-    Object.defineProperty(Entity.prototype, "componentTypes", {
-        get: function () {
-            return Object.keys(this.components);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Entity.prototype.renew = function (components) {
-        if (components === void 0) { components = []; }
-        components.forEach(this.addComponent);
+    get componentTypes() {
+        return Object.keys(this.components);
+    }
+    renew(components = []) {
+        for (const component of components) {
+            this.addComponent(component);
+        }
         return this;
-    };
-    Entity.prototype.reset = function () {
-        this.componentTypes.reverse().forEach(this.removeComponent);
+    }
+    reset() {
+        for (const type of this.componentTypes.reverse()) {
+            this.removeComponent(type);
+        }
         this.id = ++instanceIdx;
         this.onChangeListeners = new Set();
         return this;
-    };
-    Entity.prototype.onChange = function (listener) {
-        var _this = this;
+    }
+    onChange(listener) {
         this.onChangeListeners.add(listener);
-        return function () { return _this.onChangeListeners.delete(listener); };
-    };
-    Entity.prototype.removeOnChange = function (listener) {
+        return () => this.onChangeListeners.delete(listener);
+    }
+    removeOnChange(listener) {
         if (this.onChangeListeners.has(listener)) {
             this.onChangeListeners.delete(listener);
         }
-    };
-    Entity.prototype.hasComponent = function (type) {
+    }
+    hasComponent(type) {
         return !!this.components[type];
-    };
-    Entity.prototype.toggleComponent = function (componentClass, predicate) {
-        var componentType = Component_1.getComponentTypeFromClass(componentClass);
+    }
+    toggleComponent(componentClass, predicate) {
+        const componentType = Component_1.getComponentTypeFromClass(componentClass);
         if (predicate) {
             if (!this.hasComponent(componentType)) {
                 this.addComponent(new componentClass());
@@ -93,20 +87,20 @@ var Entity = /** @class */ (function () {
         else {
             this.removeComponent(componentType);
         }
-    };
+    }
     // Get component instance
-    Entity.prototype.getComponent = function (type) {
+    getComponent(type) {
         return this.components[type];
-    };
-    Entity.prototype.getComponentValue = function (type) {
+    }
+    getComponentValue(type) {
         if (this.hasComponent(type)) {
             return this.components[type].value;
         }
         else {
-            throw new Error("Entity does not contain component of type " + type + ".");
+            throw new Error(`Entity does not contain component of type ${type}.`);
         }
-    };
-    Entity.prototype.setComponentValue = function (type, value) {
+    }
+    setComponentValue(type, value) {
         if (this.hasComponent(type)) {
             if (typeof value === 'object' && !Array.isArray(value)) {
                 Object.assign(this.components[type].value, value);
@@ -116,10 +110,9 @@ var Entity = /** @class */ (function () {
             }
         }
         else {
-            throw new Error("Entity does not contain component of type " + type + ".");
+            throw new Error(`Entity does not contain component of type ${type}.`);
         }
-    };
-    return Entity;
-}());
+    }
+}
 exports.default = Entity;
 //# sourceMappingURL=Entity.js.map

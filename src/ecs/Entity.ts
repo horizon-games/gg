@@ -21,10 +21,12 @@ export type EntityChangeListener<C extends ComponentTypes> = (
   ev: EntityChangeEvent<C>
 ) => void
 
+const UNDEFINED_ID = -1
+
 let instanceIdx = 0
 
 export default class Entity<C extends ComponentTypes> {
-  id: number
+  id: number = UNDEFINED_ID
   components: Partial<C> = {}
 
   get componentTypes(): (keyof C)[] {
@@ -39,12 +41,16 @@ export default class Entity<C extends ComponentTypes> {
   }
 
   renew(components: ValueOf<C>[] = []): Entity<C> {
-    components.forEach(this.addComponent)
+    for (const component of components) {
+      this.addComponent(component)
+    }
     return this
   }
 
   reset(): Entity<C> {
-    this.componentTypes.reverse().forEach(this.removeComponent)
+    for (const type of this.componentTypes.reverse()) {
+      this.removeComponent(type)
+    }
     this.id = ++instanceIdx
     this.onChangeListeners = new Set()
     return this
@@ -78,9 +84,9 @@ export default class Entity<C extends ComponentTypes> {
 
       component.onAttach(this)
 
-      this.onChangeListeners.forEach(listener =>
+      for (const listener of this.onChangeListeners) {
         listener({ type: 'add', entity: this, component })
-      )
+      }
     } else {
       throw new Error(
         `Entity already contains component of type ${component.type}.`
@@ -99,9 +105,9 @@ export default class Entity<C extends ComponentTypes> {
 
       component.onDetach(this)
 
-      this.onChangeListeners.forEach(listener =>
+      for (const listener of this.onChangeListeners) {
         listener({ type: 'remove', entity: this, component })
-      )
+      }
     }
   }
 

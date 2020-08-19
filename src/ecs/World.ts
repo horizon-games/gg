@@ -42,7 +42,9 @@ export default class World<C extends ComponentTypes> {
   }
 
   addSystems(...systems: System<C>[]) {
-    systems.forEach(system => this.addSystem(system))
+    for (const system of systems) {
+      this.addSystem(system)
+    }
   }
 
   removeSystem<T extends System<C>>(
@@ -104,19 +106,19 @@ export default class World<C extends ComponentTypes> {
     }
   }
 
-  getEntity(entityId: number): Entity<C> | undefined {
+  getEntity = (entityId: number): Entity<C> | undefined => {
     return this.manager.getEntity(entityId)
   }
 
-  getEntities(entityIds: number[]): Entity<C>[] {
-    return entityIds.map(this.getEntity.bind(this))
+  getEntities(entityIds: number[]): (Entity<C> | undefined)[] {
+    return entityIds.map(this.getEntity)
   }
 
   update(dt: number, time: number) {
-    this.systems.forEach(system => {
+    for (const system of this.systems.values()) {
       if (system.enabled) {
         system.update(this.manager, dt, time)
       }
-    })
+    }
   }
 }

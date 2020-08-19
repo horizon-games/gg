@@ -107,8 +107,14 @@ export default abstract class Archetype<C extends ComponentTypes>
         }
 
         this.entities.push(entity)
-        this.onAddListeners.forEach(listener => listener(ev))
-        this.onChangeListeners.forEach(listener => listener(ev))
+
+        for (const listener of this.onAddListeners) {
+          listener(ev)
+        }
+
+        for (const listener of this.onChangeListeners) {
+          listener(ev)
+        }
       }
     }
   }
@@ -126,8 +132,14 @@ export default abstract class Archetype<C extends ComponentTypes>
         }
 
         this.entities.splice(idx, 1)
-        this.onRemoveListeners.forEach(listener => listener(ev))
-        this.onChangeListeners.forEach(listener => listener(ev))
+
+        for (const listener of this.onRemoveListeners) {
+          listener(ev)
+        }
+
+        for (const listener of this.onChangeListeners) {
+          listener(ev)
+        }
       }
     }
   }

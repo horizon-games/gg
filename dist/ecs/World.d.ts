@@ -23,8 +23,8 @@ export default class World<C extends ComponentTypes> {
     getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
     createEntity(components?: ValueOf<C>[]): Entity<C>;
     removeEntity(entityId: number): void;
-    getEntity(entityId: number): Entity<C> | undefined;
-    getEntities(entityIds: number[]): Entity<C>[];
+    getEntity: (entityId: number) => Entity<C> | undefined;
+    getEntities(entityIds: number[]): (Entity<C> | undefined)[];
     update(dt: number, time: number): void;
 }
 export {};

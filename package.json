@@ -1,6 +1,6 @@
 {
   "name": "gg",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "description": "GG game engine",
   "author": "Corban Riley",
   "license": "MIT",
@@ -23,11 +23,9 @@
     "prettier": "^1.19.1",
     "prettier-check": "^2.0.0",
     "ts-jest": "^25.2.1",
-    "ts-loader": "^6.2.1",
     "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-webpack-plugin": "^2.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {},
   "jest": {
@@ -35,7 +33,7 @@
       "js",
       "ts"
     ],
-    "testRegex": "/__tests__/.*\\.test\\.tsx?$",
+    "testRegex": "/tests/.*\\.test\\.tsx?$",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },

@@ -1,21 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var System = /** @class */ (function () {
-    function System(options) {
-        if (options === void 0) { options = {}; }
+class System {
+    constructor(options = {}) {
         this.enabled = true;
         Object.assign(this, options);
     }
-    System.prototype.init = function (_) {
+    init(_) {
         // stub
-    };
-    System.prototype.enable = function () {
+    }
+    enable() {
         this.enabled = true;
-    };
-    System.prototype.disable = function () {
+    }
+    disable() {
         this.enabled = false;
-    };
-    return System;
-}());
+    }
+}
 exports.default = System;
 //# sourceMappingURL=System.js.map

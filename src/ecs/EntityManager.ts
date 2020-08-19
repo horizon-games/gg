@@ -46,9 +46,9 @@ export default class EntityManager<C extends ComponentTypes> {
       )
 
       // Add entity to archetypes
-      this.archetypes.forEach(archetype => {
+      for (const archetype of this.archetypes.values()) {
         archetype.handleEntityAdd(entity)
-      })
+      }
     }
   }
 
@@ -63,9 +63,9 @@ export default class EntityManager<C extends ComponentTypes> {
       }
 
       // Remove entity from archetypes
-      this.archetypes.forEach(archetype => {
+      for (const archetype of this.archetypes.values()) {
         archetype.handleEntityRemove(entity)
-      })
+      }
     }
   }
 
@@ -98,9 +98,9 @@ export default class EntityManager<C extends ComponentTypes> {
       this.archetypes.set(type, archetype)
 
       // Add matching entities to archetypes
-      this.entities.forEach(entity => {
+      for (const entity of this.entities.values()) {
         archetype.handleEntityAdd(entity)
-      })
+      }
 
       return archetype
     } else {
@@ -143,9 +143,9 @@ export default class EntityManager<C extends ComponentTypes> {
 
   private handleEntityAddComponent(entity: Entity<C>, component: ValueOf<C>) {
     if (this.hasEntity(entity.id)) {
-      this.archetypes.forEach(archetype => {
+      for (const archetype of this.archetypes.values()) {
         archetype.handleEntityChange(entity, component)
-      })
+      }
     }
   }
 
@@ -154,9 +154,9 @@ export default class EntityManager<C extends ComponentTypes> {
     component: ValueOf<C>
   ) {
     if (this.hasEntity(entity.id)) {
-      this.archetypes.forEach(archetype => {
+      for (const archetype of this.archetypes.values()) {
         archetype.handleEntityChange(entity, component)
-      })
+      }
     }
   }
 }

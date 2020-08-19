@@ -1,22 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ComponentTypeRegExp = /Component$/;
-exports.getComponentTypeFromClass = function (klass) {
-    return klass.name.charAt(0).toLowerCase() +
-        klass.name.slice(1).replace(ComponentTypeRegExp, '');
-};
-var Component = /** @class */ (function () {
-    function Component(value) {
+exports.getComponentTypeFromClass = void 0;
+const ComponentTypeRegExp = /Component$/;
+exports.getComponentTypeFromClass = (klass) => klass.name.charAt(0).toLowerCase() +
+    klass.name.slice(1).replace(ComponentTypeRegExp, '');
+class Component {
+    constructor(value) {
         this.value = value;
         this.type = exports.getComponentTypeFromClass(this.constructor);
     }
-    Component.prototype.onAttach = function (entity) {
+    onAttach(entity) {
         // stub
-    };
-    Component.prototype.onDetach = function (entity) {
+    }
+    onDetach(entity) {
         // stub
-    };
-    return Component;
-}());
+    }
+}
 exports.default = Component;
 //# sourceMappingURL=Component.js.map
