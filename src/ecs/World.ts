@@ -1,10 +1,8 @@
 import Archetype from './Archetype'
-import { ComponentTypes } from './Component'
+import { ComponentTypes, ComponentOf } from './Component'
 import Entity from './Entity'
 import EntityManager from './EntityManager'
 import System from './System'
-
-type ValueOf<T> = T[keyof T]
 
 /*
 
@@ -94,7 +92,7 @@ export default class World<C extends ComponentTypes> {
     return this.manager.getArchetype(klass)
   }
 
-  createEntity(components: ValueOf<C>[] = []): Entity<C> {
+  createEntity(components: ComponentOf<C>[] = []): Entity<C> {
     return this.manager.renewEntity(components)
   }
 

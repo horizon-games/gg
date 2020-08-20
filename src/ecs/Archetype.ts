@@ -1,7 +1,5 @@
-import { ComponentTypes } from './Component'
+import { ComponentTypes, ComponentOf } from './Component'
 import Entity from './Entity'
-
-type ValueOf<T> = T[keyof T]
 
 export type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: (keyof C)[]
@@ -17,7 +15,7 @@ export interface ArchetypeChangeEvent<C extends ComponentTypes> {
   type: ArchetypeChangeEventTypes
   archetype: Archetype<C>
   entity: Entity<C>
-  component: ValueOf<C> | undefined
+  component: ComponentOf<C> | undefined
 }
 
 export type ArchetypeChangeListener<C extends ComponentTypes> = (
@@ -82,7 +80,7 @@ export default abstract class Archetype<C extends ComponentTypes>
     return this.entities.indexOf(entity) !== -1
   }
 
-  handleEntityChange(entity: Entity<C>, component?: ValueOf<C>) {
+  handleEntityChange(entity: Entity<C>, component?: ComponentOf<C>) {
     if (this.hasEntity(entity)) {
       // Does this entity need to be removed
       if (!this.matchesEntity(entity)) {
@@ -96,7 +94,7 @@ export default abstract class Archetype<C extends ComponentTypes>
     }
   }
 
-  handleEntityAdd(entity: Entity<C>, component?: ValueOf<C>) {
+  handleEntityAdd(entity: Entity<C>, component?: ComponentOf<C>) {
     if (this.matchesEntity(entity)) {
       if (!this.hasEntity(entity)) {
         const ev: ArchetypeChangeEvent<C> = {
@@ -119,7 +117,7 @@ export default abstract class Archetype<C extends ComponentTypes>
     }
   }
 
-  handleEntityRemove(entity: Entity<C>, component?: ValueOf<C>) {
+  handleEntityRemove(entity: Entity<C>, component?: ComponentOf<C>) {
     if (this.hasEntity(entity)) {
       const idx = this.entities.indexOf(entity)
 

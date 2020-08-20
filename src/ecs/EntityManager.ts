@@ -1,9 +1,7 @@
-import { ComponentTypes } from './Component'
+import { ComponentTypes, ComponentOf } from './Component'
 import Archetype from './Archetype'
 import Entity from './Entity'
 import EntityPool from './EntityPool'
-
-type ValueOf<T> = T[keyof T]
 
 interface EntityManagerOptions {
   poolSize: number
@@ -77,7 +75,7 @@ export default class EntityManager<C extends ComponentTypes> {
     return this.entities.get(entityId)
   }
 
-  renewEntity(components: ValueOf<C>[] = []): Entity<C> {
+  renewEntity(components: ComponentOf<C>[] = []): Entity<C> {
     const entity = this.entityPool.renew(components)
     this.addEntity(entity)
     return entity
@@ -141,7 +139,10 @@ export default class EntityManager<C extends ComponentTypes> {
     }
   }
 
-  private handleEntityAddComponent(entity: Entity<C>, component: ValueOf<C>) {
+  private handleEntityAddComponent(
+    entity: Entity<C>,
+    component: ComponentOf<C>
+  ) {
     if (this.hasEntity(entity.id)) {
       for (const archetype of this.archetypes.values()) {
         archetype.handleEntityChange(entity, component)
@@ -151,7 +152,7 @@ export default class EntityManager<C extends ComponentTypes> {
 
   private handleEntityRemoveComponent(
     entity: Entity<C>,
-    component: ValueOf<C>
+    component: ComponentOf<C>
   ) {
     if (this.hasEntity(entity.id)) {
       for (const archetype of this.archetypes.values()) {

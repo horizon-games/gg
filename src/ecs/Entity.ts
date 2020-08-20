@@ -1,20 +1,15 @@
-import Component, {
+import {
   ComponentTypes,
-  getComponentTypeFromClass
+  getComponentTypeFromClass,
+  ComponentOf
 } from './Component'
-
-type ValueOf<T> = T[keyof T]
-
-// type ComponentValues<T extends ComponentTypes> = {
-//   [type in keyof T]: T[type]['value']
-// }
 
 export type EntityChangeEventTypes = 'add' | 'remove'
 
 export interface EntityChangeEvent<C extends ComponentTypes> {
   type: EntityChangeEventTypes
   entity: Entity<C>
-  component: C[keyof C]
+  component: ComponentOf<C>
 }
 
 export type EntityChangeListener<C extends ComponentTypes> = (
@@ -35,12 +30,12 @@ export default class Entity<C extends ComponentTypes> {
 
   private onChangeListeners: Set<EntityChangeListener<C>> = new Set()
 
-  constructor(components: ValueOf<C>[] = []) {
+  constructor(components: ComponentOf<C>[] = []) {
     this.reset()
     this.renew(components)
   }
 
-  renew(components: ValueOf<C>[] = []): Entity<C> {
+  renew(components: ComponentOf<C>[] = []): Entity<C> {
     for (const component of components) {
       this.addComponent(component)
     }
@@ -78,7 +73,7 @@ export default class Entity<C extends ComponentTypes> {
     return types.every(type => this.hasComponent(type))
   }
 
-  addComponent = (component: ValueOf<C>) => {
+  addComponent = (component: ComponentOf<C>) => {
     if (!this.hasComponent(component.type)) {
       this.components[component.type as keyof C] = component
 
@@ -115,7 +110,7 @@ export default class Entity<C extends ComponentTypes> {
   remove = this.removeComponent
 
   toggleComponent(
-    componentClass: new (value: void) => ValueOf<C>,
+    componentClass: new (value: void) => ComponentOf<C>,
     predicate: boolean
   ) {
     const componentType = getComponentTypeFromClass(componentClass)

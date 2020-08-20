@@ -1,7 +1,5 @@
 import Entity from './Entity'
-import { ComponentTypes } from './Component'
-
-type ValueOf<T> = T[keyof T]
+import { ComponentTypes, ComponentOf } from './Component'
 
 export default class EntityPool<C extends ComponentTypes> {
   head: number = -1
@@ -20,7 +18,7 @@ export default class EntityPool<C extends ComponentTypes> {
   }
 
   // Take an Entity from the pool
-  renew(components: ValueOf<C>[] = []): Entity<C> {
+  renew(components: ComponentOf<C>[] = []): Entity<C> {
     if (this.head >= 0) {
       const entity = this.entities[this.head--]
       return entity.renew(components)
