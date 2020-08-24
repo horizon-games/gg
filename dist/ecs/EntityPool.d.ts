@@ -1,14 +1,12 @@
 import Entity from './Entity';
-import { ComponentTypes } from './Component';
-declare type ValueOf<T> = T[keyof T];
+import { ComponentTypes, ComponentOf } from './Component';
 export default class EntityPool<C extends ComponentTypes> {
     size: number;
     head: number;
     entities: Entity<C>[];
     constructor(size: number);
     get length(): number;
-    renew(components?: ValueOf<C>[]): Entity<C>;
+    renew(components?: ComponentOf<C>[]): Entity<C>;
     release(entity: Entity<C>): void;
 }
-export {};
 //# sourceMappingURL=EntityPool.d.ts.map

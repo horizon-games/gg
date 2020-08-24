@@ -17,4 +17,5 @@ class Component {
     }
 }
 exports.default = Component;
+// export type ComponentTypes = {}
 //# sourceMappingURL=Component.js.map

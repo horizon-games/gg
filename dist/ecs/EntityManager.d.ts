@@ -1,8 +1,7 @@
-import { ComponentTypes } from './Component';
+import { ComponentTypes, ComponentOf } from './Component';
 import Archetype from './Archetype';
 import Entity from './Entity';
 import EntityPool from './EntityPool';
-declare type ValueOf<T> = T[keyof T];
 interface EntityManagerOptions {
     poolSize: number;
 }
@@ -17,7 +16,7 @@ export default class EntityManager<C extends ComponentTypes> {
     removeEntity(entity: Entity<C>): void;
     hasEntity(entityId: number): boolean;
     getEntity(entityId: number): Entity<C> | undefined;
-    renewEntity(components?: ValueOf<C>[]): Entity<C>;
+    renewEntity(components?: ComponentOf<C>[]): Entity<C>;
     releaseEntity(entity: Entity<C>): void;
     addArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
     removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): Archetype<C>;

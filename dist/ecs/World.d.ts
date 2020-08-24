@@ -1,9 +1,8 @@
 import Archetype from './Archetype';
-import { ComponentTypes } from './Component';
+import { ComponentTypes, ComponentOf } from './Component';
 import Entity from './Entity';
 import EntityManager from './EntityManager';
 import System from './System';
-declare type ValueOf<T> = T[keyof T];
 interface WorldOptions {
     poolSize: number;
 }
@@ -21,7 +20,7 @@ export default class World<C extends ComponentTypes> {
     removeArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): Archetype<C>;
     hasArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): boolean;
     getArchetype<T extends Archetype<C>>(klass: new (...args: any[]) => T): T;
-    createEntity(components?: ValueOf<C>[]): Entity<C>;
+    createEntity(components?: ComponentOf<C>[]): Entity<C>;
     removeEntity(entityId: number): void;
     getEntity: (entityId: number) => Entity<C> | undefined;
     getEntities(entityIds: number[]): (Entity<C> | undefined)[];
