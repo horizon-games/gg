@@ -1,5 +1,5 @@
-import EntityPool from '../EntityPool'
 import Entity from '../Entity'
+import EntityPool from '../EntityPool'
 
 const SIZE = 3
 

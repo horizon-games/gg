@@ -1,6 +1,6 @@
 import Archetype from '../Archetype'
-import Entity from '../Entity'
-import { Components } from './Component.fixtures'
+import type Entity from '../Entity'
+import type { Components } from './Component.fixtures'
 
 export class AllArchetype extends Archetype<Components> {}
 export class AnyArchetype extends Archetype<Components> {

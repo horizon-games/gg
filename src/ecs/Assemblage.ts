@@ -1,4 +1,4 @@
-import Component from './Component'
+import type Component from './Component'
 
 type Assemblage = (...args: any[]) => Component<any>[]
 

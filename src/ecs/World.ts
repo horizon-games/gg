@@ -1,8 +1,8 @@
-import Archetype from './Archetype'
-import { ComponentTypes, ComponentOf } from './Component'
-import Entity from './Entity'
+import type Archetype from './Archetype'
+import type { ComponentOf, ComponentTypes } from './Component'
+import type Entity from './Entity'
 import EntityManager from './EntityManager'
-import System from './System'
+import type System from './System'
 
 /*
 

@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Archetype {
     constructor() {
         this.include = (...componentTypes) => (entity) => entity.hasComponents(...componentTypes);
-        this.exclude = (...componentTypes) => (entity) => componentTypes.every(type => !entity.hasComponent(type));
+        this.exclude = (...componentTypes) => (entity) => componentTypes.every((type) => !entity.hasComponent(type));
         this.only = (...componentTypes) => (entity) => componentTypes.length === entity.componentTypes.length &&
             entity.hasComponents(...componentTypes);
-        this.any = (...componentTypes) => (entity) => componentTypes.some(type => entity.hasComponent(type));
+        this.any = (...componentTypes) => (entity) => componentTypes.some((type) => entity.hasComponent(type));
         this.filters = [];
         this.entities = [];
         this.onChangeListeners = new Set();
@@ -26,7 +26,7 @@ class Archetype {
         return () => this.onRemoveListeners.delete(listener);
     }
     matchesEntity(entity) {
-        return this.filters.every(filter => filter(entity));
+        return this.filters.every((filter) => filter(entity));
     }
     hasEntity(entity) {
         return this.entities.indexOf(entity) !== -1;

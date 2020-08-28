@@ -1,8 +1,5 @@
-import {
-  ComponentTypes,
-  getComponentTypeFromClass,
-  ComponentOf
-} from './Component'
+import type { ComponentOf, ComponentTypes } from './Component'
+import { getComponentTypeFromClass } from './Component'
 
 export type EntityChangeEventTypes = 'add' | 'remove'
 
@@ -70,7 +67,7 @@ export default class Entity<C extends ComponentTypes> {
   has = this.hasComponent
 
   hasComponents = (...types: (keyof C)[]): boolean => {
-    return types.every(type => this.hasComponent(type))
+    return types.every((type) => this.hasComponent(type))
   }
 
   addComponent = (component: ComponentOf<C>) => {

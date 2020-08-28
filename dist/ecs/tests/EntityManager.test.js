@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const EntityManager_1 = __importDefault(require("../EntityManager"));
-const Entity_1 = __importDefault(require("../Entity"));
 const Archetype_1 = __importDefault(require("../Archetype"));
+const Entity_1 = __importDefault(require("../Entity"));
+const EntityManager_1 = __importDefault(require("../EntityManager"));
+require("./Archetype.fixtures");
 const Component_fixtures_1 = require("./Component.fixtures");
 var Archetypes;
 (function (Archetypes) {

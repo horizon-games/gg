@@ -12,13 +12,13 @@ class EntityManager {
         this.entityPool = new EntityPool_1.default(poolSize);
     }
     filter(types) {
-        return Array.from(this.entities.values()).filter(entity => entity.hasComponents(...types));
+        return Array.from(this.entities.values()).filter((entity) => entity.hasComponents(...types));
     }
     addEntity(entity) {
         if (!this.entities.has(entity.id)) {
             this.entities.set(entity.id, entity);
             // Add entity listener
-            this.entityChangeDisposers.set(entity.id, entity.onChange(ev => {
+            this.entityChangeDisposers.set(entity.id, entity.onChange((ev) => {
                 const { type, entity, component } = ev;
                 switch (type) {
                     case 'add':

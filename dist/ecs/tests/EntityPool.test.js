@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const EntityPool_1 = __importDefault(require("../EntityPool"));
 const Entity_1 = __importDefault(require("../Entity"));
+const EntityPool_1 = __importDefault(require("../EntityPool"));
 const SIZE = 3;
 describe('EntityPool', () => {
     test('can create pool', () => {

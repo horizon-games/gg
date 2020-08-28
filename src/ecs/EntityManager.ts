@@ -1,6 +1,6 @@
-import { ComponentTypes, ComponentOf } from './Component'
-import Archetype from './Archetype'
-import Entity from './Entity'
+import type Archetype from './Archetype'
+import type { ComponentOf, ComponentTypes } from './Component'
+import type Entity from './Entity'
 import EntityPool from './EntityPool'
 
 interface EntityManagerOptions {
@@ -18,7 +18,7 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   filter(types: string[]): Entity<C>[] {
-    return Array.from(this.entities.values()).filter(entity =>
+    return Array.from(this.entities.values()).filter((entity) =>
       entity.hasComponents(...types)
     )
   }
@@ -30,7 +30,7 @@ export default class EntityManager<C extends ComponentTypes> {
       // Add entity listener
       this.entityChangeDisposers.set(
         entity.id,
-        entity.onChange(ev => {
+        entity.onChange((ev) => {
           const { type, entity, component } = ev
           switch (type) {
             case 'add':

@@ -1,7 +1,6 @@
-import Entity from '../Entity'
-
-import { Components, PositionComponent } from './Component.fixtures'
 import Component from '../Component'
+import Entity from '../Entity'
+import { Components, PositionComponent } from './Component.fixtures'
 
 class TagComponent extends Component<void> {}
 class PrimitiveValueComponent extends Component<number> {}

@@ -11,7 +11,7 @@ class Entity {
         // tslint:disable-next-line
         this.has = this.hasComponent;
         this.hasComponents = (...types) => {
-            return types.every(type => this.hasComponent(type));
+            return types.every((type) => this.hasComponent(type));
         };
         this.addComponent = (component) => {
             if (!this.hasComponent(component.type)) {

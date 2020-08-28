@@ -1,12 +1,11 @@
 import Archetype from '../Archetype'
 import Entity from '../Entity'
-
 import {
   Components,
   PositionComponent,
   RotationComponent,
-  VelocityComponent,
-  StaticComponent
+  StaticComponent,
+  VelocityComponent
 } from './Component.fixtures'
 
 describe('Archetype', () => {

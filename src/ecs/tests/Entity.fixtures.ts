@@ -1,10 +1,10 @@
 import Entity from '../Entity'
 import {
+  AccelerationComponent,
+  PlayerControllableComponent,
   PositionComponent,
   RotationComponent,
-  VelocityComponent,
-  AccelerationComponent,
-  PlayerControllableComponent
+  VelocityComponent
 } from './Component.fixtures'
 
 export const createEntityFixture = () => {

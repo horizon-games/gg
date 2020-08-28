@@ -1,19 +1,18 @@
-import EntityManager from '../EntityManager'
-import Entity from '../Entity'
 import Archetype from '../Archetype'
-
+import Entity from '../Entity'
+import EntityManager from '../EntityManager'
+import {
+  EmptyArchetype,
+  PhysicalArchetype,
+  PositionOnlyArchetype
+} from './Archetype.fixtures'
 import {
   Components,
   PositionComponent,
   RotationComponent,
-  VelocityComponent,
-  StaticComponent
+  StaticComponent,
+  VelocityComponent
 } from './Component.fixtures'
-import {
-  EmptyArchetype,
-  PositionOnlyArchetype,
-  PhysicalArchetype
-} from './Archetype.fixtures'
 
 enum Archetypes {
   All,

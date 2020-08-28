@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const World_1 = __importDefault(require("../World"));
 const Archetype_1 = __importDefault(require("../Archetype"));
+const World_1 = __importDefault(require("../World"));
+const Archetype_fixtures_1 = require("./Archetype.fixtures");
 const Component_fixtures_1 = require("./Component.fixtures");
 const System_fixtures_1 = require("./System.fixtures");
-const Archetype_fixtures_1 = require("./Archetype.fixtures");
 describe('World', () => {
     test('can create', () => {
         const world = new World_1.default();

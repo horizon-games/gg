@@ -1,5 +1,5 @@
-import { ComponentTypes, ComponentOf } from './Component';
-import Entity from './Entity';
+import type { ComponentOf, ComponentTypes } from './Component';
+import type Entity from './Entity';
 export declare type ArchetypeComponentFilter<C extends ComponentTypes> = (...componentTypes: (keyof C)[]) => ArchetypeFilterPredicate<C>;
 export declare type ArchetypeFilterPredicate<C extends ComponentTypes> = (entity: Entity<C>) => boolean;
 export declare type ArchetypeChangeEventTypes = 'add' | 'remove';

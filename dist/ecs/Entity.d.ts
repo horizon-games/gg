@@ -1,4 +1,4 @@
-import { ComponentTypes, ComponentOf } from './Component';
+import type { ComponentOf, ComponentTypes } from './Component';
 export declare type EntityChangeEventTypes = 'add' | 'remove';
 export interface EntityChangeEvent<C extends ComponentTypes> {
     type: EntityChangeEventTypes;

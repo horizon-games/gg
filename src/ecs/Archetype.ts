@@ -1,5 +1,5 @@
-import { ComponentTypes, ComponentOf } from './Component'
-import Entity from './Entity'
+import type { ComponentOf, ComponentTypes } from './Component'
+import type Entity from './Entity'
 
 export type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: (keyof C)[]
@@ -37,7 +37,7 @@ export default abstract class Archetype<C extends ComponentTypes>
 
   exclude: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
     entity: Entity<C>
-  ) => componentTypes.every(type => !entity.hasComponent(type))
+  ) => componentTypes.every((type) => !entity.hasComponent(type))
 
   only: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
     entity: Entity<C>
@@ -47,7 +47,7 @@ export default abstract class Archetype<C extends ComponentTypes>
 
   any: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
     entity: Entity<C>
-  ) => componentTypes.some(type => entity.hasComponent(type))
+  ) => componentTypes.some((type) => entity.hasComponent(type))
 
   filters: ArchetypeFilterPredicate<C>[] = []
 
@@ -73,7 +73,7 @@ export default abstract class Archetype<C extends ComponentTypes>
   }
 
   matchesEntity(entity: Entity<C>): boolean {
-    return this.filters.every(filter => filter(entity))
+    return this.filters.every((filter) => filter(entity))
   }
 
   hasEntity(entity: Entity<C>): boolean {

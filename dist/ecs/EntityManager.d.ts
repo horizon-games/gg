@@ -1,6 +1,6 @@
-import { ComponentTypes, ComponentOf } from './Component';
-import Archetype from './Archetype';
-import Entity from './Entity';
+import type Archetype from './Archetype';
+import type { ComponentOf, ComponentTypes } from './Component';
+import type Entity from './Entity';
 import EntityPool from './EntityPool';
 interface EntityManagerOptions {
     poolSize: number;

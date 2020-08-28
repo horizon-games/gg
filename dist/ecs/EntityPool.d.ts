@@ -1,5 +1,5 @@
+import type { ComponentOf, ComponentTypes } from './Component';
 import Entity from './Entity';
-import { ComponentTypes, ComponentOf } from './Component';
 export default class EntityPool<C extends ComponentTypes> {
     size: number;
     head: number;

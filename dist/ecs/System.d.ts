@@ -1,5 +1,5 @@
-import EntityManager from './EntityManager';
-import { ComponentTypes } from './Component';
+import type { ComponentTypes } from './Component';
+import type EntityManager from './EntityManager';
 interface SystemOptions {
     priority: number;
     enabled: boolean;

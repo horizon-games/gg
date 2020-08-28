@@ -1,8 +1,7 @@
+import type EntityManager from '../EntityManager'
 import System from '../System'
-import EntityManager from '../EntityManager'
-
-import { Components } from './Component.fixtures'
 import { AllArchetype } from './Archetype.fixtures'
+import type { Components } from './Component.fixtures'
 
 class PhysicsSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number, time: number) {
