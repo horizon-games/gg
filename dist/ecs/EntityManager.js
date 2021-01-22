@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const EntityPool_1 = __importDefault(require("./EntityPool"));
+const Entity_1 = __importDefault(require("./Entity"));
 class EntityManager {
-    constructor({ poolSize } = { poolSize: 1000 }) {
+    constructor() {
         this.entities = new Map();
         this.archetypes = new Map();
         this.entityChangeDisposers = new Map();
-        this.entityPool = new EntityPool_1.default(poolSize);
     }
     filter(types) {
         return Array.from(this.entities.values()).filter((entity) => entity.hasComponents(...types));
@@ -55,14 +54,13 @@ class EntityManager {
         return this.entities.get(entityId);
     }
     renewEntity(components = []) {
-        const entity = this.entityPool.renew(components);
+        const entity = new Entity_1.default(components);
         this.addEntity(entity);
         return entity;
     }
     releaseEntity(entity) {
         if (this.hasEntity(entity.id)) {
             this.removeEntity(entity);
-            this.entityPool.release(entity);
         }
     }
     addArchetype(klass) {

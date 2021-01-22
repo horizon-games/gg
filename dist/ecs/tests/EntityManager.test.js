@@ -108,7 +108,7 @@ describe('EntityManager', () => {
         expect(physicalArchetype.hasEntity(entity)).toBe(false);
     });
     test('can renew and release entities from entity pool', () => {
-        const manager = new EntityManager_1.default({ poolSize: 10 });
+        const manager = new EntityManager_1.default();
         const entity = manager.renewEntity();
         const { id } = entity;
         entity.add(new Component_fixtures_1.PositionComponent({ x: 0, y: 0, z: 0 }));

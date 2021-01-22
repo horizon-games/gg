@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EntityManager_1 = __importDefault(require("./EntityManager"));
 class World {
-    constructor({ poolSize } = { poolSize: 1000 }) {
+    constructor({} = {}) {
         this.manager = new EntityManager_1.default();
         this.systems = new Map();
         this.getEntity = (entityId) => {
             return this.manager.getEntity(entityId);
         };
-        this.manager = new EntityManager_1.default({ poolSize });
+        this.manager = new EntityManager_1.default();
     }
     get systemTypes() {
         return Array.from(this.systems.keys());

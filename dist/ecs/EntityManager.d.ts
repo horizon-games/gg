@@ -1,16 +1,10 @@
 import type Archetype from './Archetype';
 import type { ComponentOf, ComponentTypes } from './Component';
-import type Entity from './Entity';
-import EntityPool from './EntityPool';
-interface EntityManagerOptions {
-    poolSize: number;
-}
+import Entity from './Entity';
 export default class EntityManager<C extends ComponentTypes> {
     entities: Map<number, Entity<C>>;
     archetypes: Map<string, Archetype<C>>;
-    entityPool: EntityPool<C>;
     entityChangeDisposers: Map<number, () => void>;
-    constructor({ poolSize }?: EntityManagerOptions);
     filter(types: string[]): Entity<C>[];
     addEntity(entity: Entity<C>): void;
     removeEntity(entity: Entity<C>): void;
@@ -25,5 +19,4 @@ export default class EntityManager<C extends ComponentTypes> {
     private handleEntityAddComponent;
     private handleEntityRemoveComponent;
 }
-export {};
 //# sourceMappingURL=EntityManager.d.ts.map

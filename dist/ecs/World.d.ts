@@ -4,12 +4,11 @@ import type Entity from './Entity';
 import EntityManager from './EntityManager';
 import type System from './System';
 interface WorldOptions {
-    poolSize: number;
 }
 export default class World<C extends ComponentTypes> {
     manager: EntityManager<C>;
     private systems;
-    constructor({ poolSize }?: WorldOptions);
+    constructor({}?: WorldOptions);
     get systemTypes(): string[];
     addSystem(system: System<C>): void;
     addSystems(...systems: System<C>[]): void;
