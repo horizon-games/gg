@@ -117,7 +117,7 @@ describe('EntityManager', () => {
   })
 
   test('can renew and release entities from entity pool', () => {
-    const manager = new EntityManager({ poolSize: 10 })
+    const manager = new EntityManager()
     const entity = manager.renewEntity()
     const { id } = entity
     entity.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
