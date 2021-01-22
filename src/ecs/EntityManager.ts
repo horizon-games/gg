@@ -1,21 +1,11 @@
 import type Archetype from './Archetype'
 import type { ComponentOf, ComponentTypes } from './Component'
-import type Entity from './Entity'
-import EntityPool from './EntityPool'
-
-interface EntityManagerOptions {
-  poolSize: number
-}
+import Entity from './Entity'
 
 export default class EntityManager<C extends ComponentTypes> {
   entities: Map<number, Entity<C>> = new Map()
   archetypes: Map<string, Archetype<C>> = new Map()
-  entityPool: EntityPool<C>
   entityChangeDisposers: Map<number, () => void> = new Map()
-
-  constructor({ poolSize }: EntityManagerOptions = { poolSize: 1000 }) {
-    this.entityPool = new EntityPool<C>(poolSize)
-  }
 
   filter(types: string[]): Entity<C>[] {
     return Array.from(this.entities.values()).filter((entity) =>
@@ -76,7 +66,7 @@ export default class EntityManager<C extends ComponentTypes> {
   }
 
   renewEntity(components: ComponentOf<C>[] = []): Entity<C> {
-    const entity = this.entityPool.renew(components)
+    const entity = new Entity<C>(components)
     this.addEntity(entity)
     return entity
   }
@@ -84,7 +74,6 @@ export default class EntityManager<C extends ComponentTypes> {
   releaseEntity(entity: Entity<C>) {
     if (this.hasEntity(entity.id)) {
       this.removeEntity(entity)
-      this.entityPool.release(entity)
     }
   }
 
