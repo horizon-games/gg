@@ -45,6 +45,7 @@ class EntityManager {
             for (const archetype of this.archetypes.values()) {
                 archetype.handleEntityRemove(entity);
             }
+            entity.reset();
         }
     }
     hasEntity(entityId) {

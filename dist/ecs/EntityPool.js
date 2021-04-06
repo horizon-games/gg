@@ -30,7 +30,7 @@ class EntityPool {
     release(entity) {
         if (entity instanceof Entity_1.default) {
             if (this.head < this.size - 1) {
-                this.entities[++this.head] = entity.reset();
+                this.entities[++this.head] = entity;
             }
             else {
                 throw new Error('EntityPool: Attempted to release an Entity back into a full pool.');
