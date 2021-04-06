@@ -54,6 +54,7 @@ export default class EntityManager<C extends ComponentTypes> {
       for (const archetype of this.archetypes.values()) {
         archetype.handleEntityRemove(entity)
       }
+      entity.reset()
     }
   }
 

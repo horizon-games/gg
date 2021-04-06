@@ -33,7 +33,7 @@ export default class EntityPool<C extends ComponentTypes> {
   release(entity: Entity<C>) {
     if (entity instanceof Entity) {
       if (this.head < this.size - 1) {
-        this.entities[++this.head] = entity.reset()
+        this.entities[++this.head] = entity
       } else {
         throw new Error(
           'EntityPool: Attempted to release an Entity back into a full pool.'
