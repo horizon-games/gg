@@ -18,7 +18,7 @@ import type Entity from './Entity'
 export type ComponentKeyOf<C> = keyof C
 export type ComponentOf<C> = C[keyof C]
 
-const ComponentTypeRegExp = /Component$/
+const ComponentTypeRegExp = /_?Component$/
 export const getComponentTypeFromClass = (klass: any): string =>
   klass.name.charAt(0).toLowerCase() +
   klass.name.slice(1).replace(ComponentTypeRegExp, '')

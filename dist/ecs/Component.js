@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getComponentTypeFromClass = void 0;
-const ComponentTypeRegExp = /Component$/;
+const ComponentTypeRegExp = /_?Component$/;
 exports.getComponentTypeFromClass = (klass) => klass.name.charAt(0).toLowerCase() +
     klass.name.slice(1).replace(ComponentTypeRegExp, '');
 class Component {
