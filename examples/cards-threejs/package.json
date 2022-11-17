@@ -28,7 +28,7 @@
     "popmotion": "^8.5.3",
     "sillyname": "^0.1.0",
     "stats.js": "^0.17.0",
-    "three": "^0.114.0",
+    "three": "^0.137.0",
     "unistore": "^3.5.1"
   },
   "jest": {
