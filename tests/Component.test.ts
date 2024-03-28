@@ -1,5 +1,7 @@
 import { describe, test, expect } from 'vitest'
-import Component from '../src/Component'
+
+import { Component } from '../src/Component'
+
 import { PositionComponent } from './Component.fixtures'
 
 describe('Component', () => {

@@ -1,4 +1,4 @@
-import type Entity from './Entity'
+import { Entity } from './Entity'
 
 // export type FilterComponents<C> = Pick<
 //   C,
@@ -28,7 +28,7 @@ export function getComponentTypeFromClass(klass: any): string {
   )
 }
 
-export default abstract class Component<T> {
+export abstract class Component<T> {
   readonly type: string = getComponentTypeFromClass(this.constructor)
 
   constructor(public value: T) {}

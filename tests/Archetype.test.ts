@@ -1,12 +1,14 @@
 import { describe, test, expect, vi } from 'vitest'
-import Archetype from '../src/Archetype'
-import Entity from '../src/Entity'
+
+import { Archetype } from '../src/Archetype'
+import { Entity } from '../src/Entity'
+
 import {
   Components,
   PositionComponent,
   RotationComponent,
   StaticComponent,
-  VelocityComponent
+  VelocityComponent,
 } from './Component.fixtures'
 
 describe('Archetype', () => {
@@ -40,7 +42,7 @@ describe('Archetype', () => {
     class PhysicalArchetype extends Archetype<Components> {
       filters = [
         this.include('position', 'rotation', 'velocity'),
-        this.exclude('static')
+        this.exclude('static'),
       ]
     }
     class ExcludeArchetype extends Archetype<Components> {
@@ -140,7 +142,7 @@ describe('Archetype', () => {
     expect(spy).toHaveBeenCalledWith({
       type: 'add',
       archetype,
-      entity
+      entity,
     })
 
     entity.removeComponent('position')
@@ -152,7 +154,7 @@ describe('Archetype', () => {
     expect(spy).toHaveBeenCalledWith({
       type: 'remove',
       archetype,
-      entity
+      entity,
     })
 
     disposer()
@@ -194,7 +196,7 @@ describe('Archetype', () => {
     expect(spy).toHaveBeenCalledWith({
       type: 'add',
       archetype,
-      entity
+      entity,
     })
 
     entity.removeComponent('position')
@@ -247,7 +249,7 @@ describe('Archetype', () => {
     expect(spy).toHaveBeenCalledWith({
       type: 'remove',
       archetype,
-      entity
+      entity,
     })
 
     expect(archetype.entities).toHaveLength(0)

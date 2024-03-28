@@ -1,5 +1,8 @@
-import type { ComponentOf, ComponentTypes } from './Component'
-import { getComponentTypeFromClass } from './Component'
+import {
+  getComponentTypeFromClass,
+  ComponentOf,
+  ComponentTypes,
+} from './Component'
 
 export type EntityChangeEventTypes = 'add' | 'remove'
 
@@ -17,7 +20,7 @@ const UNDEFINED_ID = -1
 
 let instanceIdx = 0
 
-export default class Entity<C extends ComponentTypes> {
+export class Entity<C extends ComponentTypes> {
   id: number = UNDEFINED_ID
   components: Partial<C> = {}
 

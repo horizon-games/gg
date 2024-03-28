@@ -1,6 +1,8 @@
 import { describe, test, expect } from 'vitest'
-import Archetype from '../src/Archetype'
-import World from '../src/World'
+
+import { Archetype } from '../src/Archetype'
+import { World } from '../src/World'
+
 import { PhysicalArchetype } from './Archetype.fixtures'
 import { Components, physicalAssemblage } from './Component.fixtures'
 import { PhysicsSystem } from './System.fixtures'

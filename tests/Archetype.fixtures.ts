@@ -1,6 +1,7 @@
-import Archetype from '../src/Archetype'
-import type Entity from '../src/Entity'
-import type { Components } from './Component.fixtures'
+import { Archetype } from '../src/Archetype'
+import { Entity } from '../src/Entity'
+
+import { Components } from './Component.fixtures'
 
 export class AllArchetype extends Archetype<Components> {}
 export class AnyArchetype extends Archetype<Components> {
@@ -21,6 +22,6 @@ export class PositionArchetype extends Archetype<Components> {
 export class PhysicalArchetype extends Archetype<Components> {
   filters = [
     this.include('position', 'rotation', 'velocity'),
-    this.exclude('static')
+    this.exclude('static'),
   ]
 }

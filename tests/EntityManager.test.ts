@@ -1,18 +1,20 @@
 import { describe, test, expect } from 'vitest'
-import Archetype from '../src/Archetype'
-import Entity from '../src/Entity'
-import EntityManager from '../src/EntityManager'
+
+import { Archetype } from '../src/Archetype'
+import { Entity } from '../src/Entity'
+import { EntityManager } from '../src/EntityManager'
+
 import {
   EmptyArchetype,
   PhysicalArchetype,
-  PositionOnlyArchetype
+  PositionOnlyArchetype,
 } from './Archetype.fixtures'
 import {
   Components,
   PositionComponent,
   RotationComponent,
   StaticComponent,
-  VelocityComponent
+  VelocityComponent,
 } from './Component.fixtures'
 
 enum Archetypes {
@@ -21,7 +23,7 @@ enum Archetypes {
   NonEmpty,
   PositionOnly,
   Position,
-  Physical
+  Physical,
 }
 
 describe('EntityManager', () => {
@@ -43,7 +45,7 @@ describe('EntityManager', () => {
     const entity = new Entity<Components>([
       new PositionComponent({ x: 1, y: 2, z: 3 }),
       new RotationComponent({ x: 1, y: 2, z: 3 }),
-      new VelocityComponent({ x: 1, y: 2, z: 3 })
+      new VelocityComponent({ x: 1, y: 2, z: 3 }),
     ])
 
     manager.addEntity(entity)
@@ -75,7 +77,7 @@ describe('EntityManager', () => {
     class PhysicalArchetype extends Archetype<Components> {
       filters = [
         this.include('position', 'rotation', 'velocity'),
-        this.exclude('static')
+        this.exclude('static'),
       ]
     }
 

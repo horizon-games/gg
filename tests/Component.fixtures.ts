@@ -1,4 +1,4 @@
-import Component, { ComponentTypes } from '../src/Component'
+import { Component, ComponentTypes } from '../src/Component'
 
 export type Components = {
   position: PositionComponent
@@ -52,6 +52,6 @@ export const physicalAssemblage = () => {
     new RotationComponent({ x: 0, y: 0, z: 0 }),
     new VelocityComponent({ x: 0, y: 0, z: 0 }),
     new AccelerationComponent({ x: 0, y: 0, z: 0 }),
-    new ColliderComponent(true)
+    new ColliderComponent(true),
   ]
 }

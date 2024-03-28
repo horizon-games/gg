@@ -1,18 +1,18 @@
-export { default as Component, ComponentTypes } from './Component'
+export { Component, type ComponentTypes } from './Component'
 export {
-  default as Entity,
-  EntityChangeEvent,
-  EntityChangeEventTypes,
+  type Entity,
+  type EntityChangeEvent,
+  type EntityChangeEventTypes,
 } from './Entity'
 export {
-  default as Archetype,
-  ArchetypeComponentFilter,
-  ArchetypeFilterPredicate,
-  ArchetypeChangeEvent,
-  ArchetypeChangeEventTypes,
-  ArchetypeChangeListener,
+  Archetype,
+  type ArchetypeComponentFilter,
+  type ArchetypeFilterPredicate,
+  type ArchetypeChangeEvent,
+  type ArchetypeChangeEventTypes,
+  type ArchetypeChangeListener,
 } from './Archetype'
-export { default as Assemblage } from './Assemblage'
-export { default as EntityManager } from './EntityManager'
-export { default as System } from './System'
-export { default as World } from './World'
+export { type Assemblage } from './Assemblage'
+export { EntityManager } from './EntityManager'
+export { System } from './System'
+export { World } from './World'

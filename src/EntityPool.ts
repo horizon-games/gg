@@ -1,7 +1,7 @@
-import type { ComponentOf, ComponentTypes } from './Component'
-import Entity from './Entity'
+import { ComponentOf, ComponentTypes } from './Component'
+import { Entity } from './Entity'
 
-export default class EntityPool<C extends ComponentTypes> {
+export class EntityPool<C extends ComponentTypes> {
   head: number = -1
   entities: Entity<C>[]
 

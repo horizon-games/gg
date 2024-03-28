@@ -1,5 +1,3 @@
-import type Component from './Component'
+import { Component } from './Component'
 
-type Assemblage = (...args: any[]) => Component<any>[]
-
-export default Assemblage
+export type Assemblage = (...args: any[]) => Component<any>[]

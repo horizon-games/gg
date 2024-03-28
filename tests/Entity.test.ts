@@ -1,6 +1,8 @@
 import { describe, test, expect, vi } from 'vitest'
-import Component from '../src/Component'
-import Entity from '../src/Entity'
+
+import { Component } from '../src/Component'
+import { Entity } from '../src/Entity'
+
 import { Components, PositionComponent } from './Component.fixtures'
 
 class TagComponent extends Component<void> {}
@@ -27,7 +29,7 @@ describe('Entity', () => {
     expect(entity.getComponentValue('position')).toEqual({
       x: 1,
       y: 2,
-      z: 3
+      z: 3,
     })
   })
 
@@ -39,7 +41,7 @@ describe('Entity', () => {
     }>([
       new PositionComponent({ x: 0, y: 0, z: 0 }),
       new PrimitiveValueComponent(1),
-      new ArrayValueComponent([1, 2])
+      new ArrayValueComponent([1, 2]),
     ])
 
     expect(entity.getComponent('unknown' as any)).toBeUndefined()
@@ -51,7 +53,7 @@ describe('Entity', () => {
     expect(entity.getComponentValue('position')).toEqual({
       x: 1,
       y: 0,
-      z: 0
+      z: 0,
     })
 
     entity.setComponentValue('position', { y: 2 })
@@ -59,7 +61,7 @@ describe('Entity', () => {
     expect(entity.getComponentValue('position')).toEqual({
       x: 1,
       y: 2,
-      z: 0
+      z: 0,
     })
 
     expect(entity.getComponentValue('primitiveValue')).toBe(1)
@@ -100,7 +102,7 @@ describe('Entity', () => {
       type: 'add',
       // componentType: 'tag',
       entity,
-      component: new TagComponent()
+      component: new TagComponent(),
     })
 
     entity.toggleComponent(TagComponent, false)
@@ -108,7 +110,7 @@ describe('Entity', () => {
     expect(spy).toHaveBeenCalledWith({
       type: 'remove',
       entity,
-      component: new TagComponent()
+      component: new TagComponent(),
     })
 
     disposer()

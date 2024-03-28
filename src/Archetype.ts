@@ -1,5 +1,5 @@
-import type { ComponentOf, ComponentTypes } from './Component'
-import type Entity from './Entity'
+import { ComponentOf, ComponentTypes } from './Component'
+import { Entity } from './Entity'
 
 export type ArchetypeComponentFilter<C extends ComponentTypes> = (
   ...componentTypes: (keyof C)[]
@@ -29,7 +29,7 @@ interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
   any: ArchetypeComponentFilter<C>
 }
 
-export default abstract class Archetype<C extends ComponentTypes>
+export abstract class Archetype<C extends ComponentTypes>
   implements ArchetypeComponentFilterPresets<C>
 {
   include: ArchetypeComponentFilter<C> =

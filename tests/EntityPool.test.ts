@@ -1,6 +1,7 @@
 import { describe, test, expect } from 'vitest'
-import Entity from '../src/Entity'
-import EntityPool from '../src/EntityPool'
+
+import { Entity } from '../src/Entity'
+import { EntityPool } from '../src/EntityPool'
 
 const SIZE = 3
 

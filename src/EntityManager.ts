@@ -1,8 +1,8 @@
-import type Archetype from './Archetype'
-import type { ComponentOf, ComponentTypes } from './Component'
-import Entity from './Entity'
+import { Archetype } from './Archetype'
+import { ComponentOf, ComponentTypes } from './Component'
+import { Entity } from './Entity'
 
-export default class EntityManager<C extends ComponentTypes> {
+export class EntityManager<C extends ComponentTypes> {
   entities: Map<number, Entity<C>> = new Map()
   archetypes: Map<string, Archetype<C>> = new Map()
   entityChangeDisposers: Map<number, () => void> = new Map()

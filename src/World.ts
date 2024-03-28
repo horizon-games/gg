@@ -1,8 +1,8 @@
-import type Archetype from './Archetype'
-import type { ComponentOf, ComponentTypes } from './Component'
-import type Entity from './Entity'
-import EntityManager from './EntityManager'
-import type System from './System'
+import { Archetype } from './Archetype'
+import { ComponentOf, ComponentTypes } from './Component'
+import { Entity } from './Entity'
+import { EntityManager } from './EntityManager'
+import { System } from './System'
 
 /*
 
@@ -14,7 +14,7 @@ interface WorldOptions {
   // poolSize: number
 }
 
-export default class World<C extends ComponentTypes> {
+export class World<C extends ComponentTypes> {
   manager: EntityManager<C> = new EntityManager<C>()
 
   private systems: Map<string, System<C>> = new Map()
