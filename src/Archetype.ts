@@ -30,24 +30,28 @@ interface ArchetypeComponentFilterPresets<C extends ComponentTypes> {
 }
 
 export default abstract class Archetype<C extends ComponentTypes>
-  implements ArchetypeComponentFilterPresets<C> {
-  include: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) => entity.hasComponents(...componentTypes)
+  implements ArchetypeComponentFilterPresets<C>
+{
+  include: ArchetypeComponentFilter<C> =
+    (...componentTypes: (keyof C)[]) =>
+    (entity: Entity<C>) =>
+      entity.hasComponents(...componentTypes)
 
-  exclude: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) => componentTypes.every((type) => !entity.hasComponent(type))
+  exclude: ArchetypeComponentFilter<C> =
+    (...componentTypes: (keyof C)[]) =>
+    (entity: Entity<C>) =>
+      componentTypes.every((type) => !entity.hasComponent(type))
 
-  only: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) =>
-    componentTypes.length === entity.componentTypes.length &&
-    entity.hasComponents(...componentTypes)
+  only: ArchetypeComponentFilter<C> =
+    (...componentTypes: (keyof C)[]) =>
+    (entity: Entity<C>) =>
+      componentTypes.length === entity.componentTypes.length &&
+      entity.hasComponents(...componentTypes)
 
-  any: ArchetypeComponentFilter<C> = (...componentTypes: (keyof C)[]) => (
-    entity: Entity<C>
-  ) => componentTypes.some((type) => entity.hasComponent(type))
+  any: ArchetypeComponentFilter<C> =
+    (...componentTypes: (keyof C)[]) =>
+    (entity: Entity<C>) =>
+      componentTypes.some((type) => entity.hasComponent(type))
 
   filters: ArchetypeFilterPredicate<C>[] = []
 
@@ -101,7 +105,7 @@ export default abstract class Archetype<C extends ComponentTypes>
           type: 'add',
           archetype: this,
           entity,
-          component
+          component,
         }
 
         this.entities.push(entity)
@@ -126,7 +130,7 @@ export default abstract class Archetype<C extends ComponentTypes>
           type: 'remove',
           archetype: this,
           entity,
-          component
+          component,
         }
 
         this.entities.splice(idx, 1)

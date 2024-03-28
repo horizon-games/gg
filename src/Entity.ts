@@ -133,7 +133,9 @@ export default class Entity<C extends ComponentTypes> {
     if (this.hasComponent(type)) {
       return this.components[type]!.value
     } else {
-      throw new Error(`Entity does not contain component of type ${type}.`)
+      throw new Error(
+        `Entity does not contain component of type ${String(type)}.`
+      )
     }
   }
 
@@ -151,7 +153,9 @@ export default class Entity<C extends ComponentTypes> {
         this.components[type]!.value = value
       }
     } else {
-      throw new Error(`Entity does not contain component of type ${type}.`)
+      throw new Error(
+        `Entity does not contain component of type ${String(type)}.`
+      )
     }
   }
 

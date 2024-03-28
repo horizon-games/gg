@@ -7,15 +7,14 @@
   "main": "dist/ecs/index",
   "types": "./dist/ecs/index.d.ts",
   "scripts": {
-    "eslint": "eslint ./src --ext .ts",
-    "eslint:fix": "eslint ./src --ext .ts --fix",
-    "prettier": "prettier --check --config .prettierrc $(find src -type f -name *.ts)",
-    "prettier:fix": "prettier --config .prettierrc --write $(find src -type f -name *.ts)",
+    "build": "tsc && vite build",
+    "eslint": "eslint -c .eslintrc './src/**/*.ts'",
+    "eslint:fix": "eslint -c .eslintrc --fix './src/**/*.ts'",
+    "format": "prettier --list-different --write src/**/*.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "build": "tsc -p ./tsconfig.json"
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
@@ -26,7 +25,9 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "prettier": "^3.2.5",
-    "typescript": "^4.0.2",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
+    "vite-plugin-eslint": "^1.8.1",
     "vitest": "^1.4.0"
   }
 }

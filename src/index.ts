@@ -2,7 +2,7 @@ export { default as Component, ComponentTypes } from './Component'
 export {
   default as Entity,
   EntityChangeEvent,
-  EntityChangeEventTypes
+  EntityChangeEventTypes,
 } from './Entity'
 export {
   default as Archetype,
@@ -10,7 +10,7 @@ export {
   ArchetypeFilterPredicate,
   ArchetypeChangeEvent,
   ArchetypeChangeEventTypes,
-  ArchetypeChangeListener
+  ArchetypeChangeListener,
 } from './Archetype'
 export { default as Assemblage } from './Assemblage'
 export { default as EntityManager } from './EntityManager'

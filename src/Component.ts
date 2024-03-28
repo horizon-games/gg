@@ -22,8 +22,10 @@ const ComponentTypeRegExp = /Component$/
 export function getComponentTypeFromClass(klass: any): string {
   const name = klass.name
   const noUnderscoreName = name.replace(/^_?/, '')
-  return noUnderscoreName.charAt(0).toLowerCase() +
+  return (
+    noUnderscoreName.charAt(0).toLowerCase() +
     noUnderscoreName.slice(1).replace(ComponentTypeRegExp, '')
+  )
 }
 
 export default abstract class Component<T extends any> {
