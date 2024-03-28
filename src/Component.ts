@@ -28,16 +28,16 @@ export function getComponentTypeFromClass(klass: any): string {
   )
 }
 
-export default abstract class Component<T extends any> {
+export default abstract class Component<T> {
   readonly type: string = getComponentTypeFromClass(this.constructor)
 
   constructor(public value: T) {}
 
-  onAttach(entity: Entity<any>) {
+  onAttach(_entity: Entity<any>) {
     // stub
   }
 
-  onDetach(entity: Entity<any>) {
+  onDetach(_entity: Entity<any>) {
     // stub
   }
 }
