@@ -8,8 +8,8 @@
   "types": "./dist/ecs/index.d.ts",
   "scripts": {
     "build": "tsc && vite build",
-    "eslint": "eslint -c .eslintrc './src/**/*.ts'",
-    "eslint:fix": "eslint -c .eslintrc --fix './src/**/*.ts'",
+    "lint": "eslint -c .eslintrc './src/**/*.ts'",
+    "lint:fix": "eslint -c .eslintrc --fix './src/**/*.ts'",
     "format": "prettier --list-different --write src/**/*.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
