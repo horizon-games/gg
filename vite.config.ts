@@ -1,12 +1,17 @@
 import path from 'path'
+
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 import eslint from 'vite-plugin-eslint'
 
 export default defineConfig({
   plugins: [
     eslint({
-      include: ['**/*.ts']
-    })
+      include: ['**/*.ts'],
+    }),
+    dts({
+      rollupTypes: true,
+    }),
   ],
   build: {
     outDir: path.resolve(__dirname, 'dist'),
@@ -14,8 +19,8 @@ export default defineConfig({
       name: 'GG',
       entry: path.resolve(__dirname, 'src/index.ts'),
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`
+      fileName: (format) => `index.${format}.js`,
     },
-    minify: false
-  }
+    minify: false,
+  },
 })

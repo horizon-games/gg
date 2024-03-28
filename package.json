@@ -4,8 +4,15 @@
   "description": "GG game engine",
   "author": "Corban Riley",
   "license": "MIT",
-  "main": "dist/ecs/index",
-  "types": "./dist/ecs/index.d.ts",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
   "scripts": {
     "build": "tsc && vite build",
     "lint": "eslint -c .eslintrc './src/**/*.ts'",
@@ -28,6 +35,7 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.3",
     "vite": "^5.2.6",
+    "vite-plugin-dts": "^3.8.1",
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^1.4.0"
   }
