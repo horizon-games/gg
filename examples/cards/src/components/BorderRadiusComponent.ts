@@ -1,3 +1,3 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class BorderRadiusComponent extends Component<number> {}
+export class BorderRadiusComponent extends Component<number> {}

@@ -1,14 +1,15 @@
-import { System, EntityManager, Entity } from '../../../../src/ecs'
-import { Components } from '../components'
-import { RenderableArchetype } from '../archetypes'
 import $ from 'jquery'
+
+import { System, EntityManager } from '../../../../src'
+import { RenderableArchetype } from '../archetypes'
+import { Components } from '../components'
 import { CardStatus } from '../types'
 
-export default class RenderSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number) {
+export class RenderSystem extends System<Components> {
+  update(manager: EntityManager<Components>) {
     const { entities } = manager.getArchetype(RenderableArchetype)
 
-    entities.forEach(entity => {
+    entities.forEach((entity) => {
       const { element, className } = entity.getComponentValue('dom')
       const width = entity.getComponentValue('width')
       const height = entity.getComponentValue('height')
@@ -55,7 +56,7 @@ export default class RenderSystem extends System<Components> {
         $element.width(width).height(height)
       }
 
-      const transforms = []
+      const transforms: string[] = []
 
       if (position) {
         transforms.push(
@@ -66,9 +67,7 @@ export default class RenderSystem extends System<Components> {
 
       if (rotation) {
         transforms.push(
-          `rotateZ(${rotation.z}deg) rotateX(${rotation.x}deg) rotateY(${
-            rotation.y
-          }deg)`
+          `rotateZ(${rotation.z}deg) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
         )
       }
 
@@ -78,15 +77,13 @@ export default class RenderSystem extends System<Components> {
           left: 0,
           top: 0,
           transform: transforms.join(' '),
-          transformOrigin: `50% 50%`
+          transformOrigin: `50% 50%`,
         })
       }
 
       if (material) {
         $element.find('.face').css({
-          'background-image': `linear-gradient(rgba(32,64,255,0), rgba(32,64,255,0.1), rgba(255,32,128,0.2), rgba(32,0,64,0.8), rgba(16,0,32,1)), url("${
-            material.imageSrc
-          }")`
+          'background-image': `linear-gradient(rgba(32,64,255,0), rgba(32,64,255,0.1), rgba(255,32,128,0.2), rgba(32,0,64,0.8), rgba(16,0,32,1)), url("${material.imageSrc}")`,
         })
       }
 
@@ -98,11 +95,7 @@ export default class RenderSystem extends System<Components> {
       if (boxShadow) {
         $element.css(
           'box-shadow',
-          `${boxShadow.hOffset}px ${boxShadow.vOffset}px ${boxShadow.blur}px ${
-            boxShadow.spread
-          }px rgba(${boxShadow.color.r}, ${boxShadow.color.g}, ${
-            boxShadow.color.b
-          }, ${boxShadow.color.a})`
+          `${boxShadow.hOffset}px ${boxShadow.vOffset}px ${boxShadow.blur}px ${boxShadow.spread}px rgba(${boxShadow.color.r}, ${boxShadow.color.g}, ${boxShadow.color.b}, ${boxShadow.color.a})`
         )
       }
     })

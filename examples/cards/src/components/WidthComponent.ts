@@ -1,3 +1,3 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class WidthComponent extends Component<number> {}
+export class WidthComponent extends Component<number> {}

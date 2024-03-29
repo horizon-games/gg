@@ -1,5 +1,5 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class MaterialComponent extends Component<{
+export class MaterialComponent extends Component<{
   imageSrc: string
 }> {}

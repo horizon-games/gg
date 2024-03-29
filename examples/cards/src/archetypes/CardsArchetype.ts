@@ -1,6 +1,6 @@
-import { Archetype } from '../../../../src/ecs'
+import { Archetype } from '../../../../src'
 import { Components } from '../components'
 
-export default class CardsArchetype extends Archetype<Components> {
+export class CardsArchetype extends Archetype<Components> {
   filters = [this.include('card')]
 }

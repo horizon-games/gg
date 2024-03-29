@@ -1,3 +1,3 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class HoverComponent extends Component<boolean> {}
+export class HoverComponent extends Component<boolean> {}

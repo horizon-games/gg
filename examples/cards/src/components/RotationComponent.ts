@@ -1,6 +1,6 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class RotationComponent extends Component<{
+export class RotationComponent extends Component<{
   x: number
   y: number
   z: number

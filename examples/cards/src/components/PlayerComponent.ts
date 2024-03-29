@@ -1,3 +1,3 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class PlayerComponent extends Component<{ id: number }> {}
+export class PlayerComponent extends Component<{ id: number }> {}

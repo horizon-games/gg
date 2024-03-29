@@ -1,3 +1,3 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class OrderComponent extends Component<number> {}
+export class OrderComponent extends Component<number> {}

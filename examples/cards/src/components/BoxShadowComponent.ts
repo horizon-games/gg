@@ -1,7 +1,8 @@
-import { Component } from '../../../../src/ecs'
-import ColorComponent from './ColorComponent'
+import { Component } from '../../../../src'
 
-export default class BoxShadowComponent extends Component<{
+import { ColorComponent } from './ColorComponent'
+
+export class BoxShadowComponent extends Component<{
   hOffset: number
   vOffset: number
   blur: number

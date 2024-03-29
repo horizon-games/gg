@@ -1,21 +1,23 @@
+import $ from 'jquery'
 import Stats from 'stats.js'
-import { State, CardStatus, Card } from './types'
-import store from './store'
+
+import { World, Entity } from '../../../src'
+
 import { drawCard, playCard } from './actions'
-import { World, Archetype, Entity } from '../../../src/ecs'
-import RenderSystem from './systems/RenderSystem'
 import {
   RenderableArchetype,
   CardsArchetype,
   PlayerCardsArchetype,
-  OpponentCardsArchetype
+  OpponentCardsArchetype,
 } from './archetypes'
+import { CardAssemblage } from './assemblages/CardAssemblage'
 import { Components } from './components'
-import CardAssemblage from './assemblages/CardAssemblage'
-import DeckSystem from './systems/DeckSystem'
-import HandSystem from './systems/HandSystem'
-import $ from 'jquery'
-import FieldSystem from './systems/FieldSystem'
+import store from './store'
+import { DeckSystem } from './systems/DeckSystem'
+import { FieldSystem } from './systems/FieldSystem'
+import { HandSystem } from './systems/HandSystem'
+import { RenderSystem } from './systems/RenderSystem'
+import { State, CardStatus, Card } from './types'
 
 const stats = new Stats()
 
@@ -49,7 +51,7 @@ const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
 }
 
 const syncState = (state: State) => {
-  state.players.forEach((player, playerId) => {
+  state.players.forEach((player) => {
     player.inDeck.forEach((card, idx) => {
       updateCardEntity(card, CardStatus.Deck, idx)
     })
@@ -81,10 +83,10 @@ window.onkeydown = (ev: any) => {
   }
 }
 
-$('body').mousemove(ev => {
+$('body').mousemove((ev) => {
   const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
-  world.manager.entities.forEach(entity => {
+  world.manager.entities.forEach((entity) => {
     if (entity.hasComponent('hover')) {
       entity.setComponentValue('hover', false)
     }
@@ -102,7 +104,7 @@ $('body').mousemove(ev => {
   }
 })
 
-$('body').on('click', '.card', ev => {
+$('body').on('click', '.card', (ev) => {
   const target = $(ev.target).closest('.card')
   const id = Number(target.data('id'))
 
@@ -156,7 +158,7 @@ const init = () => {
       () => drawCard(1),
       () => drawCard(1),
       () => drawCard(1),
-      () => drawCard(1)
+      () => drawCard(1),
     ],
     200
   )

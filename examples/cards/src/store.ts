@@ -1,8 +1,8 @@
-import createStore, { Store } from 'unistore'
-import { State, PlayerState, CardType } from './types'
-
 //@ts-ignore
 import sillyname from 'sillyname'
+import createStore from 'unistore'
+
+import { State, PlayerState, CardType } from './types'
 
 let cardIdx = 0
 const getCardId = () => {
@@ -21,7 +21,7 @@ const getCard = (playerId: number) => ({
   type: getCardType(),
   name: sillyname(),
   cost: Math.ceil(Math.random() * 9),
-  artId: Math.ceil(Math.random() * 32)
+  artId: Math.ceil(Math.random() * 32),
 })
 
 const getPlayerState = (playerId: number): PlayerState => ({
@@ -45,18 +45,18 @@ const getPlayerState = (playerId: number): PlayerState => ({
     getCard(playerId),
     getCard(playerId),
     getCard(playerId),
-    getCard(playerId)
+    getCard(playerId),
   ],
   inHand: [],
   inPlay: [],
   mana: 1,
-  manaMax: 1
+  manaMax: 1,
 })
 
 const state: State = {
   players: [getPlayerState(0), getPlayerState(1)],
   currentPlayerId: 1,
-  turnIndex: 0
+  turnIndex: 0,
 }
 
 const store = createStore(state)

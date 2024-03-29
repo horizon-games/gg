@@ -1,17 +1,18 @@
-import { ComponentTypes } from '../../../../src/ecs'
-import PositionComponent from './PositionComponent'
-import RotationComponent from './RotationComponent'
-import HoverComponent from './HoverComponent'
-import PlayerComponent from './PlayerComponent'
-import CardComponent from './CardComponent'
-import DomComponent from './DomComponent'
-import ColorComponent from './ColorComponent'
-import WidthComponent from './WidthComponent'
-import HeightComponent from './HeightComponent'
-import BoxShadowComponent from './BoxShadowComponent'
-import BorderRadiusComponent from './BorderRadiusComponent'
-import MaterialComponent from './MaterialComponent'
-import OrderComponent from './OrderComponent'
+import { ComponentTypes } from '../../../../src'
+
+import { BorderRadiusComponent } from './BorderRadiusComponent'
+import { BoxShadowComponent } from './BoxShadowComponent'
+import { CardComponent } from './CardComponent'
+import { ColorComponent } from './ColorComponent'
+import { DomComponent } from './DomComponent'
+import { HeightComponent } from './HeightComponent'
+import { HoverComponent } from './HoverComponent'
+import { MaterialComponent } from './MaterialComponent'
+import { OrderComponent } from './OrderComponent'
+import { PlayerComponent } from './PlayerComponent'
+import { PositionComponent } from './PositionComponent'
+import { RotationComponent } from './RotationComponent'
+import { WidthComponent } from './WidthComponent'
 
 export type Components = {
   player: PlayerComponent
@@ -42,5 +43,5 @@ export {
   BorderRadiusComponent,
   HoverComponent,
   MaterialComponent,
-  OrderComponent
+  OrderComponent,
 }

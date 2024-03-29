@@ -1,6 +1,6 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class ColorComponent extends Component<{
+export class ColorComponent extends Component<{
   r: number
   g: number
   b: number

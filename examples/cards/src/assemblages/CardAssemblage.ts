@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 import {
   PositionComponent,
   PlayerComponent,
@@ -11,28 +13,24 @@ import {
   RotationComponent,
   HoverComponent,
   MaterialComponent,
-  OrderComponent
+  OrderComponent,
 } from '../components'
 import { Card, CardStatus } from '../types'
-import $ from 'jquery'
 
-// @ts-ignore
-import images from '../images/*.jpg'
-
-const CardAssemblage = (card: Card, status: CardStatus) => {
+export const CardAssemblage = (card: Card, status: CardStatus) => {
   const element = $('<div/>').get(0)
-  const isPlayer = card.playerId === 1
+  //const isPlayer = card.playerId === 1
 
   return [
     new CardComponent({
       id: card.id,
-      cardType: card.type,
+      type: card.type,
       name: card.name,
       cost: card.cost,
-      status
+      status,
     }),
     new MaterialComponent({
-      imageSrc: images[card.artId]
+      imageSrc: `/images/${card.artId}.jpg`,
     }),
     new PlayerComponent({ id: card.playerId }),
     new WidthComponent(125),
@@ -42,12 +40,12 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
     new PositionComponent({
       x: 0,
       y: 0,
-      z: 0
+      z: 0,
     }),
     new RotationComponent({
       x: 0,
       y: 180,
-      z: Math.random() * 4 - 2 + 180
+      z: Math.random() * 4 - 2 + 180,
     }),
     new DomComponent({ className: 'card', element }),
     new BoxShadowComponent({
@@ -55,10 +53,8 @@ const CardAssemblage = (card: Card, status: CardStatus) => {
       vOffset: 2,
       blur: 6,
       spread: 2,
-      color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.3 }).value
+      color: new ColorComponent({ r: 0, g: 0, b: 0, a: 0.3 }).value,
     }),
-    new BorderRadiusComponent(6)
+    new BorderRadiusComponent(6),
   ]
 }
-
-export default CardAssemblage

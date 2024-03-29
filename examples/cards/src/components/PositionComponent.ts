@@ -1,6 +1,6 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class PositionComponent extends Component<{
+export class PositionComponent extends Component<{
   x: number
   y: number
   z: number

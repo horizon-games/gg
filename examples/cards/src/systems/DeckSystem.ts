@@ -1,6 +1,6 @@
-import { System, EntityManager, Entity } from '../../../../src/ecs'
-import { Components, PositionComponent } from '../components'
+import { System, EntityManager } from '../../../../src'
 import { PlayerCardsArchetype, OpponentCardsArchetype } from '../archetypes'
+import { Components, PositionComponent } from '../components'
 import { CardStatus } from '../types'
 
 const updateDeckPosition = (
@@ -13,8 +13,8 @@ const updateDeckPosition = (
   position.z = -40 + idx * 2
 }
 
-export default class DeckSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number) {
+export class DeckSystem extends System<Components> {
+  update(manager: EntityManager<Components>) {
     const { entities: playerCards } = manager.getArchetype(PlayerCardsArchetype)
     const { entities: opponentCards } = manager.getArchetype(
       OpponentCardsArchetype
@@ -22,7 +22,7 @@ export default class DeckSystem extends System<Components> {
 
     playerCards
       .filter(
-        entity => entity.components.card!.value.status === CardStatus.Deck
+        (entity) => entity.components.card!.value.status === CardStatus.Deck
       )
       .forEach((entity, idx) => {
         const position = entity.getComponentValue('position')
@@ -32,7 +32,7 @@ export default class DeckSystem extends System<Components> {
 
     opponentCards
       .filter(
-        entity => entity.components.card!.value.status === CardStatus.Deck
+        (entity) => entity.components.card!.value.status === CardStatus.Deck
       )
       .forEach((entity, idx) => {
         const position = entity.getComponentValue('position')
