@@ -1,1 +1,1 @@
-export { default as BirdsArchetype } from './BirdsArchetype'
+export { BirdsArchetype } from './BirdsArchetype'

@@ -1,4 +1,4 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 import { Vector2 } from '../lib/vec2'
 
-export default class PositionComponent extends Component<Vector2> {}
+export class PositionComponent extends Component<Vector2> {}

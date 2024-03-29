@@ -1,12 +1,12 @@
-import { Archetype } from '../../../../src/ecs'
+import { Archetype } from '../../../../src'
 import { Components } from '../components'
 
 type BirdComponents = Pick<Components, 'position' | 'velocity' | 'acceleration'>
 
-export default class BirdsArchetype extends Archetype<BirdComponents> {
+export class BirdsArchetype extends Archetype<BirdComponents> {
   filters = [
     this.include('position'),
     this.include('velocity'),
-    this.include('acceleration')
+    this.include('acceleration'),
   ]
 }

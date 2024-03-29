@@ -6,21 +6,15 @@
   "author": "Corban Riley",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html",
-    "tslint": "tslint -c tslint.json $(find src -type f -name *.ts)",
-    "tslint:fix": "tslint -c tslint.json --fix $(find src -type f -name *.ts)",
-    "prettier": "prettier-check --config .prettierrc $(find src -type f -name *.ts)",
-    "prettier:fix": "prettier --config .prettierrc --write $(find src -type f -name *.ts)"
+    "start": "vite",
+    "format": "prettier --write --write src/**/*.ts"
   },
   "devDependencies": {
-    "@types/node": "^13.5.1",
+    "@types/node": "^20.11.30",
     "@types/stats": "^0.16.30",
-    "parcel-bundler": "^1.12.4",
-    "prettier": "^1.14.3",
-    "prettier-check": "^2.0.0",
-    "tslint": "^6.0.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.8.3"
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6"
   },
   "dependencies": {
     "stats.js": "^0.17.0"

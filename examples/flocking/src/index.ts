@@ -1,14 +1,15 @@
 import Stats from 'stats.js'
-import { World } from '../../../src/ecs'
-import { createRenderingContext } from './RenderingContext'
 
-import { Components } from './components'
+import { World } from '../../../src'
+
 import { BirdsArchetype } from './archetypes'
-import BirdAssemblage from './assemblages/BirdAssemblage'
-import FlockingSystem from './systems/FlockingSystem'
-import RenderSystem from './systems/RenderSystem'
+import { BirdAssemblage } from './assemblages/BirdAssemblage'
+import { Components } from './components'
+import { createRenderingContext } from './RenderingContext'
+import { FlockingSystem } from './systems/FlockingSystem'
+import { RenderSystem } from './systems/RenderSystem'
 
-const FLOCK_SIZE = Number(process.env.FLOCK_SIZE)
+const FLOCK_SIZE = Number(import.meta.env.VITE_FLOCK_SIZE)
 
 const stats = new Stats()
 

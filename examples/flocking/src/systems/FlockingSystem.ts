@@ -1,14 +1,14 @@
-import { System, EntityManager, Entity } from '../../../../src/ecs'
+import { System, EntityManager, Entity } from '../../../../src'
+import { BirdsArchetype } from '../archetypes'
 import { Components } from '../components'
 import * as vec2 from '../lib/vec2'
 import { Vector2 } from '../lib/vec2'
-import { BirdsArchetype } from '../archetypes'
 
-const MAX_SPEED = Number(process.env.MAX_SPEED)
-const MAX_FORCE = Number(process.env.MAX_FORCE)
-const NEIGHBOR_DISTANCE = Number(process.env.NEIGHBOR_DISTANCE)
-const DESIRED_SEPARATION = Number(process.env.DESIRED_SEPARATION)
-const RADIUS = Number(process.env.RADIUS)
+const MAX_SPEED = Number(import.meta.env.VITE_MAX_SPEED)
+const MAX_FORCE = Number(import.meta.env.VITE_MAX_FORCE)
+const NEIGHBOR_DISTANCE = Number(import.meta.env.VITE_NEIGHBOR_DISTANCE)
+const DESIRED_SEPARATION = Number(import.meta.env.VITE_DESIRED_SEPARATION)
+const RADIUS = Number(import.meta.env.VITE_RADIUS)
 
 // Predefine vectors for scratch work within loop
 const separation: Vector2 = vec2.create()
@@ -18,8 +18,8 @@ const diff: Vector2 = vec2.create()
 const steer: Vector2 = vec2.create()
 const desired: Vector2 = vec2.create()
 
-export default class FlockingSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number) {
+export class FlockingSystem extends System<Components> {
+  update(manager: EntityManager<Components>, _dt: number) {
     const { entities } = manager.getArchetype(BirdsArchetype)
     const { innerWidth: width, innerHeight: height } = window
     const len = entities.length

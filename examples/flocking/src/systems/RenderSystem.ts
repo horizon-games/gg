@@ -1,14 +1,14 @@
-import { System, Entity, EntityManager } from '../../../../src/ecs'
-import { Components } from '../components'
+import { System, Entity, EntityManager } from '../../../../src'
 import { BirdsArchetype } from '../archetypes'
+import { Components } from '../components'
 import { Vector2 } from '../lib/vec2'
 import { getRenderingContext } from '../RenderingContext'
 
 const HALF_PI = Math.PI / 2
-const RADIUS = Number(process.env.RADIUS)
+const RADIUS = Number(import.meta.env.VITE_RADIUS)
 
-export default class RenderSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number) {
+export class RenderSystem extends System<Components> {
+  update(manager: EntityManager<Components>, _dt: number) {
     const ctx = getRenderingContext()
     const { entities } = manager.getArchetype(BirdsArchetype)
 
@@ -17,7 +17,7 @@ export default class RenderSystem extends System<Components> {
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
 
     // Render entities
-    entities.forEach(bird => this.render(ctx, bird))
+    entities.forEach((bird) => this.render(ctx, bird))
   }
 
   render = (ctx: CanvasRenderingContext2D, entity: Entity<Components>) => {
