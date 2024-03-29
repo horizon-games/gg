@@ -1,46 +1,67 @@
 import { ComponentOf, ComponentTypes } from './Component'
 import { Entity } from './Entity'
 
+/**
+ * Manages a pool of reusable Entities.
+ * Once an Entity is released, it can be renewed with new components
+ */
 export class EntityPool<C extends ComponentTypes> {
-  head: number = -1
-  entities: Entity<C>[]
+  readonly entities: Entity<C>[]
 
-  constructor(public size: number) {
+  /** Size of the pool */
+  readonly size: number = 0
+
+  /** Cursor to the next available entity in the pool */
+  private head: number = -1
+
+  constructor(size: number) {
+    this.size = size
     this.entities = new Array(size)
 
+    // Fill the pool with new entities
     for (let idx = 0; idx < size; idx++) {
       this.entities[++this.head] = new Entity<C>()
     }
   }
 
+  /**
+   * The count of used entities in the pool
+   * */
   get length(): number {
     return this.size - this.head - 1
   }
 
-  // Take an Entity from the pool
-  renew(components: ComponentOf<C>[] = []): Entity<C> {
-    if (this.head >= 0) {
-      const entity = this.entities[this.head--]
-      return entity.renew(components)
-    } else {
+  /**
+   * Whether the pool is full or not
+   * */
+  get isExhausted(): boolean {
+    return this.head === -1
+  }
+
+  /**
+   * Get an Entity from the pool
+   * */
+  getEntity(components: ComponentOf<C>[] = []): Entity<C> {
+    if (this.isExhausted) {
       throw new Error(
         'EntityPool: Attempted to take an Entity from an exhausted pool.'
       )
     }
+
+    const entity = this.entities[this.head--]
+    return entity.renew(components)
   }
 
-  // Release an Entity back into the pool
-  release(entity: Entity<C>) {
-    if (entity instanceof Entity) {
-      if (this.head < this.size - 1) {
-        this.entities[++this.head] = entity
-      } else {
-        throw new Error(
-          'EntityPool: Attempted to release an Entity back into a full pool.'
-        )
-      }
-    } else {
-      throw new Error('EntityPool: Released object was not an Entity.')
+  /**
+   * Release an Entity back into the pool
+   * */
+  releaseEntity(entity: Entity<C>) {
+    if (this.head === this.size - 1) {
+      throw new Error(
+        'EntityPool: Attempted to release an Entity back into a full pool.'
+      )
     }
+
+    this.entities[++this.head] = entity
   }
 }
