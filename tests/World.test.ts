@@ -10,6 +10,7 @@ import { PhysicsSystem } from './System.fixtures'
 describe('World', () => {
   test('can create', () => {
     const world = new World<Components>()
+    expect(world).toBeInstanceOf(World)
   })
 
   test('can add archetype', () => {

@@ -1,13 +1,15 @@
 import { describe, test, expect } from 'vitest'
 
-import { Archetype } from '../src/Archetype'
 import { Entity } from '../src/Entity'
 import { EntityManager } from '../src/EntityManager'
 
 import {
+  AllArchetype,
   EmptyArchetype,
   PhysicalArchetype,
   PositionOnlyArchetype,
+  NonEmptyArchetype,
+  PositionArchetype,
 } from './Archetype.fixtures'
 import {
   Components,
@@ -16,15 +18,6 @@ import {
   StaticComponent,
   VelocityComponent,
 } from './Component.fixtures'
-
-enum Archetypes {
-  All,
-  Empty,
-  NonEmpty,
-  PositionOnly,
-  Position,
-  Physical,
-}
 
 describe('EntityManager', () => {
   test('can create', () => {
@@ -55,31 +48,10 @@ describe('EntityManager', () => {
   })
 
   test('can add archetypes', () => {
-    const manager = new EntityManager()
-
+    const manager = new EntityManager<Components>()
     const entity = new Entity<Components>()
 
     manager.addEntity(entity)
-
-    class AllArchetype extends Archetype<Components> {}
-    class EmptyArchetype extends Archetype<Components> {
-      filters = [this.only()]
-    }
-    class NonEmptyArchetype extends Archetype<Components> {
-      filters = [(x: Entity<Components>) => x.componentTypes.length > 0]
-    }
-    class PositionOnlyArchetype extends Archetype<Components> {
-      filters = [this.only('position')]
-    }
-    class PositionArchetype extends Archetype<Components> {
-      filters = [this.include('position')]
-    }
-    class PhysicalArchetype extends Archetype<Components> {
-      filters = [
-        this.include('position', 'rotation', 'velocity'),
-        this.exclude('static'),
-      ]
-    }
 
     const allArchetype = manager.addArchetype(AllArchetype)
     const emptyArchetype = manager.addArchetype(EmptyArchetype)
@@ -121,18 +93,22 @@ describe('EntityManager', () => {
 
   test('can renew and release entities from entity pool', () => {
     const manager = new EntityManager()
-    const entity = manager.renewEntity()
-    const { id } = entity
-    entity.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
-    expect(entity).toBeInstanceOf(Entity)
+    const entity1 = manager.renewEntity()
+    const { id } = entity1
 
-    manager.releaseEntity(entity)
+    entity1.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
+    expect(entity1).toBeInstanceOf(Entity)
 
-    expect(entity.componentTypes.length).toBe(0)
-    expect(entity.id).not.toBe(id)
+    manager.releaseEntity(entity1)
+
+    expect(
+      entity1.componentTypes.length,
+      'to have no components after release'
+    ).toBe(0)
+    expect(entity1.id, 'to be removed').not.toBe(id)
 
     const entity2 = manager.renewEntity()
 
-    expect(entity2).toBe(entity)
+    expect(entity2, 'to be shared reference to entity1').toBe(entity1)
   })
 })

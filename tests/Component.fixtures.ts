@@ -1,4 +1,4 @@
-import { Component, ComponentTypes } from '../src/Component'
+import { Component } from '../src/Component'
 
 export type Components = {
   position: PositionComponent

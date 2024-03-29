@@ -7,7 +7,7 @@ import { AllArchetype } from './Archetype.fixtures'
 import { Components } from './Component.fixtures'
 
 class PhysicsSystem extends System<Components> {
-  update(manager: EntityManager<Components>, dt: number, time: number) {
+  update(manager: EntityManager<Components>) {
     const all = manager.getArchetype(AllArchetype)
   }
 }
