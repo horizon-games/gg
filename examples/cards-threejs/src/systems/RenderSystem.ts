@@ -1,12 +1,12 @@
-import { System, EntityManager, Entity } from '../../../../src/ecs'
-import { Components } from '../components'
+import { System, EntityManager } from '../../../../src'
 import { RenderableArchetype } from '../archetypes'
+import { Components } from '../components'
 
-export default class RenderSystem extends System<Components> {
+export class RenderSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     const { entities } = manager.getArchetype(RenderableArchetype)
 
-    entities.forEach(entity => {
+    entities.forEach((entity) => {
       const position = entity.getComponentValue('position')
       const rotation = entity.getComponentValue('rotation')
       const mesh = entity.getComponentValue('mesh')

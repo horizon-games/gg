@@ -1,6 +1,6 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class DroppableComponent extends Component<{
+export class DroppableComponent extends Component<{
   receives: string[]
   isHovered?: boolean
 }> {}

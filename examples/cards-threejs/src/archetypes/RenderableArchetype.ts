@@ -1,6 +1,6 @@
-import { Archetype } from '../../../../src/ecs'
+import { Archetype } from '../../../../src'
 import { Components } from '../components'
 
-export default class RenderableArchetype extends Archetype<Components> {
+export class RenderableArchetype extends Archetype<Components> {
   filters = [this.include('mesh')]
 }

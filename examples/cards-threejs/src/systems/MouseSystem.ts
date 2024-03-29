@@ -1,12 +1,13 @@
-import { System, EntityManager } from '../../../../src/ecs'
-import { Components, HoverComponent } from '../components'
-import { HoveredCardsArchetype } from '../archetypes'
 import { Raycaster } from 'three'
+
+import { System, EntityManager } from '../../../../src'
+import { drawCard } from '../actions'
+import { HoveredCardsArchetype } from '../archetypes'
 import camera from '../camera'
-import scene from '../scene'
-import { drawCard, playCard } from '../actions'
-import { CardStatus } from '../types'
+import { Components, HoverComponent } from '../components'
 import mouse from '../mouse'
+import scene from '../scene'
+import { CardStatus } from '../types'
 
 const raycaster = new Raycaster()
 
@@ -28,20 +29,20 @@ window.addEventListener('click', () => {
 
 let hoveredEntity: any
 
-export default class MouseSystem extends System<Components> {
+export class MouseSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     const { entities } = manager.getArchetype(HoveredCardsArchetype)
 
     raycaster.setFromCamera(mouse.position, camera)
 
     const intersections = raycaster.intersectObjects(scene.children, true)
-    entities.forEach(entity => entity.removeComponent('hover'))
+    entities.forEach((entity) => entity.removeComponent('hover'))
     hoveredEntity = null
     document.body.style.cursor = 'default'
 
     if (intersections.length) {
       const {
-        object: { parent }
+        object: { parent },
       } = intersections[0]
       if (parent) {
         const { entityId } = parent.userData

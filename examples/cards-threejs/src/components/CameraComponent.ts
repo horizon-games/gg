@@ -1,7 +1,8 @@
-import { Component } from '../../../../src/ecs'
 import { PerspectiveCamera } from 'three'
 
-export default class SceneComponent extends Component<{
+import { Component } from '../../../../src'
+
+export class SceneComponent extends Component<{
   object: PerspectiveCamera
   fov: number
   aspect: number

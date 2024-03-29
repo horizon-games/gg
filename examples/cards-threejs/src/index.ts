@@ -6,17 +6,13 @@ import {
   Mesh,
   TextureLoader,
   RepeatWrapping,
-  Vector2,
-  DoubleSide,
   PCFSoftShadowMap,
-  PointLight,
   MeshStandardMaterial,
-  DirectionalLight,
-  SpotLight
+  SpotLight,
 } from 'three'
-import { World, Entity } from '../../../src/ecs'
-import { State, CardStatus, Card } from './types'
-import store from './store'
+
+import { World, Entity } from '../../../src'
+
 import { drawCard } from './actions'
 import {
   RenderableArchetype,
@@ -26,30 +22,31 @@ import {
   HoveredCardsArchetype,
   LightsArchetype,
   DraggableArchetype,
-  DroppableArchetype
+  DroppableArchetype,
 } from './archetypes'
+import { createCardAssemblage } from './assemblages/CardAssemblage'
+import { LightAssemblage } from './assemblages/LightAssemblage'
+import camera from './camera'
 import {
   Components,
   DroppableComponent,
   MeshComponent,
   PositionComponent,
-  RotationComponent
+  RotationComponent,
 } from './components'
-import createCardAssemblage from './assemblages/CardAssemblage'
-import DeckSystem from './systems/DeckSystem'
-import HandSystem from './systems/HandSystem'
-import FieldSystem from './systems/FieldSystem'
-import LightsSystem from './systems/LightsSystem'
-import MouseSystem from './systems/MouseSystem'
-import RenderSystem from './systems/RenderSystem'
-import DragDropSystem from './systems/DragDropSystem'
-import screen from './screen'
-import camera from './camera'
-import scene from './scene'
-import LightAssemblage from './assemblages/LightAssemblage'
-
 // @ts-ignore
-import backgroundImage from './images/background.png'
+import scene from './scene'
+import screen from './screen'
+import store from './store'
+import { DeckSystem } from './systems/DeckSystem'
+import { DragDropSystem } from './systems/DragDropSystem'
+import { FieldSystem } from './systems/FieldSystem'
+import { HandSystem } from './systems/HandSystem'
+import { LightsSystem } from './systems/LightsSystem'
+import { MouseSystem } from './systems/MouseSystem'
+import { RenderSystem } from './systems/RenderSystem'
+// @ts-ignore
+import { State, CardStatus, Card } from './types'
 
 const world = new World<Components>()
 console.log(world)
@@ -75,7 +72,7 @@ const renderer = new WebGLRenderer({ antialias: true })
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = PCFSoftShadowMap
 
-const backgroundTexture = new TextureLoader().load(backgroundImage)
+const backgroundTexture = new TextureLoader().load('./images/background.png')
 backgroundTexture.wrapS = RepeatWrapping
 backgroundTexture.wrapT = RepeatWrapping
 backgroundTexture.repeat.set(10, 10)
@@ -108,7 +105,7 @@ world.createEntity([
     new Mesh(new PlaneGeometry(8, 3), new MeshBasicMaterial({ visible: false }))
   ),
   new PositionComponent({ x: 0, y: 0, z: 0.1 }),
-  new RotationComponent({ x: 0, y: 0, z: 0 })
+  new RotationComponent({ x: 0, y: 0, z: 0 }),
 ])
 
 // Lookup for added cards
@@ -128,7 +125,7 @@ const updateCardEntity = (card: Card, status: CardStatus, index: number) => {
 }
 
 const syncState = (state: State) => {
-  state.players.forEach((player, playerId) => {
+  state.players.forEach((player) => {
     player.inDeck.forEach((card, idx) => {
       updateCardEntity(card, CardStatus.Deck, idx)
     })
@@ -158,7 +155,7 @@ window.onkeydown = (ev: any) => {
   }
 }
 
-window.addEventListener('resize', ev => {
+window.addEventListener('resize', () => {
   const { width, height } = screen
   camera.aspect = width / height
   camera.updateProjectionMatrix()
@@ -200,7 +197,7 @@ const init = () => {
       () => drawCard(1),
       () => drawCard(1),
       () => drawCard(1),
-      () => drawCard(1)
+      () => drawCard(1),
     ],
     200
   )

@@ -1,6 +1,6 @@
-import { System, EntityManager, Entity } from '../../../../src/ecs'
-import { Components, PositionComponent, RotationComponent } from '../components'
+import { System, EntityManager, Entity } from '../../../../src'
 import { PlayerCardsArchetype, OpponentCardsArchetype } from '../archetypes'
+import { Components } from '../components'
 import { CardStatus } from '../types'
 import { degreesToRadians, lerp } from '../utils'
 
@@ -65,22 +65,22 @@ const cardPositionY = (
   return y / 200
 }
 
-const cardPositionZ = (
-  index: number,
-  order: number,
-  step: number,
-  isHovering: boolean,
-  hoveringIdx: number
-) => {
-  let z
-  if (isHovering && hoveringIdx === index) {
-    z = index + step
-  } else {
-    z = order
-  }
+// const cardPositionZ = (
+//   index: number,
+//   order: number,
+//   step: number,
+//   isHovering: boolean,
+//   hoveringIdx: number
+// ) => {
+//   let z
+//   if (isHovering && hoveringIdx === index) {
+//     z = index + step
+//   } else {
+//     z = order
+//   }
 
-  return z / 200
-}
+//   return z / 200
+// }
 
 const cardRotation = (
   index: number,
@@ -141,7 +141,7 @@ const updateCardPosition = (
   }
 }
 
-export default class HandSystem extends System<Components> {
+export class HandSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     let { entities: playerCards } = manager.getArchetype(PlayerCardsArchetype)
     let { entities: opponentCards } = manager.getArchetype(
@@ -150,23 +150,23 @@ export default class HandSystem extends System<Components> {
 
     playerCards = playerCards
       .filter(
-        entity => entity.components.card!.value.status === CardStatus.Hand
+        (entity) => entity.components.card!.value.status === CardStatus.Hand
       )
       .sort((a, b) => a.components.order!.value - b.components.order!.value)
     opponentCards = opponentCards.filter(
-      entity => entity.components.card!.value.status === CardStatus.Hand
+      (entity) => entity.components.card!.value.status === CardStatus.Hand
     )
 
-    const isHoveringPlayerCards = playerCards.some(entity =>
+    const isHoveringPlayerCards = playerCards.some((entity) =>
       entity.hasComponent('hover')
     )
-    const isHoveringOpponentCards = opponentCards.some(entity =>
+    const isHoveringOpponentCards = opponentCards.some((entity) =>
       entity.hasComponent('hover')
     )
-    const playerHoveringIdx = playerCards.findIndex(entity =>
+    const playerHoveringIdx = playerCards.findIndex((entity) =>
       entity.hasComponent('hover')
     )
-    const opponentHoveringIdx = opponentCards.findIndex(entity =>
+    const opponentHoveringIdx = opponentCards.findIndex((entity) =>
       entity.hasComponent('hover')
     )
 

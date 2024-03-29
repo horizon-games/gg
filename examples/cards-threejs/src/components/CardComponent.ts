@@ -1,7 +1,7 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 import { CardType, CardStatus } from '../types'
 
-export default class CardComponent extends Component<{
+export class CardComponent extends Component<{
   id: number
   type: CardType
   status: CardStatus

@@ -1,13 +1,13 @@
-import { System, EntityManager } from '../../../../src/ecs'
-import { Components, HoverComponent } from '../components'
-import { DraggableArchetype, DroppableArchetype } from '../archetypes'
 import { Vector2, Raycaster } from 'three'
+
+import { System, EntityManager } from '../../../../src'
+import { playCard } from '../actions'
+import { DraggableArchetype, DroppableArchetype } from '../archetypes'
 import camera from '../camera'
-import scene from '../scene'
-import { drawCard, playCard } from '../actions'
-import { CardStatus } from '../types'
-import screen from '../screen'
+import { Components } from '../components'
 import mouse from '../mouse'
+import scene from '../scene'
+import { CardStatus } from '../types'
 import { get2DPositionAtDepth, lerp } from '../utils'
 
 const raycaster = new Raycaster()
@@ -18,7 +18,7 @@ let dropTarget: any = null
 
 const mouseDist = new Vector2()
 
-export default class DragDropSystem extends System<Components> {
+export class DragDropSystem extends System<Components> {
   update(manager: EntityManager<Components>, dt: number) {
     const { entities: draggable } = manager.getArchetype(DraggableArchetype)
     const { entities: droppable } = manager.getArchetype(DroppableArchetype)
@@ -26,7 +26,7 @@ export default class DragDropSystem extends System<Components> {
     raycaster.setFromCamera(mouse.position, camera)
 
     const intersections = raycaster.intersectObjects(scene.children, true)
-    const found = intersections.some(x => {
+    const found = intersections.some((x) => {
       const object3d = x.object.userData.entityId ? x.object : x.object.parent
       if (object3d) {
         const { entityId } = object3d.userData

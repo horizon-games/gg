@@ -1,16 +1,17 @@
-import { ComponentTypes } from '../../../../src/ecs'
-import PositionComponent from './PositionComponent'
-import RotationComponent from './RotationComponent'
-import HoverComponent from './HoverComponent'
-import PlayerComponent from './PlayerComponent'
-import CardComponent from './CardComponent'
-import MaterialComponent from './MaterialComponent'
-import OrderComponent from './OrderComponent'
-import TextureComponent from './TextureComponent'
-import MeshComponent from './MeshComponent'
-import LightComponent from './LightComponent'
-import DraggableComponent from './DraggableComponent'
-import DroppableComponent from './DroppableComponent'
+import { ComponentTypes } from '../../../../src'
+
+import { CardComponent } from './CardComponent'
+import { DraggableComponent } from './DraggableComponent'
+import { DroppableComponent } from './DroppableComponent'
+import { HoverComponent } from './HoverComponent'
+import { LightComponent } from './LightComponent'
+import { MaterialComponent } from './MaterialComponent'
+import { MeshComponent } from './MeshComponent'
+import { OrderComponent } from './OrderComponent'
+import { PlayerComponent } from './PlayerComponent'
+import { PositionComponent } from './PositionComponent'
+import { RotationComponent } from './RotationComponent'
+import { TextureComponent } from './TextureComponent'
 
 export type Components = {
   player: PlayerComponent
@@ -39,5 +40,5 @@ export {
   MeshComponent,
   LightComponent,
   DraggableComponent,
-  DroppableComponent
+  DroppableComponent,
 }

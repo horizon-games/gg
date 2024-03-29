@@ -1,6 +1,6 @@
-import { Component } from '../../../../src/ecs'
+import { Component } from '../../../../src'
 
-export default class DraggableComponent extends Component<{
+export class DraggableComponent extends Component<{
   type: string
   isDragging?: boolean
   isDroppable?: boolean
