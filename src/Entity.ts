@@ -36,7 +36,7 @@ export class Entity<C extends ComponentTypes> {
 
   constructor(components: ComponentOf<C>[] = []) {
     this.reset()
-    this.renew(components)
+    this.addComponents(components)
   }
 
   /**
@@ -48,14 +48,6 @@ export class Entity<C extends ComponentTypes> {
     }
     this.id = ++instanceIdx
     this.onChangeListeners = new Set()
-    return this
-  }
-
-  /**
-   * Renew an Entity with new components
-   */
-  renew(components: ComponentOf<C>[] = []): Entity<C> {
-    this.addComponents(components)
     return this
   }
 

@@ -49,7 +49,9 @@ export class EntityPool<C extends ComponentTypes> {
     }
 
     const entity = this.entities[this.head--]
-    return entity.renew(components)
+    entity.addComponents(components)
+
+    return entity
   }
 
   /**
@@ -62,6 +64,7 @@ export class EntityPool<C extends ComponentTypes> {
       )
     }
 
+    entity.reset()
     this.entities[++this.head] = entity
   }
 }

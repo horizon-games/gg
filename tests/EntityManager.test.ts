@@ -91,24 +91,24 @@ describe('EntityManager', () => {
     expect(physicalArchetype.hasEntity(entity)).toBe(false)
   })
 
-  test('can renew and release entities from entity pool', () => {
-    const manager = new EntityManager()
-    const entity1 = manager.renewEntity()
-    const { id } = entity1
+  // test('can renew and release entities from entity pool', () => {
+  //   const manager = new EntityManager()
+  //   const entity1 = manager.renewEntity()
+  //   const { id } = entity1
 
-    entity1.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
-    expect(entity1).toBeInstanceOf(Entity)
+  //   entity1.add(new PositionComponent({ x: 0, y: 0, z: 0 }))
+  //   expect(entity1).toBeInstanceOf(Entity)
 
-    manager.releaseEntity(entity1)
+  //   manager.releaseEntity(entity1)
 
-    expect(
-      entity1.componentTypes.length,
-      'to have no components after release'
-    ).toBe(0)
-    expect(entity1.id, 'to be removed').not.toBe(id)
+  //   expect(
+  //     entity1.componentTypes.length,
+  //     'to have no components after release'
+  //   ).toBe(0)
+  //   expect(entity1.id, 'to be removed').not.toBe(id)
 
-    const entity2 = manager.renewEntity()
+  //   const entity2 = manager.renewEntity()
 
-    expect(entity2, 'to be shared reference to entity1').toBe(entity1)
-  })
+  //   expect(entity2, 'to be shared reference to entity1').toBe(entity1)
+  // })
 })

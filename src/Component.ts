@@ -42,8 +42,4 @@ export abstract class Component<T> {
   }
 }
 
-export interface ComponentTypes {
-  [key: string]: Component<any>
-}
-
-// export type ComponentTypes = {}
+export type ComponentTypes = Record<string, Component<any>>

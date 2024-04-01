@@ -10,10 +10,6 @@ An entity acts as a container for components. They have a unique id and include 
 
 Resets an Entity to an empty state and gets a new unique id.
 
-`renew()`
-
-Used by EntityManager to re instantiate an entity from the object pool.
-
 `hasComponent(type: ComponentType)` \_alias: has
 
 Checks if entity contains a component by type.
@@ -109,4 +105,4 @@ All Systems include an update method.
 
 ### World
 
-The world is the user facing interface responsible for registering systems and archetype, creating and removing entities, and most importantly updating systems.
+The world is the user facing interface responsible for registering systems and archetypes, creating and removing entities, and most importantly updating systems.

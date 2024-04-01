@@ -10,11 +10,11 @@ interface WorldOptions {}
  * World registers systems, archetypes and entities. Updates systems.
  */
 export class World<C extends ComponentTypes> {
-  manager: EntityManager<C> = new EntityManager<C>()
+  readonly manager: EntityManager<C> = new EntityManager<C>()
 
   private systems: Map<string, System<C>> = new Map()
 
-  constructor({}: WorldOptions = {}) {
+  constructor(public readonly options: WorldOptions = {}) {
     this.manager = new EntityManager<C>()
   }
 
@@ -122,7 +122,7 @@ export class World<C extends ComponentTypes> {
    * Create a new entity
    */
   createEntity(components: ComponentOf<C>[] = []): Entity<C> {
-    return this.manager.renewEntity(components)
+    return this.manager.createEntity(components)
   }
 
   /**
@@ -132,7 +132,7 @@ export class World<C extends ComponentTypes> {
     const entity = this.getEntity(entityId)
 
     if (entity) {
-      this.manager.releaseEntity(entity)
+      this.manager.removeEntity(entity)
     }
   }
 
