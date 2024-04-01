@@ -541,6 +541,7 @@ export {
   Entity,
   EntityManager,
   System,
-  World
+  World,
+  getComponentTypeFromClass
 };
 //# sourceMappingURL=index.es.js.map

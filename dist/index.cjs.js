@@ -543,4 +543,5 @@ exports.Entity = Entity;
 exports.EntityManager = EntityManager;
 exports.System = System;
 exports.World = World;
+exports.getComponentTypeFromClass = getComponentTypeFromClass;
 //# sourceMappingURL=index.cjs.js.map

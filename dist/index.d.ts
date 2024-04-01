@@ -50,7 +50,9 @@ export declare abstract class Component<T> {
     onDetach(_entity: Entity<any>): void;
 }
 
-declare type ComponentOf<C> = C[keyof C];
+export declare type ComponentKeyOf<C> = keyof C;
+
+export declare type ComponentOf<C> = C[keyof C];
 
 export declare type ComponentTypes = Record<string, Component<any>>;
 
@@ -132,7 +134,7 @@ export declare interface EntityChangeEvent<C extends ComponentTypes> {
 
 export declare type EntityChangeEventTypes = 'add' | 'remove';
 
-declare type EntityChangeListener<C extends ComponentTypes> = (ev: EntityChangeEvent<C>) => void;
+export declare type EntityChangeListener<C extends ComponentTypes> = (ev: EntityChangeEvent<C>) => void;
 
 export declare class EntityManager<C extends ComponentTypes> {
     entities: Map<number, Entity<C>>;
@@ -187,6 +189,8 @@ export declare class EntityManager<C extends ComponentTypes> {
      */
     private handleEntityRemoveComponent;
 }
+
+export declare function getComponentTypeFromClass(klass: any): string;
 
 export declare abstract class System<C extends ComponentTypes> {
     enabled: boolean;
