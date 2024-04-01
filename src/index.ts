@@ -1,9 +1,3 @@
-export { Component, type ComponentTypes } from './Component'
-export {
-  type Entity,
-  type EntityChangeEvent,
-  type EntityChangeEventTypes,
-} from './Entity'
 export {
   Archetype,
   type ArchetypeComponentFilter,
@@ -13,6 +7,12 @@ export {
   type ArchetypeChangeListener,
 } from './Archetype'
 export { type Assemblage } from './Assemblage'
+export { Component, type ComponentTypes } from './Component'
+export {
+  Entity,
+  type EntityChangeEvent,
+  type EntityChangeEventTypes,
+} from './Entity'
 export { EntityManager } from './EntityManager'
 export { System } from './System'
 export { World } from './World'

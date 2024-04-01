@@ -6,22 +6,6 @@ var __publicField = (obj, key, value) => {
   return value;
 };
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-const ComponentTypeRegExp = /Component$/;
-function getComponentTypeFromClass(klass) {
-  const name = klass.name;
-  const noUnderscoreName = name.replace(/^_?/, "");
-  return noUnderscoreName.charAt(0).toLowerCase() + noUnderscoreName.slice(1).replace(ComponentTypeRegExp, "");
-}
-class Component {
-  constructor(value) {
-    __publicField(this, "type", getComponentTypeFromClass(this.constructor));
-    this.value = value;
-  }
-  onAttach(_entity) {
-  }
-  onDetach(_entity) {
-  }
-}
 class Archetype {
   constructor() {
     __publicField(this, "include", (...componentTypes) => (entity) => entity.hasComponents(...componentTypes));
@@ -101,6 +85,22 @@ class Archetype {
         }
       }
     }
+  }
+}
+const ComponentTypeRegExp = /Component$/;
+function getComponentTypeFromClass(klass) {
+  const name = klass.name;
+  const noUnderscoreName = name.replace(/^_?/, "");
+  return noUnderscoreName.charAt(0).toLowerCase() + noUnderscoreName.slice(1).replace(ComponentTypeRegExp, "");
+}
+class Component {
+  constructor(value) {
+    __publicField(this, "type", getComponentTypeFromClass(this.constructor));
+    this.value = value;
+  }
+  onAttach(_entity) {
+  }
+  onDetach(_entity) {
   }
 }
 const UNDEFINED_ID = -1;
@@ -539,6 +539,7 @@ class World {
 }
 exports.Archetype = Archetype;
 exports.Component = Component;
+exports.Entity = Entity;
 exports.EntityManager = EntityManager;
 exports.System = System;
 exports.World = World;
