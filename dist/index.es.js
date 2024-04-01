@@ -110,24 +110,40 @@ class Entity {
     __publicField(this, "onChangeListeners", /* @__PURE__ */ new Set());
     // tslint:disable-next-line
     __publicField(this, "has", this.hasComponent);
+    /**
+     * Check if the entity has multiple components
+     */
     __publicField(this, "hasComponents", (...types) => {
       return types.every((type) => this.hasComponent(type));
     });
+    /**
+     * Add a component to the entity
+     */
     __publicField(this, "addComponent", (component) => {
-      if (!this.hasComponent(component.type)) {
-        this.components[component.type] = component;
-        component.onAttach(this);
-        for (const listener of this.onChangeListeners) {
-          listener({ type: "add", entity: this, component });
-        }
-      } else {
+      if (this.hasComponent(component.type)) {
         throw new Error(
           `Entity already contains component of type ${component.type}.`
         );
       }
+      this.components[component.type] = component;
+      component.onAttach(this);
+      for (const listener of this.onChangeListeners) {
+        listener({ type: "add", entity: this, component });
+      }
     });
     // tslint:disable-next-line
     __publicField(this, "add", this.addComponent);
+    /**
+     * Add multiple components to the entity
+     */
+    __publicField(this, "addComponents", (components) => {
+      for (const component of components) {
+        this.addComponent(component);
+      }
+    });
+    /**
+     * Remove a component from the entity
+     */
     __publicField(this, "removeComponent", (type) => {
       if (this.hasComponent(type)) {
         const component = this.components[type];
@@ -147,17 +163,15 @@ class Entity {
     // tslint:disable-next-line
     __publicField(this, "set", this.setComponentValue);
     this.reset();
-    this.renew(components);
+    this.addComponents(components);
   }
+  /** List of components */
   get componentTypes() {
     return Object.keys(this.components);
   }
-  renew(components = []) {
-    for (const component of components) {
-      this.addComponent(component);
-    }
-    return this;
-  }
+  /**
+   * Reset the entity to its initial state
+   */
   reset() {
     for (const type of this.componentTypes.reverse()) {
       this.removeComponent(type);
@@ -166,18 +180,36 @@ class Entity {
     this.onChangeListeners = /* @__PURE__ */ new Set();
     return this;
   }
+  /**
+   * Clone an Entity
+   */
+  clone() {
+    return new Entity(Object.values(this.components));
+  }
+  /**
+   * Attach an onChange listener to the entity
+   */
   onChange(listener) {
     this.onChangeListeners.add(listener);
     return () => this.onChangeListeners.delete(listener);
   }
+  /**
+   * Remove an onChange listener from the entity
+   */
   removeOnChange(listener) {
     if (this.onChangeListeners.has(listener)) {
       this.onChangeListeners.delete(listener);
     }
   }
+  /**
+   * Check if the entity has a component
+   */
   hasComponent(type) {
     return !!this.components[type];
   }
+  /**
+   * Add or remove a component based on a predicated value
+   */
   toggleComponent(componentClass, predicate) {
     const componentType = getComponentTypeFromClass(componentClass);
     if (predicate) {
@@ -188,30 +220,36 @@ class Entity {
       this.removeComponent(componentType);
     }
   }
-  // Get component instance
+  /**
+   * Get the component on the entity
+   */
   getComponent(type) {
     return this.components[type];
   }
+  /**
+   * Get the value of the component on the entity
+   */
   getComponentValue(type) {
-    if (this.hasComponent(type)) {
-      return this.components[type].value;
-    } else {
+    if (!this.hasComponent(type)) {
       throw new Error(
         `Entity does not contain component of type ${String(type)}.`
       );
     }
+    return this.components[type].value;
   }
+  /**
+   * Set the value of the component on the entity
+   */
   setComponentValue(type, value) {
-    if (this.hasComponent(type)) {
-      if (typeof value === "object" && !Array.isArray(value)) {
-        Object.assign(this.components[type].value, value);
-      } else {
-        this.components[type].value = value;
-      }
-    } else {
+    if (!this.hasComponent(type)) {
       throw new Error(
         `Entity does not contain component of type ${String(type)}.`
       );
+    }
+    if (typeof value === "object" && !Array.isArray(value)) {
+      Object.assign(this.components[type].value, value);
+    } else {
+      this.components[type].value = value;
     }
   }
 }
@@ -221,13 +259,19 @@ class EntityManager {
     __publicField(this, "archetypes", /* @__PURE__ */ new Map());
     __publicField(this, "entityChangeDisposers", /* @__PURE__ */ new Map());
   }
+  /**
+   * Filter entities by component types
+   */
   filter(types) {
     return Array.from(this.entities.values()).filter(
       (entity) => entity.hasComponents(...types)
     );
   }
+  /**
+   * Add an entity to the manager
+   */
   addEntity(entity) {
-    if (!this.entities.has(entity.id)) {
+    if (!this.hasEntity(entity.id)) {
       this.entities.set(entity.id, entity);
       this.entityChangeDisposers.set(
         entity.id,
@@ -247,8 +291,11 @@ class EntityManager {
       }
     }
   }
+  /**
+   * Remove an entity from the manager
+   */
   removeEntity(entity) {
-    if (this.entities.has(entity.id)) {
+    if (this.hasEntity(entity.id)) {
       this.entities.delete(entity.id);
       if (this.entityChangeDisposers.has(entity.id)) {
         this.entityChangeDisposers.get(entity.id)();
@@ -260,61 +307,77 @@ class EntityManager {
       entity.reset();
     }
   }
+  /**
+   * Check if the manager has an entity
+   */
   hasEntity(entityId) {
     return this.entities.has(entityId);
   }
+  /**
+   * Get an entity from the manager
+   */
   getEntity(entityId) {
     return this.entities.get(entityId);
   }
-  renewEntity(components = []) {
+  /**
+   * Create a new entity and add it to the manager
+   */
+  createEntity(components = []) {
     const entity = new Entity(components);
     this.addEntity(entity);
     return entity;
   }
-  releaseEntity(entity) {
-    if (this.hasEntity(entity.id)) {
-      this.removeEntity(entity);
-    }
-  }
+  /**
+   * Add an archetype to the manager
+   */
   addArchetype(klass) {
     const type = klass.name;
-    if (!this.archetypes.has(type)) {
-      const archetype = new klass();
-      this.archetypes.set(type, archetype);
-      for (const entity of this.entities.values()) {
-        archetype.handleEntityAdd(entity);
-      }
-      return archetype;
-    } else {
+    if (this.archetypes.has(type)) {
       throw new Error(
         `EntityManager: Could not add archetype as '${type}' already exists.`
       );
     }
+    const archetype = new klass();
+    this.archetypes.set(type, archetype);
+    for (const entity of this.entities.values()) {
+      archetype.handleEntityAdd(entity);
+    }
+    return archetype;
   }
+  /**
+   * Remove an archetype from the manager
+   */
   removeArchetype(klass) {
     const archetype = this.archetypes.get(klass.name);
-    if (archetype) {
-      this.archetypes.delete(klass.name);
-      return archetype;
-    } else {
+    if (!archetype) {
       throw new Error(
         `EntityManager: Could not delete archetype as '${klass.name}' does not exists.`
       );
     }
+    this.archetypes.delete(klass.name);
+    return archetype;
   }
+  /**
+   * Check if the manager has an archetype
+   */
   hasArchetype(klass) {
     return this.archetypes.has(klass.name);
   }
+  /**
+   * Get an archetype from the manager
+   */
   getArchetype(klass) {
     const archetype = this.archetypes.get(klass.name);
-    if (archetype) {
-      return archetype;
-    } else {
+    if (!archetype) {
       throw new Error(
         `EntityManager: Could not get archetype as '${klass.name}' does not exists.`
       );
     }
+    return archetype;
   }
+  /**
+   * Handle entity add component event
+   */
   handleEntityAddComponent(entity, component) {
     if (this.hasEntity(entity.id)) {
       for (const archetype of this.archetypes.values()) {
@@ -322,6 +385,9 @@ class EntityManager {
       }
     }
   }
+  /**
+   * Handle entity remove component event
+   */
   handleEntityRemoveComponent(entity, component) {
     if (this.hasEntity(entity.id)) {
       for (const archetype of this.archetypes.values()) {
@@ -345,81 +411,122 @@ class System {
   }
 }
 class World {
-  constructor({} = {}) {
+  constructor(options = {}) {
     __publicField(this, "manager", new EntityManager());
     __publicField(this, "systems", /* @__PURE__ */ new Map());
+    /**
+     * Get an entity from the world
+     */
     __publicField(this, "getEntity", (entityId) => {
       return this.manager.getEntity(entityId);
     });
+    this.options = options;
     this.manager = new EntityManager();
   }
+  /** List of systems */
   get systemTypes() {
     return Array.from(this.systems.keys());
   }
+  /**
+   * Add a system to the world and initialize it
+   */
   addSystem(system) {
     const type = system.constructor.name;
-    if (!this.systems.has(type)) {
-      this.systems.set(type, system);
-      system.init(this.manager);
-    } else {
+    if (this.systems.has(type)) {
       throw new Error(
         `World: Could not add system as '${type}' already exists.`
       );
     }
+    this.systems.set(type, system);
+    system.init(this.manager);
   }
+  /**
+   * Add multiple systems to the world
+   */
   addSystems(...systems) {
     for (const system of systems) {
       this.addSystem(system);
     }
   }
+  /**
+   * Remove a system from the world
+   */
   removeSystem(klass) {
-    const system = this.systems.get(klass.name);
-    if (system) {
-      this.systems.delete(klass.name);
-      return system;
-    } else {
+    const system = this.getSystem(klass);
+    if (!system) {
       throw new Error(
-        `World: Could not delete system as '${klass.name}' does not exists.`
+        `World: Could not delete system as '${klass.name}' does not exist.`
       );
     }
+    this.systems.delete(klass.name);
+    return system;
   }
+  /**
+   * Check if a system exists in the world
+   */
   hasSystem(klass) {
     return this.systems.has(klass.name);
   }
+  /**
+   * Get a system from the world
+   */
   getSystem(klass) {
     const system = this.systems.get(klass.name);
-    if (system) {
-      return system;
-    } else {
+    if (!system) {
       throw new Error(
         `World: Could not get system as '${klass.name}' does not exists.`
       );
     }
+    return system;
   }
+  /**
+   * Add an archetype to the world
+   */
   addArchetype(klass) {
     return this.manager.addArchetype(klass);
   }
+  /**
+   * Remove an archetype from the world
+   */
   removeArchetype(klass) {
     return this.manager.removeArchetype(klass);
   }
+  /**
+   * Check if an archetype exists in the world
+   */
   hasArchetype(klass) {
     return this.manager.hasArchetype(klass);
   }
+  /**
+   * Get an archetype from the world
+   */
   getArchetype(klass) {
     return this.manager.getArchetype(klass);
   }
+  /**
+   * Create a new entity
+   */
   createEntity(components = []) {
-    return this.manager.renewEntity(components);
+    return this.manager.createEntity(components);
   }
+  /**
+   * Remove an entity from the world
+   */
   removeEntity(entityId) {
     const entity = this.getEntity(entityId);
     if (entity) {
-      this.manager.releaseEntity(entity);
+      this.manager.removeEntity(entity);
     }
   }
+  /**
+   * Get multiple entities from the world
+   */
   getEntities(entityIds) {
     return entityIds.map(this.getEntity);
   }
+  /**
+   * Update all systems
+   */
   update(dt, time) {
     for (const system of this.systems.values()) {
       if (system.enabled) {
