@@ -11,8 +11,10 @@
     "strict": true, 
     "strictFunctionTypes": false,
     "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmit": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "examples", "dist", "tests"]
