@@ -22,5 +22,6 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`,
     },
     minify: false,
+    sourcemap: true,
   },
 })
