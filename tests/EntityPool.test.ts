@@ -5,7 +5,7 @@ import { EntityPool } from '../src/EntityPool'
 
 const SIZE = 3
 
-describe.only('EntityPool', () => {
+describe('EntityPool', () => {
   test('can create pool', () => {
     const pool = new EntityPool(SIZE)
 
@@ -27,7 +27,7 @@ describe.only('EntityPool', () => {
     expect(entity).toBeInstanceOf(Entity)
   })
 
-  test.only('can release an entity back into the pool', () => {
+  test('can release an entity back into the pool', () => {
     const pool = new EntityPool(SIZE)
 
     expect(pool.length, 'starting pool size to be empty').toBe(0)
